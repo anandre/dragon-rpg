@@ -1,4 +1,4 @@
-const { Command } = requre('discord-akairo');
+const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const { stripIndent } = require('common-tags');
 
