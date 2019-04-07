@@ -36,7 +36,7 @@ class CastCommand extends Command {
         const cooldown = player.cooldowns[player.abilities.indexOf(ability)]
         console.log(cooldown);
         if (cooldown === usedAbility.cooldown) { //ability can be used
-            
+            console.log(`using ability ${usedAbility.name}`)
         }
 
     }
