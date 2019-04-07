@@ -37,6 +37,7 @@ class CastCommand extends Command {
         console.log(cooldown);
         if (cooldown === usedAbility.cooldown) { //ability can be used
             console.log(`using ability ${usedAbility.name}`)
+            message.channel.send(`used ability ${usedAbility.name}`)
         }
 
     }
