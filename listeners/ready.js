@@ -45,7 +45,9 @@ class ReadyListener extends Listener {
                     damagetype: abi.damagetype,
                     target: abi.target,
                     description: abi.description,
-                    cooldown: abi.cooldown
+                    cooldown: abi.cooldown,
+                    type: abi.type,
+                    mana: abi.mana
                 }
                 this.client.abilities.set(abi.name, data)
             }
@@ -73,7 +75,8 @@ class ReadyListener extends Listener {
                     enemyhp: combat.enemyhp,
                     enemymp: combat.enemymp,
                     turn: combat.turn,
-                    cooldowns: combat.cooldowns
+                    cooldowns: combat.cooldowns,
+                    enemycd: combat.enemycds
                 }
                 this.client.combat.set(combat.playerid, ongoingCombat)
             }

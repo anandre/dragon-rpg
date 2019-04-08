@@ -24,7 +24,7 @@ class AttackCommand extends Command {
         const playerInit = Math.floor(Math.random() * 10) + 1 + player.agi;
         const enemyInit = Math.floor(Math.random() * 10) + 1 + enemy.agi;
         if (playerInit >= enemyInit) { //player goes first, player attacks
-            const playerDmg = await this.client.playerAttack(player, weapon, enemy);
+            const playerDmg = await this.client.playerBasicAttack(player, weapon, enemy);
             if (this.client.combat.get(message.author.id).enemyhp > 0) { //enemy is still alive, enemy attacks
                 const enemyDmg = await this.client.enemyBasicAttack(enemy, player);
                 if (this.client.combat.get(message.author.id).currhp > 0) { //player is still alive, set new turn after both attacks
@@ -74,7 +74,7 @@ class AttackCommand extends Command {
         else { //enemy attacks first
             const enemyDmg = await this.client.enemyBasicAttack(enemy, player);
             if (this.client.combat.get(message.author.id).currhp > 0) { //player is still alive, player attacks
-                const playerDmg = await this.client.playerAttack(player, weapon, enemy);
+                const playerDmg = await this.client.playerBasicAttack(player, weapon, enemy);
                 if (this.client.combat.get(message.author.id).enemyhp > 0) { //enemy is still alive, set new turn after both attack
                     this.client.combat.get(message.author.id).turn++;
                     if (this.client.combat.get(message.author.id).turn % 5 === 0) { //turn is 5/10/15/etc, update database

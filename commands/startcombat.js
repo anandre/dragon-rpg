@@ -49,6 +49,7 @@ class StartCombatCommand extends Command {
         console.log(enemy);
         const abi = this.client.infoItems.get(player.weaponid).abilities.concat(this.client.infoItems.get(player.armorid).abilities);
         const cds = abi.map(a => this.client.abilities.get(a).cooldown);
+        const enemycds = enemy.abilities.map(a => this.client.abilities.get(a).cooldown);
         console.log(`abiities: ${abi}`);
         try {
             console.log(enemy);
@@ -72,14 +73,14 @@ class StartCombatCommand extends Command {
                 enemyhp: enemy.hp,
                 enemymp: enemy.mp,
                 turn: 1,
-                cooldowns: cds
+                cooldowns: cds,
+                enemycd: enemycds
             });
             const embed = new MessageEmbed()
                 .setTitle(`Combat against ${enemy.name} has begun!`)
                 .addField(`**${message.author.username}**`, `❤ HP: ${player.currhp}/${player.maxhp}\n✨ MP: ${player.currmp}/${player.maxmp}\n💥 Abilities: ${abi.join(', ')}`, true)
                 .addField(`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${enemy.hp}\n✨ MP: ${enemy.mp}`, true)
             return message.channel.send(embed);
-            //return message.channel.send(`You have entered into combat with ${enemy.name}!`);
         }
         catch (e) {
             return message.channel.send(`${message.author.username}, there was an error starting combat!
