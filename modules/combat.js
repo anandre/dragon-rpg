@@ -101,7 +101,7 @@ module.exports = (client) => {
         const grossDmg = rawDmg + addDmg;
         const netDmg = grossDmg - type[ability.damagetype];
         player.enemyhp -= Math.max(1, netDmg);
-        player.abilities.indexOf(ability.name) -= 1;
+        player.cooldowns[player.abilities.indexOf(ability.name)] -= 1;
         return Math.max(1, netDmg);
     };
 
@@ -119,7 +119,7 @@ module.exports = (client) => {
         const grossDmg = rawDmg + addDmg;
         player.currhp += grossDmg;
         if (player.currhp > player.maxhp) player.currhp = player.maxhp;
-        player.abilities.indexOf(ability.name) -= 1;
+        player.cooldowns[player.abilities.indexOf(ability.name)] -= 1;
         return grossDmg;
     };
 
@@ -137,7 +137,7 @@ module.exports = (client) => {
         const grossDmg = rawDmg + addDmg;
         player.enemyhp += grossDmg;
         if (player.enemyhp > enemy.hp) player.enemyhp = enemy.hp;
-        player.enemycd.indexOf(ability.name) -= 1;
+        player.enemycd[enemy.abilities.indexOf(ability.name)] -= 1;
         return grossDmg;
     }
 
@@ -163,7 +163,7 @@ module.exports = (client) => {
         const addDmg = parseInt(dmgAdd[0] * type[dmgAdd[1]]);
         const grossDmg = rawDmg + addDmg;
         const netDmg = grossDmg - type[ability.damagetype];
-        player.currhp -= Math.max(1, netDmg);
+        player.enemycd[enemy.abilities.indexOf(ability.name)] -= 1;
         return Math.max(1, netDmg);
     }
 }
