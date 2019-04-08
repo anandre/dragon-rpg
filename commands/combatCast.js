@@ -37,7 +37,7 @@ class CastCommand extends Command {
         const playerInit = Math.floor(Math.random() * 10) + 1 + player.agi;
         const enemyInit = Math.floor(Math.random() * 10) + 1 + enemy.agi;
         const cooldown = player.cooldowns[player.abilities.indexOf(ability)];
-        console.log(cooldown);
+        console.log(player, enemy, usedAbility);
         if (cooldown === usedAbility.cooldown && player.currmp >= usedAbility.mana) { //ability can be used
             if (playerInit >= enemyInit) { //player goes first, uses ability
                     console.log(`using ability ${usedAbility.name}`)

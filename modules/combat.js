@@ -90,6 +90,7 @@ module.exports = (client) => {
             MAG: player.mag,
             SPR: player.spr
         };
+        console.log(dmgDice, dmgAdd);
 
         let rawDmg = 0;
         let i = 0;
