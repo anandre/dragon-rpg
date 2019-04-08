@@ -87,7 +87,7 @@ class CastCommand extends Command {
                                 .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
                                 .addField(`${message.author.username} has defeated ${enemy.name}!`, `They have found ${enemy.gold} gold and earned ${enemy.xp} experience!`)
                             message.channel.send(embed);
-                            await this.client.checkXP(message.author.id);
+                            //await this.client.checkXP(message);
                         }
                     }
                 else if (usedAbility.type === 'h') { //player goes first, uses healing ability
@@ -191,7 +191,7 @@ class CastCommand extends Command {
                             .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
                             .addField(`${message.author.username} has defeated ${enemy.name}!`, `They have found ${enemy.gold} gold and earned ${enemy.xp} experience!`)
                         message.channel.send(embed);
-                        await this.client.checkXP(message.author.id);
+                        //await this.client.checkXP(message);
                     }
                     
                 }

@@ -68,7 +68,7 @@ class AttackCommand extends Command {
                     .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
                     .addField(`${message.author.username} has defeated ${enemy.name}!`, `They have found ${enemy.gold} gold and earned ${enemy.xp} experience!`)
                 message.channel.send(embed);
-                await this.client.checkXP(message.author.id);
+                //await this.client.checkXP(message);
             }
         }
         else { //enemy attacks first
@@ -101,7 +101,8 @@ class AttackCommand extends Command {
                         .setColor('GREEN')
                         .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
                         .addField(`${message.author.username} has defeated ${enemy.name}!`, `They have found ${enemy.gold} gold and earned ${enemy.xp} experience!`)
-                    return message.channel.send(embed);
+                    message.channel.send(embed);
+                    //await this.client.checkXp(message);
                 }
             }
             else { //enemy defeats player
