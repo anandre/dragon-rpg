@@ -76,7 +76,7 @@ class ReadyListener extends Listener {
                     enemymp: combat.enemymp,
                     turn: combat.turn,
                     cooldowns: combat.cooldowns,
-                    enemycd: combat.enemycds
+                    enemycd: combat.enemycd
                 }
                 this.client.combat.set(combat.playerid, ongoingCombat)
             }

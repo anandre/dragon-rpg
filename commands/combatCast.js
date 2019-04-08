@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
-const { stripIndent } = require('common-tags');
+const { stripIndents } = require('common-tags');
 
 class CastCommand extends Command {
     constructor() {
@@ -43,7 +43,6 @@ class CastCommand extends Command {
                     console.log(`using ability ${usedAbility.name}`)
                     if (usedAbility.type === 'd') { //ability is damaging
                         const playerDmg = await this.client.playerCastSingleDamage(player, enemy, usedAbility);
-                        message.channel.send(`enemy hp: ${this.client.combat.get(message.author.id).enemyhp}`);
                         if (this.client.combat.get(message.author.id).enemyhp > 0) { //enemy survived, attacks
                             const enemyDmg = await this.client.enemyBasicAttack(enemy, player);
                             if (this.client.combat.get(message.author.id).currhp > 0) { //player survived, increment turn
@@ -56,7 +55,7 @@ class CastCommand extends Command {
                                 const embed = new MessageEmbed()
                                     .setColor('BLUE')
                                     .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
-                                    .setDescription(stripIndents`${message.author.username} used ${ability.name} and dealt ${playerDmg} damage!
+                                    .setDescription(stripIndents`${message.author.username} used ${usedAbility.name} and dealt ${playerDmg} damage!
                                     ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} attacked and dealt ${enemyDmg} damage!`)
                                     .addField(`**${message.author.username}**`, `❤ HP: ${this.client.combat.get(message.author.id).currhp}/${this.client.combat.get(message.author.id).maxhp}\n✨ MP: ${this.client.combat.get(message.author.id).currmp}/${this.client.combat.get(message.author.id).maxmp}\n💥 Abilities: ${player.abilities.join(', ')}`, true)
                                     .addField(`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${this.client.combat.get(message.author.id).enemyhp}\n✨ MP: ${this.client.combat.get(message.author.id).enemymp}`, true)
@@ -104,7 +103,7 @@ class CastCommand extends Command {
                         const embed = new MessageEmbed()
                             .setColor('BLUE')
                             .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
-                            .setDescription(stripIndents`${message.author.username} used ${ability.name} and healed ${playerHeal} damage!
+                            .setDescription(stripIndents`${message.author.username} used ${usedAbility.name} and healed ${playerHeal} damage!
                             ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} attacked and dealt ${enemyDmg} damage!`)
                             .addField(`**${message.author.username}**`, `❤ HP: ${this.client.combat.get(message.author.id).currhp}/${this.client.combat.get(message.author.id).maxhp}\n✨ MP: ${this.client.combat.get(message.author.id).currmp}/${this.client.combat.get(message.author.id).maxmp}\n💥 Abilities: ${player.abilities.join(', ')}`, true)
                             .addField(`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${this.client.combat.get(message.author.id).enemyhp}\n✨ MP: ${this.client.combat.get(message.author.id).enemymp}`, true)
@@ -137,7 +136,7 @@ class CastCommand extends Command {
                         const embed = new MessageEmbed()
                             .setColor('BLUE')
                             .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
-                            .setDescription(stripIndents`${message.author.username} used ${ability.name}!
+                            .setDescription(stripIndents`${message.author.username} used ${usedAbility.name}!
                             ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} attacked and dealt ${enemyDmg} damage!`)
                             .addField(`**${message.author.username}**`, `❤ HP: ${this.client.combat.get(message.author.id).currhp}/${this.client.combat.get(message.author.id).maxhp}\n✨ MP: ${this.client.combat.get(message.author.id).currmp}/${this.client.combat.get(message.author.id).maxmp}\n💥 Abilities: ${player.abilities.join(', ')}`, true)
                             .addField(`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${this.client.combat.get(message.author.id).enemyhp}\n✨ MP: ${this.client.combat.get(message.author.id).enemymp}`, true)
@@ -164,7 +163,6 @@ class CastCommand extends Command {
             if (this.client.combat.get(message.author.id).currhp > 0) { //player survived, uses ability
                 if (usedAbility.type === 'd') { //player uses damaging spell
                     const playerDmg = await this.client.playerCastSingleDamage(player, enemy, usedAbility);
-                    message.channel.send(`enemy hp: ${this.client.combat.get(message.author.id).enemyhp}`)
                     if (this.client.combat.get(message.author.id).enemyhp > 0) { //enemy survives, turn increments
                         await this.client.turnIncrement(player, enemy)
                         /*this.client.combat.get(message.author.id).turn++;
@@ -175,7 +173,7 @@ class CastCommand extends Command {
                         const embed = new MessageEmbed()
                             .setColor('BLUE')
                             .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
-                            .setDescription(stripIndents`${message.author.username} used ${ability.name} and dealt ${playerDmg} damage!
+                            .setDescription(stripIndents`${message.author.username} used ${usedAbility.name} and dealt ${playerDmg} damage!
                             ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} attacked and dealt ${enemyDmg} damage!`)
                             .addField(`**${message.author.username}**`, `❤ HP: ${this.client.combat.get(message.author.id).currhp}/${this.client.combat.get(message.author.id).maxhp}\n✨ MP: ${this.client.combat.get(message.author.id).currmp}/${this.client.combat.get(message.author.id).maxmp}\n💥 Abilities: ${player.abilities.join(', ')}`, true)
                             .addField(`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${this.client.combat.get(message.author.id).enemyhp}\n✨ MP: ${this.client.combat.get(message.author.id).enemymp}`, true)
@@ -208,7 +206,7 @@ class CastCommand extends Command {
                     const embed = new MessageEmbed()
                         .setColor('BLUE')
                         .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
-                        .setDescription(stripIndents`${message.author.username} used ${ability.name} and healed ${playerHeal} damage!
+                        .setDescription(stripIndents`${message.author.username} used ${usedAbility.name} and healed ${playerHeal} damage!
                         ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} attacked and dealt ${enemyDmg} damage!`)
                         .addField(`**${message.author.username}**`, `❤ HP: ${this.client.combat.get(message.author.id).currhp}/${this.client.combat.get(message.author.id).maxhp}\n✨ MP: ${this.client.combat.get(message.author.id).currmp}/${this.client.combat.get(message.author.id).maxmp}\n💥 Abilities: ${player.abilities.join(', ')}`, true)
                         .addField(`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${this.client.combat.get(message.author.id).enemyhp}\n✨ MP: ${this.client.combat.get(message.author.id).enemymp}`, true)
@@ -249,7 +247,7 @@ class CastCommand extends Command {
         }
         } //end of ability can be used
         else if (cooldown < usedAbility.cooldown) { //not off cooldown yet
-            return message.channel.send(`${message.author.username}, ${usedAbility.name} is not ready for ${cooldown} turns!`);
+            return message.channel.send(`${message.author.username}, ${usedAbility.name} ${cooldown === 0 ? 'is ready next turn!' : 'is not ready for ' + cooldown + ' turns!' }`);
         }
         else if (player.currmp < usedAbility.mana) { //not enough mana
             return message.channel.send(`${message.author.username}, you do not have enough mana to cast ${usedAbility.name}!`);

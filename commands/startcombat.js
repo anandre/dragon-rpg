@@ -53,7 +53,7 @@ class StartCombatCommand extends Command {
         console.log(`abiities: ${abi}`);
         try {
             console.log(enemy);
-            await this.client.db.query('INSERT INTO combat (playerid, str, agi, con, mag, spr, currhp, maxhp, currmp, maxmp, abilities, weaponid, armorid, physdef, magdef, enemyid, enemyhp, enemymp, turn, cooldowns) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)', [message.author.id, player.str, player.agi, player.con, player.mag, player.spr, player.currhp, player.maxhp, player.currmp, player.maxmp, abi, player.weaponid, player.armorid, player.physdef, player.magdef, enemy.enemyid, enemy.hp, enemy.mp, 1, cds])
+            await this.client.db.query('INSERT INTO combat (playerid, str, agi, con, mag, spr, currhp, maxhp, currmp, maxmp, abilities, weaponid, armorid, physdef, magdef, enemyid, enemyhp, enemymp, turn, cooldowns, enemycd) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)', [message.author.id, player.str, player.agi, player.con, player.mag, player.spr, player.currhp, player.maxhp, player.currmp, player.maxmp, abi, player.weaponid, player.armorid, player.physdef, player.magdef, enemy.enemyid, enemy.hp, enemy.mp, 1, cds, enemycds])
             this.client.combat.set(message.author.id, {
                 str: player.str,
                 agi: player.agi,
