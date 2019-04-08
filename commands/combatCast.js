@@ -164,6 +164,7 @@ class CastCommand extends Command {
             if (this.client.combat.get(message.author.id).currhp > 0) { //player survived, uses ability
                 if (usedAbility.type === 'd') { //player uses damaging spell
                     const playerDmg = await this.client.playerCastSingleDamage(player, enemy, usedAbility);
+                    message.channel.send(`enemy hp: ${this.client.combat.get(message.author.id).enemyhp}`)
                     if (this.client.combat.get(message.author.id).enemyhp > 0) { //enemy survives, turn increments
                         await this.client.turnIncrement(player, enemy)
                         /*this.client.combat.get(message.author.id).turn++;
