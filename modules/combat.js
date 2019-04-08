@@ -100,6 +100,7 @@ module.exports = (client) => {
         const addDmg = parseInt(dmgAdd[0] * type[dmgAdd[1]]);
         const grossDmg = rawDmg + addDmg;
         const netDmg = grossDmg - type[ability.damagetype];
+        console.log(rawDmg, addDmg, grossDmg, netDmg)
         player.enemyhp -= Math.max(1, netDmg);
         player.cooldowns[player.abilities.indexOf(ability.name)] -= 1;
         return Math.max(1, netDmg);
