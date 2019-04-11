@@ -107,6 +107,7 @@ module.exports = (client) => {
     };
 
     client.playerCastSingleHeal = async (player, ability) => {
+        console.log(`${ability}`);
         const dmgDice = ability.damage.split(' + ')[0];
         const dmgAdd = ability.damage.split(' + ')[1];
 
