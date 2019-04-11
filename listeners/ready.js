@@ -115,6 +115,7 @@ class ReadyListener extends Listener {
                     id: item.id,
                     name: item.name,
                     description: item.description,
+                    effects: item.effects,
                     str: item.strmod,
                     agi: item.agimod,
                     con: item.conmod,
