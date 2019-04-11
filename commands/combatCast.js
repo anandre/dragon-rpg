@@ -196,7 +196,7 @@ class CastCommand extends Command {
                     
                 }
                 else if (usedAbility.type === 'h') { //player uses a healing spell
-                    const playerHeal = await this.client.playerCastSingleHeal(player, ability);
+                    const playerHeal = await this.client.playerCastSingleHeal(player, usedAbility);
                     await this.client.turnIncrement(player, enemy);
                     /*this.client.combat.get(message.author.id).turn++;
                     if (this.client.combat.get(message.author.id).turn % 5 === 0) { //turn is 5/10/15/etc, update database
