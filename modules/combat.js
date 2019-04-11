@@ -111,9 +111,6 @@ module.exports = (client) => {
         const dmgAdd = ability.damage.split(' + ')[1];
 
         const type = {
-            n: 0,
-            p: enemy.physdef,
-            m: enemy.magdef,
             STR: player.str,
             AGI: player.agi,
             MAG: player.mag,
