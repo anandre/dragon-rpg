@@ -110,6 +110,16 @@ module.exports = (client) => {
         const dmgDice = ability.damage.split(' + ')[0];
         const dmgAdd = ability.damage.split(' + ')[1];
 
+        const type = {
+            n: 0,
+            p: enemy.physdef,
+            m: enemy.magdef,
+            STR: player.str,
+            AGI: player.agi,
+            MAG: player.mag,
+            SPR: player.spr
+        };
+
         let rawDmg = 0;
         let i = 0;
         while (i < parseInt(dmgDice[0])) {
