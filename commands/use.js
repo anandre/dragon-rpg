@@ -2,7 +2,7 @@ const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
 
-class UseCommand extends Commands {
+class UseCommand extends Command {
     constructor() {
         super('use', {
             aliases: ['use'],
@@ -37,7 +37,7 @@ class UseCommand extends Commands {
     async exec(message, { amount, used, item }) {
         if (!this.client.infoItems.filter(i => i.effects).some(i => [i.id, i.name].includes(item))) return;
         const usedItem = this.client.infoItems.find(i => i.id === item) || this.client.infoItems.find(i => i.name === item);
-        const inventory = (await this.client.db.query('SELECT * FROM $1')).rows;
+        const inventory = (await this.client.db.query(`SELECT ${'inv' + message.author.id}.count, items.name FROM ${'inv' + message.author.id} INNER JOIN items ON ${'inv' + message.author.id}.itemid = items.itemid ORDER BY ${'inv' + message.author.id}.itemid ASC`)).rows
 
         if (!inventory.some(i => i.itemid === usedItem.itemid)) return message.channel.send(`${message.author.username}, you don't have that item!`);
         
@@ -48,6 +48,8 @@ class UseCommand extends Commands {
             HP: currhp,
             MP: currmp
         }
+
+        console.log(transfer[type]);
 
         let i = 0;
         let totalRestored = 0;
@@ -63,6 +65,7 @@ class UseCommand extends Commands {
             message.channel.send(stripIndents`${e.message}
             ${e.stack}`, { code: xxl });
         }
+        message.channel.send(`you used ${amount} ${item} and restored ${totalRestored} ${transfer[type]}`)
         
         if (this.client.combat.has(message.author.id)) {
             amount = 1;
