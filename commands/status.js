@@ -1,14 +1,14 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 
-class CombatStatusCommand extends Command {
+class StatusCommand extends Command {
     constructor() {
-        super('combatstatus', {
-            //aliases: ['combatstatus'],
+        super('status', {
+            aliases: ['status'],
             description: {
-                content: 'Shows the current state of your combat.',
-                usage: 'combat status',
-                example: 'combat status'
+                content: 'Shows your HP/MP, enemy\'s HP/MP, and current turn of your combat.',
+                usage: 'status',
+                example: 'status'
             }
         })
     }
@@ -26,4 +26,4 @@ class CombatStatusCommand extends Command {
     }
 }
 
-module.exports = CombatStatusCommand;
+module.exports = StatusCommand;

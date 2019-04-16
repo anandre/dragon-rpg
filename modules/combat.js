@@ -44,7 +44,7 @@ module.exports = (client) => {
             i++;
             rawDmg += Math.floor(Math.random() * parseInt(playerDmgDice[1]) + 1);
         };
-        const addDmg = parseInt(playerDmgAdd[0]) * playerObject[playerDmgAdd[1]];
+        const addDmg = Math.floor(parseFloat(playerDmgAdd[0]) * playerObject[playerDmgAdd[1]]);
         const playerRawDmg = rawDmg + addDmg;
         const playerNetDmg = playerRawDmg - playerObject[weapon.damagetype];
         player.enemyhp -= Math.max(1, playerNetDmg);
@@ -71,7 +71,7 @@ module.exports = (client) => {
             i++;
             rawDmg += Math.floor(Math.random() * parseInt(enemyDmgDice[1]));
         };
-        const addDmg = parseInt(enemyDmgAdd[0]) * enemyObject[enemyDmgAdd[1]];
+        const addDmg = Math.floor(parseFloat(enemyDmgAdd[0]) * enemyObject[enemyDmgAdd[1]]);
         const enemyRawDmg = rawDmg + addDmg;
         const enemyNetDmg = enemyRawDmg - enemyObject[enemy.damagetype];
         player.currhp -= Math.max(1, enemyNetDmg);
@@ -97,7 +97,7 @@ module.exports = (client) => {
             i++;
             rawDmg += Math.floor(Math.random() * parseInt(dmgDice[1]) + 1);
         };
-        const addDmg = parseInt(dmgAdd[0] * type[dmgAdd[1]]);
+        const addDmg = Math.floor(parseFloat(dmgAdd[0]) * type[dmgAdd[1]]);
         const grossDmg = rawDmg + addDmg;
         const netDmg = grossDmg - type[ability.damagetype];
         player.enemyhp -= Math.max(1, netDmg);
@@ -124,7 +124,7 @@ module.exports = (client) => {
             i++;
             rawDmg += Math.floor(Math.random() * parseInt(dmgDice[1]));
         };
-        const addDmg = parseInt(dmgAdd[0] * type[dmgAdd[1]]);
+        const addDmg = Math.floor(parseFloat(dmgAdd[0]) * type[dmgAdd[1]]);
         const grossDmg = rawDmg + addDmg;
         player.currhp += grossDmg;
         if (player.currhp > player.maxhp) player.currhp = player.maxhp;
@@ -143,7 +143,7 @@ module.exports = (client) => {
             i++;
             rawDmg += Math.floor(Math.random() * parseInt(dmgDice[1]));
         };
-        const addDmg = parseInt(dmgAdd[0] * type[dmgAdd[1]]);
+        const addDmg = Math.floor(parseFloat(dmgAdd[0]) * type[dmgAdd[1]]);
         const grossDmg = rawDmg + addDmg;
         player.enemyhp += grossDmg;
         if (player.enemyhp > enemy.hp) player.enemyhp = enemy.hp;
@@ -171,11 +171,20 @@ module.exports = (client) => {
             i++;
             rawDmg += Math.floor(Math.random() * parseInt(dmgDice[1]));
         };
-        const addDmg = parseInt(dmgAdd[0] * type[dmgAdd[1]]);
+        const addDmg = Math.floor(parseFloat(dmgAdd[0]) * type[dmgAdd[1]]);
         const grossDmg = rawDmg + addDmg;
         const netDmg = grossDmg - type[ability.damagetype];
         player.enemymp -= ability.mana;
         player.enemycd[enemy.abilities.indexOf(ability.name)] -= 1;
         return Math.max(1, netDmg);
+    }
+
+    client.flee = (player, enemy) => {
+        const success = Math.random() * (player.agi * 1.5) - (enemy.agi * .75) + 25;
+        const roll = Math.random() * 100;
+        if (roll < success) {
+            return true;
+        }
+        return false;
     }
 }

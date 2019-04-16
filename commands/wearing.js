@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
+const { stripIndents } = require('common-tags');
 
 class WearingCommand extends Command {
     constructor() {
@@ -26,23 +27,22 @@ class WearingCommand extends Command {
     }
 
     async exec(message, args) {
-        //const weapon = (await this.client.db.query(`SELECT players.weaponid, items.name, items.abilities, items.strmod, items.agimod, items.conmod, items.magmod, items.sprmod, items.hpmod, items.mpmod, items.hunttimermod, items.gathertimermod, items.fishtimermod FROM players INNER JOIN items ON players.weaponid = items.itemid WHERE playerid = '${user.id}'`));
-        //const armor = (await this.client.db.query(`SELECT players.armorid, items.name, items.abilities, items.strmod, items.agimod, items.conmod, items.magmod, items.sprmod, items.hpmod, items.mpmod, items.hunttimermod, items.gathertimermod, items.fishtimermod FROM players INNER JOIN items ON players.armorid = items.itemid WHERE playerid = '${user.id}'`)).rows[0];
-        //const accessoryid = (await this.client.db.query(`SELECT players.accessoryid, items.name, items.abilities, items.strmod, items.agimod, items.conmod, items.magmod, items.sprmod, items.hpmod, items.mpmod, items.hunttimermod, items.gathertimermod, items.fishtimermod FROM players INNER JOIN items ON players.accessoryid = items.itemid WHERE playerid = '${user.id}'`)).rows[0];
-        if (!this.client.players.includes(args.user.id)) return;
-        const weapon = (await this.client.db.query(`SELECT players.weaponid, items.abilities, items.strmod, items.agimod, items.conmod, items.magmod, items.sprmod, items.hpmod, items.mpmod, items.name, items.gathertimermod, items.fishtimermod, items.hunttimermod, items.slot FROM players INNER JOIN items ON players.weaponid = items.itemid WHERE playerid = '${args.user.id}'`)).rows[0]
-        console.log(weapon);
-        const armor = (await this.client.db.query(`SELECT players.armorid, items.abilities, items.strmod, items.agimod, items.conmod, items.magmod, items.sprmod, items.hpmod, items.mpmod, items.name, items.gathertimermod, items.fishtimermod, items.hunttimermod, items.slot FROM players INNER JOIN items ON players.armorid = items.itemid WHERE playerid = '${args.user.id}'`)).rows[0]
-        console.log(armor);
-        const accessory = (await this.client.db.query(`SELECT players.accessoryid, items.abilities, items.strmod, items.agimod, items.conmod, items.magmod, items.sprmod, items.hpmod, items.mpmod, items.name, items.gathertimermod, items.fishtimermod, items.hunttimermod, items.slot FROM players INNER JOIN items ON players.accessoryid = items.itemid WHERE playerid = '${args.user.id}'`)).rows[0]
-        console.log(accessory);
+        const wornItems = (await this.client.db.query('SELECT weaponid, armorid, accessoryid FROM players WHERE playerid = $1', [message.author.id])).rows[0]
+        const weapon = this.client.infoItems.get(wornItems.weaponid);
+        const armor = this.client.infoItems.get(wornItems.armorid);
+        const accessory = this.client.infoItems.get(wornItems.accessoryid);
+        const type = {
+            p: 'physical',
+            m: 'magical'
+        }
         const weaponAbilities = !weapon.abilities ? 'none' : weapon.abilities.join(', ');
         const armorAbilities = !armor.abilities ? 'none' : armor.abilities.join(', ');
         let weaponStr;
         let armorStr;
         let accessoryStr;
         if (args.long) {
-            weaponStr = `${weapon.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
+            weaponStr = stripIndents`${weapon.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
+            **Damage**: ${weapon.weapondice} (${type[weapon.damagetype]})
             **Abilities**: ${weaponAbilities}
             **Strength:** ${weapon.strmod}
             **Agility:** ${weapon.agimod}
@@ -54,7 +54,9 @@ class WearingCommand extends Command {
             **Gather mod:** -${(1 - weapon.gathertimermod) * 100}%
             **Fish mod:** -${(1 - weapon.fishtimermod) * 100}%
             **Hunt mod:** -${(1 - weapon.hunttimermod) * 100}%`
-            armorStr = `${armor.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
+            armorStr = stripIndents`${armor.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
+            **Physical Defense**: ${armor.physdef}
+            **Magical Defense**: ${armor.magdef}
             **Abilities**: ${armorAbilities}
             **Strength:** ${armor.strmod}
             **Agility:** ${armor.agimod}
@@ -66,7 +68,7 @@ class WearingCommand extends Command {
             **Gather mod:** -${(1 - armor.gathertimermod) * 100}%
             **Fish mod:** -${(1 - armor.fishtimermod) * 100}%
             **Hunt mod:** -${(1 - armor.hunttimermod) * 100}%`
-            accessoryStr = `${accessory.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
+            accessoryStr = stripIndents`${accessory.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
             **Strength:** ${accessory.strmod}
             **Agility:** ${accessory.agimod}
             **Constitution**: ${accessory.conmod}
@@ -79,11 +81,14 @@ class WearingCommand extends Command {
             **Hunt mod:** -${(1 - accessory.hunttimermod) * 100}%`
         }
         else {
-            weaponStr = `${weapon.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
+            weaponStr = stripIndents`${weapon.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
+            **Damage**: ${weapon.weapondice} (${type[weapon.damagetype]})
             **Abilities**: ${weaponAbilities}`
-            armorStr = `${armor.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
+            armorStr = stripIndents`${armor.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
+            **Physical Defense**: ${armor.physdef}
+            **Magical Defense**: ${armor.magdef}
             **Abilities**: ${armorAbilities}`
-            accessoryStr = `${accessory.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substring(1)).join(' ')}`
+            accessoryStr = stripIndents`${accessory.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substring(1)).join(' ')}`
         }
         const embed = new MessageEmbed()
             .setAuthor(args.user.username, args.user.displayAvatarURL())

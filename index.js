@@ -19,7 +19,6 @@ class MyClient extends AkairoClient {
             allowMention: true,
             prefix: message => {
                 if (message.guild) {
-                    console.log(this.guildSettings.get(message.guild.id).prefix)
                     return this.guildSettings.get(message.guild.id).prefix
                 }
                 return ';'
@@ -67,4 +66,6 @@ client.db = db;
 
 require('./modules/functions.js')(client);
 require('./modules/combat.js')(client);
+require('./modules/gather.js')(client);
+
 client.login(config.token);

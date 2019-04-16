@@ -8,8 +8,11 @@ class PlayersInhibitor extends Inhibitor {
     }
 
     exec(message, command) {
-        const blockedCommands = ['hunt', 'gather', 'fish', 'inventory'];
+        const blockedCommands = this.client.commandHandler.modules.filter(x => x.categoryID === 'rpg' && x.id != 'start').map(x => x.id);
         const blacklist = this.client.players;
+        if (blockedCommands.includes(command.id) && !blacklist.includes(message.author.id)) {
+            message.channel.send(`${message.author.username}, you need to join the game first!  Use the \`start\` command to join!`);
+        };
         return blockedCommands.includes(command.id) && !blacklist.includes(message.author.id);
     }
 }

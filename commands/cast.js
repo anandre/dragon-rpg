@@ -47,11 +47,6 @@ class CastCommand extends Command {
                             const enemyDmg = await this.client.enemyBasicAttack(enemy, player);
                             if (this.client.combat.get(message.author.id).currhp > 0) { //player survived, increment turn
                                 await this.client.turnIncrement(player, enemy);
-                                /*this.client.combat.get(message.author.id).turn++;
-                                if (this.client.combat.get(message.author.id).turn % 5 === 0) { //turn is 5/10/15/etc, update database
-                                    const update = this.client.combat.get(message.author.id);
-                                    await this.client.db.query('UPDATE combat SET currhp = $1, currmp = $2, enemyhp = $3, enemymp = $4, turn = $5 WHERE playerid = $6', [update.currhp, update.currmp, update.enemyhp, update.enemymp, update.turn, update.playerid])
-                                }*/
                                 const embed = new MessageEmbed()
                                     .setColor('BLUE')
                                     .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)

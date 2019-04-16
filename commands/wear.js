@@ -19,7 +19,7 @@ class WearCommand extends Command {
     }
 
     async exec(message, args) {
-        const inventory = (await this.client.db.query(`SELECT ${'inv' + message.author.id}.itemid, items.id, items.name, items.slot, items.strmod, items.agimod, items.conmod, items.magmod, items.sprmod, items.hpmod, items.mpmod, items.gathertimermod, items.fishtimermod, items.hunttimermod FROM ${'inv' + message.author.id} INNER JOIN items ON ${'inv' + message.author.id}.itemid = items.itemid WHERE items.rarity > 2`)).rows
+        const inventory = (await this.client.db.query(`SELECT inventory.count, items.slot, items.itemid, items.name, items.strmod, items.agimod, items.id, items.conmod, items.magmod, items.sprmod, items.hpmod, items.mpmod, items.gathertimermod, items.fishtimermod, items.hunttimermod FROM inventory INNER JOIN items ON inventory.itemid = items.itemid WHERE inventory.playerid = '${message.author.id}'`)).rows
         let wearing = [];
         const currentStats = (await this.client.db.query(`SELECT str, agi, con, mag, spr, currhp, maxhp, currmp, maxmp, gathermod, fishmod, huntmod FROM players WHERE playerid = $1`, [message.author.id])).rows[0];
         const putOn = inventory.find(it => it.id === args.item) || inventory.find(it => it.name === args.item)
@@ -29,9 +29,7 @@ class WearCommand extends Command {
         wearing.push(weapon, armor, accessory)
         if (args.item === 'nothing') {
             try {
-                await this.client.db.query(`INSERT INTO ${'inv' + message.author.id} (itemid, count) VALUES (${weapon.itemid}, 1) ON CONFLICT (itemid) DO UPDATE SET count = ${'inv' + message.author.id}.count + 1 WHERE ${'inv' + message.author.id}.itemid = ${weapon.itemid}`);
-                await this.client.db.query(`INSERT INTO ${'inv' + message.author.id} (itemid, count) VALUES (${armor.itemid}, 1) ON CONFLICT (itemid) DO UPDATE SET count = ${'inv' + message.author.id}.count + 1 WHERE ${'inv' + message.author.id}.itemid = ${armor.itemid}`);
-                await this.client.db.query(`INSERT INTO ${'inv' + message.author.id} (itemid, count) VALUES (${accessory.itemid}, 1) ON CONFLICT (itemid) DO UPDATE SET count = ${'inv' + message.author.id}.count + 1 WHERE ${'inv' + message.author.id}.itemid = ${accessory.itemid}`);
+                await this.client.db.query('INSERT INTO inventory (playeritem, playerid, itemid, count) VALUES ($1, $2, $3, $4), ($5, $6, $7, $8), ($9, $10, $11, $12) ON CONFLICT (playeritem) DO UPDATE SET count = (inventory.count + excluded.count)', [`${message.author.id}-${weapon.itemid}`, messag.author.id, weapon.itemid, 1, `${message.author.id}-${armor.itemid}`, message.author.id, armor.itemid, 1, `${message.author.id}-${accessory.itemid}`, message.author.id, accessory.itemid, 1]);
                 await this.client.db.query(`UPDATE players SET armorid = 47, weaponid = 46, accessoryid = 48 WHERE playerid = '${message.author.id}'`)
                 return message.channel.send('You have removed your equipment.');
             }
@@ -66,18 +64,12 @@ class WearCommand extends Command {
             try {
                 console.log('1')
                 if (currentItem.name !== 'nothing') {
-                    await this.client.db.query(`INSERT INTO ${'inv' + message.author.id} (itemid, count) VALUES (${currentItem.itemid}, 1) ON CONFLICT (itemid) DO UPDATE SET count = ${'inv' + message.author.id}.count + 1 WHERE ${'inv' + message.author.id}.itemid = ${currentItem.itemid}`)
+                    await this.client.db.query('INSERT INTO inventory (playeritem, playerid, itemid, count) VALUES ($1, $2, $3, $4) ON CONFLICT (playeritem) DO UPDATE SET count = (inventory.count + excluded.count)', [`${message.author.id}-${currentItem.itemid}`, message.author.id, currentItem.itemid, 1]);
                 }
                 console.log('2')
-                const newAmt = await this.client.db.query(`UPDATE ${'inv' + message.author.id} SET count = count - 1 WHERE itemid = ${putOn.itemid}`)
-                console.log('3')
-                await this.client.db.query(`DELETE FROM ${'inv' + message.author.id} WHERE count < 1`);
-                await this.client.db.query(`DELETE FROM ${'inv' + message.author.id} WHERE itemid = 46 OR itemid = 47 OR itemid = 48`)
+                await this.client.db.query('UPDATE inventory SET count = (inventory.count - 1) WHERE playeritem = $1', [`${message.author.id}-${putOn.itemid}`]);
                 console.log('4')
                 await this.client.db.query(`UPDATE players SET ${newSlot[putOn.slot]} = ${putOn.itemid}, str = ${strChange}, agi = ${agiChange}, con = ${conChange}, mag = ${magChange}, spr = ${sprChange}, currhp = ${currHPChange}, maxhp = ${hpChange}, currmp = ${currMPChange}, maxmp = ${mpChange}, huntmod = ${huntChange}, gathermod = ${gatherChange}, fishmod = ${fishChange} WHERE playerid = '${message.author.id}'`)
-                console.log('5')
-                //console.log(`${currentStats.maxhp} - ${currentItem.hpmod} + ${putOn.hpmod} hp change`);
-                //console.log(`Old HP: ${currentStats.maxhp} New HP: ${currentStats.maxhp + putOn.hpmod - currentItem.hpmod}`)
                 return message.channel.send(`You have equipped ${putOn.name}`);
             }
             catch (e) {

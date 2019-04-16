@@ -57,74 +57,8 @@ module.exports = (client) => {
     client.gold = async function(userid) {
         const goldArray = [25, 25, 25, 50, 50, 100];
         const goldResult = goldArray[Math.floor(Math.random() * goldArray.length)];
-        await client.db.query(`UPDATE players SET gold = gold + $1 WHERE playerid = $2`, [goldResult, userid])
+        //await client.db.query(`UPDATE players SET gold = gold + $1 WHERE playerid = $2`, [goldResult, userid])
         return goldResult;
-    }
-
-    client.fish = async function(userid, messageTime) {
-        let end = [];
-        await client.db.query(`UPDATE players SET fishtimer = $1 WHERE playerid = $2`, [messageTime, userid])
-        let item = Math.random() * 100;
-        if (item > 90) {
-            const result = client.fishunc[Math.floor(Math.random() * client.fishunc.length)];
-            const amt = Math.floor(Math.random() * 2 + 1);
-            await client.db.query(`INSERT INTO ${'inv' + userid} (itemid, count) VALUES (${result.itemid}, ${amt}) ON CONFLICT (itemid) DO UPDATE SET count = (${'inv' + userid}.count + ${amt})`)
-            end.push(result.name, amt);
-            return end;
-        }
-        else if (item > 1) {
-            const result = client.fishcom[Math.floor(Math.random() * client.fishcom.length)];
-            const amt = Math.floor(Math.random() * 4 + 1);
-            await client.db.query(`INSERT INTO ${'inv' + userid} (itemid, count) VALUES (${result.itemid}, ${amt}) ON CONFLICT (itemid) DO UPDATE SET count = (${'inv' + userid}.count + ${amt})`)
-            end.push(result.name, amt);
-            return end;
-        }
-        else return;
-    }
-
-    client.gather = async function(userid, messageTime) {
-        let end = [];
-        await client.db.query(`UPDATE players SET gathertimer = $1 WHERE playerid = $2`, [messageTime, userid]);
-        const item = Math.random() * 100;
-        if (item > 90) {
-            const result = client.gathunc[Math.floor(Math.random() * client.gathunc.length)];
-            const amt = Math.floor(Math.random() * 2 + 1);
-            await client.db.query(`INSERT INTO ${'inv' + userid} (itemid, count) VALUES (${result.itemid}, ${amt}) ON CONFLICT (itemid) DO UPDATE SET count = (${'inv' + userid}.count + ${amt})`)
-            end.push(result.name, amt);
-            return end;
-        }
-        else if (item > 1) {
-            const result = client.gathcom[Math.floor(Math.random() * client.gathcom.length)];
-            const amt = Math.floor(Math.random() * 4 + 1);
-            await client.db.query(`INSERT INTO ${'inv' + userid} (itemid, count) VALUES (${result.itemid}, ${amt}) ON CONFLICT (itemid) DO UPDATE SET count = (${'inv' + userid}.count + ${amt})`)
-            end.push(result.name, amt);
-            return end;
-        }
-        else return;
-    }
-
-    client.hunt = async function(userid, messageTime) {
-        let end = [];
-        await client.db.query('UPDATE players SET hunttimer = $1 WHERE playerid = $2', [messageTime, userid])
-        const item = Math.random() * 100;
-        console.log(`Random: ${item}`);
-        if (item > 90) {
-            const result = client.huntunc[Math.floor(Math.random() * client.huntunc.length)];
-            console.log(`Result: ${result.name} + ${result.itemid}`)
-            const amt = Math.floor(Math.random() * 2 + 1);
-            await client.db.query(`INSERT INTO ${'inv' + userid} (itemid, count) VALUES (${result.itemid}, ${amt}) ON CONFLICT (itemid) DO UPDATE SET count = (${'inv' + userid}.count + ${amt})`)
-            end.push(result.name, amt);
-            return end;
-        }
-        else if (item > 1) {
-            const result = client.huntcom[Math.floor(Math.random() * client.huntcom.length)]
-            const amt = Math.floor(Math.random() * 4 + 1);
-            console.log(`Result: ${result.name} + ${result.itemid}`)
-            await client.db.query(`INSERT INTO ${'inv' + userid} (itemid, count) VALUES (${result.itemid}, ${amt}) ON CONFLICT (itemid) DO UPDATE SET count = (${'inv' + userid}.count + ${amt})`)
-            end.push(result.name, amt);
-            return end;
-        }
-        else return;
     }
 
     client.addXP = async function(userid, xp) {

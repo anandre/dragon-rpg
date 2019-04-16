@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 class InventoryCommand extends Command {
     constructor() {
@@ -16,17 +16,16 @@ class InventoryCommand extends Command {
     }
 
     async exec(message) {
-        const inv = (await this.client.db.query(`SELECT ${'inv' + message.author.id}.count, items.name FROM ${'inv' + message.author.id} INNER JOIN items ON ${'inv' + message.author.id}.itemid = items.itemid ORDER BY ${'inv' + message.author.id}.itemid ASC`)).rows
-        console.log(inv);
-        const embed = new Discord.MessageEmbed()
+        const inv = (await this.client.db.query('SELECT inventory.count, inventory.itemid, items.name FROM inventory INNER JOIN items ON inventory.itemid = items.itemid WHERE inventory.playerid = $1 ORDER BY inventory.itemid ASC', [message.author.id])).rows
+        const embed = new MessageEmbed()
         .setColor("#e00808")
 	    .setTitle(message.author.username + "'s inventory")
 	    .setFooter('Information retrieved at:')
 	    .setTimestamp()
         .setThumbnail(message.author.displayAvatarURL());
-        let invstr = "";
+        let invstr = '';
 	    for(let i = 0; i < inv.length; i++) {
-		    invstr += inv[i].name + " - " + inv[i].count + "\n"
+		    invstr += `${inv[i].name} - ${inv[i].count}\n`
 	    }
 	    if (invstr.length > 1) {
 		    embed.addField("\u200b", invstr);
