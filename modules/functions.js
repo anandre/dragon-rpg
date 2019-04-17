@@ -121,5 +121,19 @@ module.exports = (client) => {
             await client.db.query("UPDATE players SET xp = $1, level = $2, str = $4, agi = $5, con = $6, mag = $7, spr = $8, currhp = $9, maxhp = $10, currmp = $11, maxmp = $12 WHERE playerid = $3", [currXP.xp - client.levelChart[currXP.level], currXP.level + 1, message.author.id, currXP.str + client.levelStats[currXP.path][currXP.level].str, currXP.agi + client.levelStats[currXP.path][currXP.level].agi, currXP.con + client.levelStats[currXP.path][currXP.level].con, currXP.mag + client.levelStats[currXP.path][currXP.level].mag, currXP.spr + client.levelStats[currXP.path][currXP.level].spr, currXP.currhp + client.levelStats[currXP.path][currXP.level].hp, currXP.maxhp + client.levelStats[currXP.path][currXP.level].hp, currXP.currmp + client.levelStats[currXP.path][currXP.level].mp, currXP.maxmp + client.levelStats[currXP.path][currXP.level].mp])
             return await message.channel.send(`You have leveled up!  Now level ${currXP.level + 1} with ${currXP.xp - client.levelChart[currXP.level]} XP!`)
         }
+    };
+
+    /*
+    * Splits array into subarrays.
+    * count parameter indicates that how many item per subarray contains.
+    * Example usage: splitIntoSubArray([1,2,3,4,5], 2) -> [[1, 2], [3, 4], [5]]
+    */
+
+    client.shopArray = function(array, parts) {
+        let result = [];
+        for (let i = parts; i > 0; i--) {
+            result.push(array.splice(0, Math.ceil(array.length / i)));
+        }
+        return result;
     }
 }
