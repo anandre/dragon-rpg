@@ -12,7 +12,7 @@ class GuildCreateListener extends Listener{
     async exec(guild) {
         try {
             await this.client.db.query(`INSERT INTO guildsettings (guildid, prefix, channel) VALUES ('${guild.id}', '{";"}', '{}')`);
-            this.client.guildSettings.set(guild.id, {prefix: [';'], channel: []});
+            this.client.guildSettings.set(guild.id, { id: guild.id, prefix: [';'], channel: [] });
             const embed = new MessageEmbed()
             .setColor('GREEN')
             .setTitle(`Joined ${guild.name} (id: ${guild.id}) at ${new Date().toLocaleString()}`)

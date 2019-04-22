@@ -19,12 +19,51 @@ class ReadyListener extends Listener {
             this.client.guildSettings = new Collection();
             for (let guild of gSettings) {
                 const settings = {
-                    id: guild.id,
+                    id: guild.guildid,
                     prefix: guild.prefix,
                     channel: guild.channel
                 }
                 this.client.guildSettings.set(guild.guildid, settings);
             };
+
+            //check for guilds joined while not on-line, then add default configs for each
+            const newGuilds = this.client.guilds.filter(g => !this.client.guildSettings.has(g.id)).array();
+            console.log(newGuilds);
+            let query = `INSERT INTO guildsettings (guildid, prefix, channel) VALUES `
+            let params = [];
+            
+            for (let i = 0, k = 0; i < newGuilds.length; i ++, k += 3) {
+                if (i === newGuilds.length - 1) {
+                    query += `($${k + 1}, $${k + 2}, $${k + 3})`
+                }
+                else {
+                    query += `($${k + 1}, $${k + 2}, $${k + 3}), `
+                }
+                params.push(`${newGuilds[i].id}`, '{";"}', '{}')
+                this.client.guildSettings.set(newGuilds[i].id, { id: newGuilds[i].id, prefix: [';'], channel: [] });
+            }
+            
+            query += ` ON CONFLICT (guildid) DO NOTHING`
+            
+            
+            if (params.length > 1) {
+                await this.client.db.query(`${query}`, params);
+                await this.client.channels.get('550762593443250186').send(`Joined ${newGuilds.join(', ')} while offline.`)
+            };
+
+            //check for guilds left while not on-line, then remove configs for each
+            const deletedGuilds = this.client.guildSettings.filter(g => !this.client.guilds.has(g.id));
+            const toDelete = `${deletedGuilds.map(x => x.id).join(`', '`)}`
+            console.log(deletedGuilds.array());
+            console.log(deletedGuilds.size);
+            if (deletedGuilds.size > 0) {
+                for (const guild of this.client.guildSettings.filter(g => !this.client.guilds.has(g.id))) {
+                    this.client.guildSettings.delete(guild.id);
+                }
+                const query = `DELETE FROM guildsettings WHERE guildid IN ('${toDelete}')`
+                await this.client.db.query(`${query}`);
+                await this.client.channels.get('550762593443250186').send(`Left ${toDelete.replace(/[()]/g, '')} while offline.`)
+            }
 
             //players - used to check if the user has a character started
             this.client.players = (await this.client.db.query(`SELECT playerid FROM players`)).rows.map(p => p.playerid);

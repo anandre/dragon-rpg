@@ -43,7 +43,7 @@ module.exports = (client) => {
         query += ` ON CONFLICT (playeritem) DO UPDATE SET count = (inventory.count + excluded.count)`
 
         await client.db.query(`${query}`, params);
-        await client.db.query('UPDATE players SET hunttimer = $1, xp = (xp + $2) WHERE playerid = $3', [messageTime, xp, userid]);
+        await client.db.query('UPDATE players SET fishtimer = $1, xp = (xp + $2) WHERE playerid = $3', [messageTime, xp, userid]);
 
         return end;
     }
@@ -92,7 +92,7 @@ module.exports = (client) => {
         query += ` ON CONFLICT (playeritem) DO UPDATE SET count = (inventory.count + excluded.count)`
 
         await client.db.query(`${query}`, params);
-        await client.db.query('UPDATE players SET hunttimer = $1, xp = (xp + $2) WHERE playerid = $3', [messageTime, xp, userid]);
+        await client.db.query('UPDATE players SET gathertimer = $1, xp = (xp + $2) WHERE playerid = $3', [messageTime, xp, userid]);
 
         return end;
     }

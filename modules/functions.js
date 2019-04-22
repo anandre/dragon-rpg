@@ -136,4 +136,6 @@ module.exports = (client) => {
         }
         return result;
     }
+
+    client.wait = require("util").promisify(setTimeout);
 }

@@ -25,7 +25,7 @@ class UseCommand extends Command {
         };
         const used = [... state.usedIndices][0];
 
-        let item = parsed.phrases.map(x => x.raw.trim());
+        let item = parsed.phrases.map(x => x.raw.replace(/"/g, '').trim());
         if (typeof used != 'undefined') {
             item.splice(used, 1);
         };
