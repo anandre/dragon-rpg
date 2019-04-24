@@ -21,11 +21,11 @@ class TradeCommand extends Command {
 
   async *args(message, parsed, state) {
 
-    const gold = yield {
+    const tGold = yield {
       type: (message, phrase) => {
-        const gold = phrase.match(/\b[0-9]*(?=g)/);
-        if (!gold) return null;
-        return gold;
+        const tGold = phrase.match(/\b[0-9]*(?=g)/);
+        if (!tGold) return null;
+        return tGold[0];
       },
       unordered: true,
       default: 0
@@ -45,14 +45,14 @@ class TradeCommand extends Command {
     };
     item.splice(item.findIndex(i => i.includes(tradePartner.id)), 1);
 
-    return { used, item, gold, tradePartner };
+    return { used, item, tGold, tradePartner };
   }
 
-  async exec(message, { tradePartner, item, gold }) {
+  async exec(message, { tradePartner, item, tGold }) {
     if (!tradePartner) return message.answer(message.author.username, 'you must mention a player to trade with!');
-    //if (!this.client.players.includes(tradePartner.id) || tradePartner.id === message.author.id) {
-    //  return message.answer(message.author.username, 'that is not a valid player to trade with!');
-    //}
+    if (!this.client.players.includes(tradePartner.id) || tradePartner.id === message.author.id) {
+      return message.answer(message.author.username, 'that is not a valid player to trade with!');
+    }
 
     const item1 = item[0];
     const item2 = item[1];
@@ -64,7 +64,7 @@ class TradeCommand extends Command {
     }
 
     if (!pItem) return message.answer(message.author, 'you have to offer an item for trade.');
-    if (!item2 && !gold) return message.answer(message.author, 'you need to trade for an item or gold in return!');
+    if (!item2 && !tGold) return message.answer(message.author, 'you need to trade for an item or gold in return!');
     if (item2 && !tItem) return message.answer(message.author, 'that\'s not an item you can ask for!');
 
     let offer = `${tradePartner}, ${message.author} is offering ${pItem.name} for `;
@@ -83,8 +83,8 @@ class TradeCommand extends Command {
     const userInventory = inventories.filter(i => i.playerid === message.author.id);
     const tradeInventory = inventories.filter(i => i.playerid === tradePartner.id);
 
-    if (gold && !tItem) { //ask for gold, no item
-      offer += `${gold}g.  If you accept, please respond with \`yes\`, otherwise respond with \`no\`.`
+    if (tGold && !tItem) { //ask for gold, no item
+      offer += `${tGold}g.  If you accept, please respond with \`yes\`, otherwise respond with \`no\`.`
       message.channel.send(offer);
       const filter = m => m.author.id === tradePartner.id && ['yes', 'no', 'y', 'n'].includes(m.content.toLowerCase());
       try {
@@ -100,11 +100,11 @@ class TradeCommand extends Command {
               playerid = $1`,
             [message.author.id])).rows[0];
 
-          console.log(tradeGold);
+          console.log(tGold);
           if (userInventory.findIndex(i => i.itemid === pItem.itemid) === -1) {
             return message.answer(message.author.username, `you do not have ${pItem.name} in your inventory.`);
           } 
-          if (gold > tradeGold.gold) {
+          if (tGold > tradeGold.gold) {
             return message.answer(tradePartner.username, 'does not have enough gold!');
           }
           await this.client.db.query(`
@@ -113,14 +113,14 @@ class TradeCommand extends Command {
             SET
               count = (count - 1)
             WHERE
-              pItem = $1`,
+              playeritem = $1`,
             [`${message.author.id}-${pItem.itemid}`]);
           await this.client.db.query(`
             INSERT INTO
-              inventory (pItem, playerid, itemid, count)
+              inventory (playeritem, playerid, itemid, count)
             VALUES
               ($1, $2, $3, $4)
-            ON CONFLICT (pItem) DO UPDATE
+            ON CONFLICT (playeritem) DO UPDATE
             SET count = (inventory.count + excluded.count)`,
             [`${tradePartner.id}-${pItem.itemid}`, tradePartner.id, pItem.itemid, 1]);
           await this.client.db.query(`
@@ -130,7 +130,7 @@ class TradeCommand extends Command {
               gold = (gold + $1)
             WHERE
               playerid = $2`,
-            [gold, message.author.id]);
+            [tGold, message.author.id]);
           await this.client.db.query(`
             UPDATE
               players
@@ -138,9 +138,9 @@ class TradeCommand extends Command {
               gold = (gold - $1)
             WHERE
               playerid = $2`,
-            [gold, tradePartner.id]);
+            [tGold, tradePartner.id]);
 
-          success += `${gold}g.`
+          success += `${tGold}g.`
           return message.channel.send(success);
         }
 
@@ -155,9 +155,9 @@ class TradeCommand extends Command {
       }
     }
     if (tItem) { //item for item
-      if (gold) { //item for item + gold
-        offer += `${tItem.name} and ${gold}g.  If you accept, please respond with \`yes\`, otherwise respond with \`no\`.`
-        message.channel.send(offerr);
+      if (tGold) { //item for item + gold
+        offer += `${tItem.name} and ${tGold}g.  If you accept, please respond with \`yes\`, otherwise respond with \`no\`.`
+        message.channel.send(offer);
         const filter = m => m.author.id === tradePartner.id && ['yes', 'no', 'y', 'n'].includes(m.content.toLowerCase());
         try {
           const resp = await message.channel.awaitMessages(filter, { max: 1, time: 30000 });
@@ -177,7 +177,7 @@ class TradeCommand extends Command {
             if (!tradeInventory.some(i => i.itemid === tItem.itemid)) {
               return message.answer(tradePartner, `you don't have ${tItem.name}.`);
             }
-            if (gold > tradeGold.gold) {
+            if (tGold > tradeGold.gold) {
               return message.answer(tradePartner, 'does not have enough gold.');
             }
             await this.client.db.query(`
@@ -186,15 +186,15 @@ class TradeCommand extends Command {
               SET
                 count = (count - 1)
               WHERE
-                pItem IN ($1, $2)`,
+                playeritem IN ($1, $2)`,
               [`${message.author.id}-${pItem.itemid}`, `${tradePartner.id}-${tItem.itemid}`]);
             await this.client.db.query(`
               INSERT INTO
-                inventory (pItem, playerid, itemid, count)
+                inventory (playeritem, playerid, itemid, count)
               VALUES
                 ($1, $2, $3, $4),
                 ($5, $6, $7, $8)
-              ON CONFLICT (pItem) DO UPDATE
+              ON CONFLICT (playeritem) DO UPDATE
               SET count = (inventory.count + excluded.count)`,
               [`${tradePartner.id}-${pItem.itemid}`, tradePartner.id, pItem.itemid, 1, `${message.author.id}-${tItem.itemid}`, message.author.id, tItem.itemid, 1]);
             await this.client.db.query(`
@@ -204,7 +204,7 @@ class TradeCommand extends Command {
                 gold = (gold + $1)
               WHERE
                 playerid = $2`,
-              [gold, message.author.id]);
+              [tGold, message.author.id]);
             await this.client.db.query(`
               UPDATE
                 players
@@ -212,9 +212,9 @@ class TradeCommand extends Command {
                 gold = (gold - $1)
               WHERE
                 playerid = $2`,
-              [gold, tradePartner.id]);
+              [tGold, tradePartner.id]);
 
-            success += `${tItem.name} and ${gold}g.`
+            success += `${tItem.name} and ${tGold}g.`
             return message.channel.send(success);
 
           }
@@ -229,7 +229,7 @@ class TradeCommand extends Command {
         }
       }
       else { //item for item
-        offer += `${tItem.name}.`
+        offer += `${tItem.name}.  If you accept, please respond with \`yes\`, otherwise respond with \`no\``
         message.channel.send(offer);
         const filter = m => m.author.id === tradePartner.id && ['yes', 'no', 'y', 'n'].includes(m.content.toLowerCase());
         try {
@@ -248,15 +248,15 @@ class TradeCommand extends Command {
               SET
                 count = (count - 1)
               WHERE
-                pItem IN ($1, $2)`,
+                playeritem IN ($1, $2)`,
               [`${message.author.id}-${pItem.itemid}`, `${tradePartner.id}-${tItem.itemid}`]);
             await this.client.db.query(`
               INSERT INTO
-                inventory (pItem, playerid, itemid, count)
+                inventory (playeritem, playerid, itemid, count)
               VALUES
                 ($1, $2, $3, $4),
                 ($5, $6, $7, $8)
-              ON CONFLICT (pItem) DO UPDATE
+              ON CONFLICT (playeritem) DO UPDATE
               SET count = (inventory.count + excluded.count)`,
               [`${tradePartner.id}-${pItem.itemid}`, tradePartner.id, pItem.itemid, 1, `${message.author.id}-${tItem.itemid}`, message.author.id, tItem.itemid, 1]);
 
