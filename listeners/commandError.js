@@ -10,7 +10,7 @@ class CommandErrorListener extends Listener {
     }
 
     async exec(error, message, command) {
-        return message.channel.send(stripIndents`There was an error running ${command.id}. \`\`\`xxl
+        return message.channel.send(stripIndents`There was an error running ${command.id}. \`\`\`xl
         ${error.message}
         ${error.stack}\`\`\``);
     }
