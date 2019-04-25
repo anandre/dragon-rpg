@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 class GatherCommand extends Command {
     constructor() {
         super('gather', {
-            aliases: ['gather', 'g'],
+            aliases: ['gather', 'g', 'forage'],
             channel: 'guild',
             category: 'rpg',
             description: {

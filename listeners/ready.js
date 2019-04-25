@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const { Collection } = require('discord.js');
+const { Collection, MessageEmbed } = require('discord.js');
 
 class ReadyListener extends Listener {
   constructor() {
@@ -47,7 +47,11 @@ class ReadyListener extends Listener {
 
       if (params.length > 1) {
         await this.client.db.query(`${query}`, params);
-        await this.client.channels.get('550762593443250186').send(`Joined ${newGuilds.join(', ')} while offline.`)
+        const embed = new MessageEmbed()
+          .setColor('GREEN')
+          .setTitle(`Joined ${newGuilds.join(', ')} while offline.`)
+        this.client.channels.get('550762593443250186').send(embed);
+        //await this.client.channels.get('550762593443250186').send(`Joined ${newGuilds.join(', ')} while offline.`)
       };
 
       //check for guilds left while not on-line, then remove configs for each
@@ -59,7 +63,11 @@ class ReadyListener extends Listener {
         }
         const query = `DELETE FROM guildsettings WHERE guildid IN ('${toDelete}')`
         await this.client.db.query(`${query}`);
-        await this.client.channels.get('550762593443250186').send(`Left ${toDelete.replace(/[()]/g, '')} while offline.`)
+        const embed = new MessageEmbed()
+          .setColor('RED')
+          .setTitle(`Left ${toDelete.replace(/[()]/g, '')} while offline.`);
+        await this.client.channels.get('550762593443250186').send(embed);
+        //await this.client.channels.get('550762593443250186').send(`Left ${toDelete.replace(/[()]/g, '')} while offline.`)
       }
 
       //players - used to check if the user has a character started

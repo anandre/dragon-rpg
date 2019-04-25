@@ -98,7 +98,7 @@ class TradeCommand extends Command {
               players
             WHERE
               playerid = $1`,
-            [message.author.id])).rows[0];
+            [tradePartner.id])).rows[0];
 
           console.log(tGold);
           if (userInventory.findIndex(i => i.itemid === pItem.itemid) === -1) {
@@ -169,8 +169,8 @@ class TradeCommand extends Command {
                 players
               WHERE
                 playerid = $1`,
-              [message.author.id])).rows[0];
-            
+              [tradePartner.id])).rows[0];
+            console.log(tGold, tradeGold.gold);
             if (!userInventory.some(i => i.itemid === pItem.itemid)) {
               return message.answer(message.author, `you do not have ${pItem.name} in your inventory.`);
             }

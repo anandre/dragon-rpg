@@ -19,7 +19,7 @@ module.exports = (client) => {
             };
         };
         if (player.turn % 3 === 0) {
-            const update = client.combat.get(message.author.id);
+            const update = client.combat.get(player.id);
             await client.db.query('UPDATE combat SET currhp = $1, currmp = $2, enemyhp = $3, enemymp = $4, turn = $5, cooldowns = $6, enemycd = $7 WHERE playerid = $6', [update.currhp, update.currmp, update.enemyhp, update.enemymp, update.turn, update.playerid])
         };
     };

@@ -22,7 +22,7 @@ class EvalCommand extends Command {
             message.channel.send(clean, {code: 'xl'});
         }
         catch (err) {
-            message.channel.send(`\`ERROR\` \`\`\`xl\n${await message.client.clean(message.client, err.message.substr(1, 1900))}\n\`\`\``);
+            message.channel.send(`\`ERROR\` \`\`\`xl\n${await message.client.clean(message.client, err.message.substr(0, 1900))}\n\`\`\``);
         }
     }
 }
