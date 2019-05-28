@@ -8,7 +8,7 @@ class MyClient extends AkairoClient {
   constructor() {
     super({
       // Options for Akairo go here
-      ownerID: '167988857046827010'
+      ownerID: ['167988857046827010', '575448221577641989']
     }, {
       // Options for discord.js go here
       disableEveryone: true,

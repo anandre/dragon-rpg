@@ -8,5 +8,3 @@ Structures.extend('Message', Message => {
   }
   return MessageAnswer;
 })
-
-//module.exports = MessageAnswer;

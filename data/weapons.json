@@ -1,0 +1,27 @@
+[
+  {
+    "name": "iron dagger",
+    "id": "idagger",
+    "description": "A basic blade, unadorned but effective.",
+    "abilities": ["slash", "stab"],
+    "strmod": 1,
+    "agimod": 1,
+    "conmod": 0,
+    "magmod": 0,
+    "sprmod": 0,
+    "hpmod": 0,
+    "mpmod": 0,
+    "fishtimermod": 1,
+    "gathertimermod": 1,
+    "hunttimermod": 1,
+    "source": "s",
+    "cost": 25,
+    "sell": 5,
+    "rarity": 3,
+    "slot": "w",
+    "dmg": 4,
+    "dmgtype": "p",
+    "physdef": 0,
+    "magdef": 0 
+  }
+]

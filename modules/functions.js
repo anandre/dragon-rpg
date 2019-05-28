@@ -129,13 +129,40 @@ module.exports = (client) => {
     * Example usage: splitIntoSubArray([1,2,3,4,5], 2) -> [[1, 2], [3, 4], [5]]
     */
 
-    client.shopArray = function(array, parts) {
-        let result = [];
-        for (let i = parts; i > 0; i--) {
-            result.push(array.splice(0, Math.ceil(array.length / i)));
-        }
-        return result;
+  client.shopArray = function(array, parts) {
+    let result = [];
+    for (let i = parts; i > 0; i--) {
+      result.push(array.splice(0, Math.ceil(array.length / i)));
     }
+    return result;
+  }
 
-    client.wait = require("util").promisify(setTimeout);
+  client.displayDamage = async (player, weapon) => {
+    const stats = (await client.db.query(`
+      SELECT
+        str,
+        agi,
+        mag,
+        spr
+      FROM
+        players
+      WHERE
+        playerid = $1`,
+      [player.id])).rows[0];
+    const type = {
+      STR: stats.str,
+      AGI: stats.agi,
+      MAG: stats.mag,
+      SPR: stats.spr
+    };
+    const dice = weapon.weapondice.split(' + ')[0].split('d');
+    const add = weapon.weapondice.split(' + ')[1].split(' * ');
+    console.log(dice)
+    console.log(add)
+    const lower = parseInt(dice[0]) + (add[0] * type[add[1]]);
+    const upper = (dice[0] * dice[1]) + (add[0] * type[add[1]]);
+    return `${lower} - ${upper}`;
+  }
+
+  client.wait = require("util").promisify(setTimeout);
 }
