@@ -34,7 +34,7 @@ class GiveCommand extends Command {
     console.log('give');
     if (!this.client.players.includes(message.author.id) || recip.id === message.author.id) return message.channel.send(`${message.author.username}, you cannot give an item to that player.`);
 
-    const item = this.client.infoItems.find(i => i.id === give) || this.client.infoItems.find(i => i.name === give);
+    const item = this.client.items.find(i => i.id === give) || this.client.items.find(i => i.name === give);
     if (!item) {
       if (give.match(/\b[0-9]*(?=g)/)) { //gold instead
         const pGold = (await this.client.db.query(`

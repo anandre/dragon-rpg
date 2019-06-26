@@ -59,10 +59,10 @@ class TradeCommand extends Command {
     const item1 = item[0];
     const item2 = item[1];
 
-    const pItem = this.client.infoItems.find(i => i.id === item1) || this.client.infoItems.find(i => i.name === item1);
+    const pItem = this.client.items.find(i => i.id === item1) || this.client.items.find(i => i.name === item1);
     let tItem;
     if (item2) {
-      tItem = this.client.infoItems.find(i => i.id === item2) || this.client.infoItems.find(i => i.name === item2);
+      tItem = this.client.items.find(i => i.id === item2) || this.client.items.find(i => i.name === item2);
     }
 
     if (!pItem) return message.answer(message.author, 'you have to offer an item for trade.');

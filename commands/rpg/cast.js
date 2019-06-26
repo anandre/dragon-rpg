@@ -33,7 +33,7 @@ class CastCommand extends Command {
         if (!this.client.combat.get(message.author.id).abilities.includes(ability)) return message.channel.send(`${message.author.username}, unknown ability, please try again.`);
         const usedAbility = this.client.abilities.get(ability);
         const player = this.client.combat.get(message.author.id);
-        const enemy = this.client.enemyInfo.get(player.enemyid);
+        const enemy = this.client.enemies.get(player.enemyid);
         const playerInit = Math.floor(Math.random() * 10) + 1 + player.agi;
         const enemyInit = Math.floor(Math.random() * 10) + 1 + enemy.agi;
         const cooldown = player.cooldowns[player.abilities.indexOf(ability)];

@@ -50,8 +50,8 @@ class StartCombatCommand extends Command {
     }
     const enemyRarity = enemyRarityObject[Math.floor(Math.random() * 10 + 1)]
 
-    const enemy = this.client.enemyInfo.filter(r => r.rank <= player.level).random();
-    const abi = this.client.infoItems.get(player.weaponid).abilities.concat(this.client.infoItems.get(player.armorid).abilities);
+    const enemy = this.client.enemies.filter(r => r.rank <= player.level).random();
+    const abi = this.client.items.get(player.weaponid).abilities.concat(this.client.items.get(player.armorid).abilities);
     const cds = abi.map(a => this.client.abilities.get(a).cooldown);
     const enemycds = enemy.abilities.map(a => this.client.abilities.get(a).cooldown);
 

@@ -16,7 +16,7 @@ class StatusCommand extends Command {
   async exec(message) {
     if (!this.client.combat.has(message.author.id)) return;
     const player = this.client.combat.get(message.author.id);
-    const enemy = this.client.enemyInfo.get(player.enemyid);
+    const enemy = this.client.enemies.get(player.enemyid);
     const embed = new MessageEmbed()
       .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
       .addField(`**${message.author.username}**`, `❤ HP: ${player.currhp}/${player.maxhp}\n✨ MP: ${player.currmp}/${player.maxmp}\n💥 Abilities: ${player.abilities.join(', ')}`, true)

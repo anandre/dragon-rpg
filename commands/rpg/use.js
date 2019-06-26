@@ -35,8 +35,8 @@ class UseCommand extends Command {
   }
 
   async exec(message, { amount, used, item }) {
-    if (!this.client.infoItems.filter(i => i.effects).some(i => [i.id, i.name].includes(item))) return;
-    const usedItem = this.client.infoItems.find(i => i.id === item) || this.client.infoItems.find(i => i.name === item);
+    if (!this.client.items.filter(i => i.effects).some(i => [i.id, i.name].includes(item))) return;
+    const usedItem = this.client.items.find(i => i.id === item) || this.client.items.find(i => i.name === item);
     const inventory = (await this.client.db.query(`
       SELECT
         inventory.count,
@@ -70,7 +70,7 @@ class UseCommand extends Command {
       }
       amount = 1;
       const player = this.client.combat.get(message.author.id);
-      const enemy = this.client.enemyInfo.get(player.enemyid);
+      const enemy = this.client.enemies.get(player.enemyid);
       const playerInit = Math.floor(Math.random() * 10) + 1 + player.agi;
       const enemyInit = Math.floor(Math.random() * 10) + 1 + enemy.agi;
       if (playerInit >= enemyInit) { //player uses item first

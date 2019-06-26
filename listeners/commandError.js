@@ -10,7 +10,7 @@ class CommandErrorListener extends Listener {
   }
 
   async exec(error, message, command) {
-    return message.channel.send(stripIndents`There was an error running ${command.id}. \`\`\`xl
+    return this.client.channels.get('547399254864560138').send(stripIndents`There was an error running ${command.id} on ${message.guild.name}. \`\`\`xl
       ${error.message}
       ${error.stack}\`\`\``);
   }

@@ -168,7 +168,7 @@ class WearCommand extends Command {
       }
       catch (e) {
         message.channel.send('There was an error changing your equipment.  Please report this in my server.');
-        this.client.channels.get('547399254864560138').send(`There was an error in the wearing command. ${e.message}
+        this.client.channels.get('547399254864560138').send(`There was an error in the wear command. ${e.message}
         ${e.stack}`)
       }
     }

@@ -1,0 +1,644 @@
+[  
+  {
+    "itemid":33,
+    "id":"clothes",
+    "name":"clothes",
+    "description":"A standard outfit, because it's not acceptable to be naked in public.",
+    
+    "abilities":[  
+      "punch",
+      "stomp"
+    ],
+    "physdef":1,
+    "magdef":1,
+    "strmod":1,
+    "agimod":1,
+    "conmod":1,
+    "magmod":0,
+    "sprmod":0,
+    "hpmod":5,
+    "mpmod":0,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":25,
+    "sell":5,
+    "rarity":3,
+    "slot":"a"
+  },
+  {
+    "itemid":34,
+    "id":"leatherjerkin",
+    "name":"leather jerkin",
+    "description":"A workman's outfit, or that of an apprentice, sturdy but serviceable.",
+    
+    "abilities":[  
+      "defend",
+      "rush"
+    ],
+    "physdef":2,
+    "magdef":1,
+    "strmod":0,
+    "agimod":1,
+    "conmod":1,
+    "magmod":0,
+    "sprmod":0,
+    "hpmod":10,
+    "mpmod":0,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":250,
+    "sell":50,
+    "rarity":4,
+    "slot":"a"
+  },
+  {
+    "itemid":35,
+    "id":"leatherarmor",
+    "name":"leather armor",
+    "description":"When properly maintained, this well-worn armor can feel like a second skin.",
+    
+    "abilities":[  
+      "rush",
+      "kick"
+    ],
+    "strmod":1,
+    "agimod":1,
+    "conmod":0,
+    "magmod":0,
+    "sprmod":0,
+    "hpmod":15,
+    "mpmod":0,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":750,
+    "sell":150,
+    "rarity":5,
+    "slot":"a",
+    
+    
+    "physdef":3,
+    "magdef":1
+    
+  },
+  {
+    "itemid":36,
+    "id":"studdedarmor",
+    "name":"studded leather armor",
+    "description":"Tough leather with bits of metal at key points, this armor is excellent for a brawler.",
+    
+    "abilities":[  
+      "bash",
+      "headbutt"
+    ],
+    "strmod":1,
+    "agimod":2,
+    "conmod":1,
+    "magmod":0,
+    "sprmod":0,
+    "hpmod":25,
+    "mpmod":0,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":1500,
+    "sell":300,
+    "rarity":6,
+    "slot":"a",
+    
+    
+    "physdef":5,
+    "magdef":2
+    
+  },
+  {
+    "itemid":37,
+    "id":"spidersilkarmor",
+    "name":"spidersilk armor",
+    "description":"Difficult to make due to the scarcity of the materials, it renders the wearer near invisible when still.",
+    
+    "abilities":[  
+      "hide",
+      "backstab"
+    ],
+    "strmod":1,
+    "agimod":5,
+    "conmod":0,
+    "magmod":0,
+    "sprmod":0,
+    "hpmod":35,
+    "mpmod":0,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":4500,
+    "sell":900,
+    "rarity":7,
+    "slot":"a",
+    
+    
+    "physdef":7,
+    "magdef":3
+    
+  },
+  {
+    "itemid":38,
+    "id":"assassinsarmor",
+    "name":"assassin's armor",
+    "description":"Bestowed only to those who have proven their skill, the fabric provides protection from both weapons and sight.",
+    
+    "abilities":[  
+      "hide",
+      "blind"
+    ],
+    "strmod":2,
+    "agimod":8,
+    "conmod":2,
+    "magmod":0,
+    "sprmod":1,
+    "hpmod":50,
+    "mpmod":0,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"b",
+    "cost":9000,
+    "sell":1800,
+    "rarity":8,
+    "slot":"a",
+    
+    
+    "physdef":10,
+    "magdef":3
+    
+  },
+  {
+    "itemid":39,
+    "id":"dragonskinjerkin",
+    "name":"dragonskin jerkin",
+    "description":"Crafted with the the skin of a slain dragon, it provides excellent protection from its surviven brethren.",
+    
+    "abilities":[  
+      "sneak",
+      "garrote"
+    ],
+    "strmod":3,
+    "agimod":10,
+    "conmod":3,
+    "magmod":0,
+    "sprmod":4,
+    "hpmod":100,
+    "mpmod":10,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"b",
+    "cost":9000,
+    "sell":1800,
+    "rarity":9,
+    "slot":"a",
+    
+    
+    "physdef":14,
+    "magdef":5
+    
+  },
+  {
+    "itemid":40,
+    "id":"dragonscalearmor",
+    "name":"dragonscale armor",
+    "description":"Expertly-made with scales woven throughout, this provides unparalleled freedom of movement coupled with protection.",
+    
+    "abilities":[  
+      "dodge",
+      "assassinate"
+    ],
+    "strmod":6,
+    "agimod":15,
+    "conmod":4,
+    "magmod":0,
+    "sprmod":5,
+    "hpmod":150,
+    "mpmod":20,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"b",
+    "cost":25000,
+    "sell":3000,
+    "rarity":10,
+    "slot":"a",
+    
+    
+    "physdef":17,
+    "magdef":6
+    
+  },
+  {
+    "itemid":47,
+    "id":"nothing",
+    "name":"nothing",
+    "description":"Nothing worn.",
+    
+    "abilities":null,
+    "strmod":0,
+    "agimod":0,
+    "conmod":0,
+    "magmod":0,
+    "sprmod":0,
+    "hpmod":0,
+    "mpmod":0,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":null,
+    "cost":null,
+    "sell":null,
+    "rarity":null,
+    "slot":"a",
+    
+    
+    "physdef":null,
+    "magdef":null
+    
+  },
+  {
+    "itemid":57,
+    "id":"cottonrobes",
+    "name":"cotton robes",
+    "description":"An inititate's robes, simple and unadorned.",
+    
+    "abilities":[  
+      "band-aid",
+      "toughen"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":1,
+    "magmod":1,
+    "sprmod":1,
+    "hpmod":0,
+    "mpmod":5,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":25,
+    "sell":5,
+    "rarity":3,
+    "slot":"a",
+    
+    
+    "physdef":1,
+    "magdef":2
+    
+  },
+  {
+    "itemid":58,
+    "id":"embroideredrobes",
+    "name":"embroidered robes",
+    "description":"Some have simple designs, while others pay for more intricate designs, these robes show a healer's dedication to their arts.",
+    
+    "abilities":[  
+      "band-aid",
+      "detox"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":1,
+    "magmod":1,
+    "sprmod":2,
+    "hpmod":0,
+    "mpmod":10,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":250,
+    "sell":50,
+    "rarity":4,
+    "slot":"a",
+    
+    
+    "physdef":1,
+    "magdef":3
+    
+  },
+  {
+    "itemid":59,
+    "id":"mentalistsarmor",
+    "name":"mentalist's armor",
+    "description":"Hemmed in bright colors, these robes are designed to be easily visible for injured combatants.",
+    
+    "abilities":[  
+      "heal",
+      "toughen"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":1,
+    "magmod":2,
+    "sprmod":4,
+    "hpmod":0,
+    "mpmod":20,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":750,
+    "sell":150,
+    "rarity":5,
+    "slot":"a",
+    
+    
+    "physdef":2,
+    "magdef":5
+    
+  },
+  {
+    "itemid":60,
+    "id":"healersrobes",
+    "name":"healer's robes",
+    "description":"With the universally-recognized healer's emblem etched in red on these robes, they're immediately recognizable.",
+    
+    "abilities":[  
+      "heal",
+      "purify"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":2,
+    "magmod":3,
+    "sprmod":6,
+    "hpmod":5,
+    "mpmod":30,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":1500,
+    "sell":300,
+    "rarity":6,
+    "slot":"a",
+    
+    
+    "physdef":3,
+    "magdef":6
+    
+  },
+  {
+    "itemid":61,
+    "id":"herbalistsrobes",
+    "name":"herbalist's robes",
+    "description":"The robes of one who's dedicated their lives to the healing arts via flora, they have several pockets to keep foraged supplies organized.",
+    
+    "abilities":[  
+      "detox",
+      "cure"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":2,
+    "magmod":3,
+    "sprmod":9,
+    "hpmod":10,
+    "mpmod":30,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":4500,
+    "sell":900,
+    "rarity":7,
+    "slot":"a",
+    
+    
+    "physdef":5,
+    "magdef":10
+    
+  },
+  {
+    "itemid":62,
+    "id":"psychicsrobes",
+    "name":"psychic's robes",
+    "description":"Adherents of this path claim supernatural abilities, although not all use them for restoration.",
+    
+    "abilities":[  
+      "psychic scream",
+      "calming wave"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":3,
+    "magmod":4,
+    "sprmod":10,
+    "hpmod":20,
+    "mpmod":40,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":9000,
+    "sell":1800,
+    "rarity":8,
+    "slot":"a",
+    
+    
+    "physdef":6,
+    "magdef":12
+    
+  },
+  {
+    "itemid":63,
+    "id":"surgeonsrobes",
+    "name":"surgeon's robes",
+    "description":"Capable of bringing their patients back from the brink of death, healers of this skill are sought the world over.",
+    
+    "abilities":[  
+      "revive",
+      "purify"
+    ],
+    "strmod":0,
+    "agimod":2,
+    "conmod":5,
+    "magmod":5,
+    "sprmod":12,
+    "hpmod":30,
+    "mpmod":55,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"b",
+    "cost":15000,
+    "sell":2500,
+    "rarity":9,
+    "slot":"a",
+    
+    
+    "physdef":8,
+    "magdef":18
+    
+  },
+  {
+    "itemid":64,
+    "id":"dragonskinrobes",
+    "name":"dragonskin robes",
+    "description":"Incredibly thin and light for ease of movement in practicing the healing arts, yet incredibly durable.",
+    
+    "abilities":[  
+      "full heal",
+      "barrier"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":10,
+    "magmod":8,
+    "sprmod":17,
+    "hpmod":40,
+    "mpmod":70,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"b",
+    "cost":25000,
+    "sell":3000,
+    "rarity":10,
+    "slot":"a",
+    
+    
+    "physdef":10,
+    "magdef":23
+    
+  },
+  {
+    "itemid":72,
+    "id":"frobes",
+    "name":"flame robes",
+    "description":"Decorated with the expected flame design, they emanate warmth.",
+    
+    "abilities":[  
+      "barfire",
+      "spark"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":1,
+    "magmod":2,
+    "sprmod":0,
+    "hpmod":15,
+    "mpmod":10,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":250,
+    "sell":50,
+    "rarity":4,
+    "slot":"a",
+    
+    
+    "physdef":1,
+    "magdef":2
+    
+  },
+  {
+    "itemid":73,
+    "id":"irobes",
+    "name":"ice robes",
+    "description":"A chill permeates the air whenever someone wearing these robes passes through.",
+    
+    "abilities":[  
+      "barice",
+      "ice shard"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":1,
+    "magmod":3,
+    "sprmod":1,
+    "hpmod":20,
+    "mpmod":10,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":750,
+    "sell":150,
+    "rarity":5,
+    "slot":"a",
+    
+    
+    "physdef":1,
+    "magdef":3
+    
+  },
+  {
+    "itemid":74,
+    "id":"srobes",
+    "name":"shock robes",
+    "description":"If you stay too long around someone enshrouded in these robes, your hair's bound to stand on end.",
+    
+    "abilities":[  
+      "barlite",
+      "shock"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":2,
+    "magmod":4,
+    "sprmod":1,
+    "hpmod":25,
+    "mpmod":15,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":1500,
+    "sell":300,
+    "rarity":6,
+    "slot":"a",
+    
+    
+    "physdef":2,
+    "magdef":5
+    
+  },
+  {
+    "itemid":75,
+    "id":"sorcrobes",
+    "name":"sorceror's robes",
+    "description":"The sign of an apprentice mage recently promoted from the ranks of an initiate.",
+    
+    "abilities":[  
+      "magic missile",
+      "magic lash"
+    ],
+    "strmod":0,
+    "agimod":0,
+    "conmod":3,
+    "magmod":6,
+    "sprmod":2,
+    "hpmod":35,
+    "mpmod":20,
+    "hunttimermod":1,
+    "gathertimermod":1,
+    "fishtimermod":1,
+    "source":"s",
+    "cost":4500,
+    "sell":900,
+    "rarity":7,
+    "slot":"a",
+    
+    
+    "physdef":4,
+    "magdef":8
+    
+  }
+]

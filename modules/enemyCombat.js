@@ -39,7 +39,7 @@ client.enemyCastSingleHeal = (enemy, player, ability) => {
   };
   const addDmg = Math.floor(parseFloat(dmgAdd[0]) * type[dmgAdd[1]]);
   const grossDmg = rawDmg + addDmg;
-  const enemySrc = client.enemyInfo.get(enemy.enemyid);
+  const enemySrc = client.enemies.get(enemy.enemyid);
   player.enemyhp = Math.min(enemySrc.hp, enemyhp += grossDmg);
   player.enemymp -= ability.mana;
   player.enemycd[enemy.abilities.indexOf(ability.name)] -= 1;

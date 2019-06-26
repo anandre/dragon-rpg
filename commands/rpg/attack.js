@@ -22,8 +22,8 @@ class AttackCommand extends Command {
       return await this.client.commandHandler.runCommand(message, scombat);
     }
     const player = this.client.combat.get(message.author.id);
-    const enemy = this.client.enemyInfo.get(player.enemyid);
-    const weapon = this.client.infoItems.get(player.weaponid);
+    const enemy = this.client.enemies.get(player.enemyid);
+    const weapon = this.client.items.get(player.weaponid);
     const inits = this.client.generateInit(player, enemy);
 
     if (inits.playerInit >= inits.enemyInit) { //player goes first

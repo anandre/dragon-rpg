@@ -1,0 +1,66 @@
+[
+  {
+    "enemyid":1,
+    "id":"goblin",
+    "name":"goblin",
+    "description":"Short and swarthy, these creatures prefer to prey on the unsuspecting but can also defend against a warrior hunting them.",
+    "abilities":[
+      "rush",
+      "bash",
+      "swipe"
+    ],
+    "str":4,
+    "agi":2,
+    "con":2,
+    "mag":0,
+    "spr":1,
+    "currhp":50,
+    "maxhp":50,
+    "currmp":15,
+    "maxmp":15,
+    "xp":4,
+    "gold":10,
+    "rank":1,
+    "rarity":"c",
+    "physdef":2,
+    "magdef":1,
+    "weaponid":76,
+    "damagetype":"physical",
+    "drops":[
+      "iron dagger",
+      "steel sword"
+    ]
+  },
+  {
+    "enemyid":2,
+    "id":"bandit",
+    "name":"bandit",
+    "description":"Scourge of the road, a bandit prefers to destroy another's life to enrich his own.",
+    "abilities":[
+      "rush",
+      "bash",
+      "stab"
+    ],
+    "str":3,
+    "agi":4,
+    "con":2,
+    "mag":0,
+    "spr":1,
+    "currhp":50,
+    "maxhp":50,
+    "currmp":25,
+    "maxmp":25,
+    "xp":15,
+    "gold":10,
+    "rank":1,
+    "rarity":"c",
+    "physdef":2,
+    "magdef":1,
+    "weaponid":25,
+    "damagetype":"physical",
+    "drops":[
+      "steel sword",
+      "iron dagger"
+    ]
+  }
+]

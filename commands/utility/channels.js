@@ -16,7 +16,10 @@ class ChannelsCommand extends Command {
 
   async exec(message) {
     const channelList = this.client.guildSettings.get(message.guild.id).channel.join('> - <#')
-    message.channel.send('Permitted channels: <#' + channelList + '>')
+    if (channelList.length < 5) {
+      return message.channel.send('I am not restricted to any channels on this guild.');
+    }
+    return message.channel.send('Permitted channels: <#' + channelList + '>')
   }
 }
 

@@ -1,0 +1,124 @@
+[
+  {
+    "name":"band-aid",
+    "damage":"1d8 + 2 * SPR",
+    "damagetype":"n",
+    "target":"single",
+    "description":"Heals small wounds",
+    "cooldown":2,
+    "mana":5,
+    "type":"h"
+  },
+  {
+    "name":"bash",
+    "damage":"2d10 + 1 * STR",
+    "damagetype":"physical",
+    "target":"t",
+    "description":"A brutal attack capable of delaying the enemy's next attack.",
+    "cooldown":3,
+    "mana":2,
+    "type":"d"
+  },
+  {
+    "name":"defend",
+    "damage":"0",
+    "damagetype":"n",
+    "target":"self",
+    "description":"Reduce damage taken in the next round.",
+    "cooldown":3,
+    "mana":1,
+    "type":"support"
+  },
+  {
+    "name":"rush",
+    "damage":"2d6 + 2 * STR",
+    "damagetype":"physical",
+    "target":"t",
+    "description":"A sudden, unexpected attack.",
+    "cooldown":2,
+    "mana":3,
+    "type":"d"
+  },
+  {
+    "name":"slash",
+    "damage":"1d8 + 2 * STR",
+    "damagetype":"physical",
+    "target":"a",
+    "description":"A quick, broad attack designed to injure a group of enemies.",
+    "cooldown":3,
+    "mana":3,
+    "type":"d"
+  },
+  {
+    "name":"spark",
+    "damage":8,
+    "damagetype":"magical",
+    "element":"lightning",
+    "target":"single",
+    "description":"A quick shock, designed to get past an enemy's defenses.",
+    "cooldown":3,
+    "mana":3,
+    "type":"d"
+  },
+  {
+    "name":"stab",
+    "damage":"1d8 + 3 * STR",
+    "damagetype":"physical",
+    "target":"single",
+    "description":"A short, quick blow designed to pierce an enemy's armor.",
+    "cooldown":2,
+    "mana":5,
+    "type":"d"
+  },
+  {
+    "name":"swipe",
+    "damage":"1d6 + 2 * STR",
+    "damagetype":"physical",
+    "target":"a",
+    "description":"A sweeping attack, weak but can hit multiple enemies.",
+    "cooldown":3,
+    "mana":5,
+    "type":"d"
+  },
+  {
+    "name":"touch-up",
+    "damage":"1d8 + 2 * SPR",
+    "damagetype":"n",
+    "target":"single",
+    "description":"A pick-me-up designed for small hurts.",
+    "cooldown":3,
+    "mana":3,
+    "type":"h"
+  },
+  {
+    "name":"toughen",
+    "damage":"0",
+    "damagetype":"n",
+    "target":"single",
+    "description":"Temporarily increases physical defense.",
+    "cooldown":3,
+    "mana":3,
+    "type":"support"
+  },
+  {
+    "name":"punch",
+    "attack":6,
+    "attacktype":"physical",
+    "target":"single",
+    "description":"A particularly brutal strike.",
+    "cooldown":3,
+    "mana":2,
+    "type":"damage"
+  },
+  {
+    "name":"smash",
+    "attack":6,
+    "attacktype":"physical",
+    "target":"single",
+    "description":"A double-fisted blow, it can bring even an exprienced fighter to his knees.",
+    "cooldown":3,
+    "mana":2,
+    "type":"single",
+    "special":"piercing"
+  }
+]

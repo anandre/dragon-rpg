@@ -1,5 +1,13 @@
 const { Listener } = require('discord-akairo');
 const { Collection, MessageEmbed } = require('discord.js');
+const enemies = require('../data/enemies.json');
+const weapons = require('../data/weapons.json');
+const armor = require('../data/armor.json');
+const accessories = require('../data/accessories.json');
+const consumables = require('../data/consumables.json');
+const statuses = require('../data/statuses.json');
+const abilities = require('../data/abilities.json');
+const fs = require('fs');
 
 class ReadyListener extends Listener {
   constructor() {
@@ -74,43 +82,59 @@ class ReadyListener extends Listener {
       this.client.players = (await this.client.db.query(`SELECT playerid FROM players`)).rows.map(p => p.playerid);
 
       //enemies - used for info command combat-related commands
-      const enemies = (await this.client.db.query(`
-        SELECT
-          *
-        FROM
-          enemies`)).rows;
-      this.client.enemyInfo = new Collection();
-      for (let enemy of enemies) {
-        this.client.enemyInfo.set(enemy.enemyid, enemy)
-      };
+      this.client.enemies = new Collection();
+      fs.readdir('./data/enemies/', (err, files) => {
+        if (err) return console.error(err);
+        files.forEach(f => {
+          if (!f.endsWith('.js')) return;
+          const enemy = new (require(`../data/enemies/${f}`))(this.client);
+          this.client.enemies.set(enemy.id, enemy);
+        })
+      })
+      //for (let enemy of enemies) {
+      //  this.client.enemies.set(enemy.enemyid, enemy)
+      //};
 
       //items - for information, shop, gather and use
-      const info = (await this.client.db.query('SELECT * FROM items')).rows;
-      this.client.infoItems = new Collection();
-      for (let item of info) {
-        this.client.infoItems.set(item.itemid, item)
+      this.client.items = new Collection();
+      for (let item of weapons) {
+        this.client.items.set(item.itemid, item)
       };
+      for (let item of armor) {
+        this.client.items.set(item.itemid, item);
+      }
+      for (let item of accessories) {
+        this.client.items.set(item.itemid, item);
+      }
+      for (let item of consumables) {
+        this.client.items.set(item.itemid, item);
+      }
 
-      this.client.shopItems = this.client.infoItems.filter(i => i.source === 's');
-      this.client.huntcom = this.client.infoItems.filter(i => i.source === 'h' && i.rarity === 1);
-      this.client.huntunc = this.client.infoItems.filter(i => i.source === 'h' && i.rarity === 2);
-      this.client.fishcom = this.client.infoItems.filter(i => i.source === 'f' && i.rarity === 1);
-      this.client.fishunc = this.client.infoItems.filter(i => i.source === 'f' && i.rarity === 2);
-      this.client.gathcom = this.client.infoItems.filter(i => i.source === 'g' && i.rarity === 1);
-      this.client.gathunc = this.client.infoItems.filter(i => i.source === 'g' && i.rarity === 2);
+      this.client.shopItems = this.client.items.filter(i => i.source === 's');
+      this.client.huntcom = this.client.items.filter(i => i.source === 'h' && i.rarity === 1);
+      this.client.huntunc = this.client.items.filter(i => i.source === 'h' && i.rarity === 2);
+      this.client.fishcom = this.client.items.filter(i => i.source === 'f' && i.rarity === 1);
+      this.client.fishunc = this.client.items.filter(i => i.source === 'f' && i.rarity === 2);
+      this.client.gathcom = this.client.items.filter(i => i.source === 'g' && i.rarity === 1);
+      this.client.gathunc = this.client.items.filter(i => i.source === 'g' && i.rarity === 2);
 
       //abilities - for information command, combat use
-      const abilities = (await this.client.db.query('SELECT * FROM abilities')).rows;
       this.client.abilities = new Collection();
       for (let abi of abilities) {
         this.client.abilities.set(abi.name, abi)
       };
 
+      //statuses - for information command, combat use
+      this.client.statuses = new Collection();
+      for (let status of statuses) {
+        this.client.statuses.set(status.name, status)
+      }
+
       //combat - for combat progress
       const combatInfo = (await this.client.db.query(`SELECT * FROM combat`)).rows;
       this.client.combat = new Collection();
       for (let combat of combatInfo) {
-        this.client.combat.set(combat.playerid, combat)
+        this.client.combat.set(combat.id, combat.data)
       };
     }
     catch (e) {

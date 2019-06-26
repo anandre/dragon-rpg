@@ -1,0 +1,8 @@
+[
+  {
+    "name":"regen",
+    "duration":4,
+    "attack":10,
+    "description":"Heal the combatant over several turns."
+  }
+]

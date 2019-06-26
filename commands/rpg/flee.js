@@ -21,7 +21,7 @@ class FleeCommand extends Command {
       return message.answer(message.author.username, 'you are not in combat.');
     }
     const player = this.client.combat.get(message.author.id);
-    const enemy = this.client.enemyInfo.get(player.enemyid);
+    const enemy = this.client.enemies.get(player.enemyid);
     const run = this.client.flee(player, enemy);
     if (run) {
       await this.client.db.query(`

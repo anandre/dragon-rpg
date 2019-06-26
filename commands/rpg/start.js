@@ -35,8 +35,8 @@ class StartCommand extends Command {
 
     const path = paths[input];
 
-    const weapon = this.client.infoItems.get(path.weapon);
-    const armor = this.client.infoItems.get(path.armor);
+    const weapon = this.client.items.get(path.weapon);
+    const armor = this.client.items.get(path.armor);
     const strmod = weapon.strmod + armor.strmod;
     const agimod = weapon.agimod + armor.agimod;
     const conmod = weapon.conmod + armor.conmod;

@@ -47,8 +47,8 @@ class InformationCommand extends Command {
                 **Cooldown**: ${ability.cooldown}`)
             return message.channel.send(embed);
         }
-        if (this.client.enemyInfo.some(i => i.name === info)) {
-            const enemy = this.client.enemyInfo.find(i => i.name === info);
+        if (this.client.enemies.some(i => i.name === info)) {
+            const enemy = this.client.enemies.find(i => i.name === info);
             const type = {
                 p: ' (physical) ',
                 m: ' (magical) ',
@@ -82,9 +82,9 @@ class InformationCommand extends Command {
                         **Starting Spirit**: ${this.client.warrior.spr}
                         **Starting HP**: ${this.client.warrior.hpmod}
                         **Starting MP**: ${this.client.warrior.mpmod}
-                        **Starting Weapon**: ${this.client.infoItems.get(this.client.warrior.weapon).name}
-                        **Starting Armor**: ${this.client.infoItems.get(this.client.warrior.armor).name}
-                        **Starting Accessory**: ${this.client.infoItems.get(this.client.warrior.accessory).name}`)
+                        **Starting Weapon**: ${this.client.items.get(this.client.warrior.weapon).name}
+                        **Starting Armor**: ${this.client.items.get(this.client.warrior.armor).name}
+                        **Starting Accessory**: ${this.client.items.get(this.client.warrior.accessory).name}`)
                     return message.channel.send(embed);
                 }
                 catch (e) {
@@ -107,9 +107,9 @@ class InformationCommand extends Command {
                         **Starting Spirit**: ${this.client.rogue.spr}
                         **Starting HP**: ${this.client.rogue.hpmod}
                         **Starting MP**: ${this.client.rogue.mpmod}
-                        **Starting Weapon**: ${this.client.infoItems.get(this.client.rogue.weapon).name}
-                        **Starting Armor**: ${this.client.infoItems.get(this.client.rogue.armor).name}
-                        **Starting Accessory**: ${this.client.infoItems.get(this.client.rogue.accessory).name}`)
+                        **Starting Weapon**: ${this.client.items.get(this.client.rogue.weapon).name}
+                        **Starting Armor**: ${this.client.items.get(this.client.rogue.armor).name}
+                        **Starting Accessory**: ${this.client.items.get(this.client.rogue.accessory).name}`)
                     return message.channel.send(embed);
                 }
                 catch (e) {
@@ -132,9 +132,9 @@ class InformationCommand extends Command {
                         **Starting Spirit**: ${this.client.priest.spr}
                         **Starting HP**: ${this.client.priest.hpmod}
                         **Starting MP**: ${this.client.priest.mpmod}
-                        **Starting Weapon**: ${this.client.infoItems.get(this.client.priest.weapon).name}
-                        **Starting Armor**: ${this.client.infoItems.get(this.client.priest.armor).name}
-                        **Starting Accessory**: ${this.client.infoItems.get(this.client.priest.accessory).name}`)
+                        **Starting Weapon**: ${this.client.items.get(this.client.priest.weapon).name}
+                        **Starting Armor**: ${this.client.items.get(this.client.priest.armor).name}
+                        **Starting Accessory**: ${this.client.items.get(this.client.priest.accessory).name}`)
                     return message.channel.send(embed);
                 }
                 catch (e) {
@@ -157,9 +157,9 @@ class InformationCommand extends Command {
                         **Starting Spirit**: ${this.client.mage.spr}
                         **Starting HP**: ${this.client.mage.hpmod}
                         **Starting MP**: ${this.client.mage.mpmod}
-                        **Starting Weapon**: ${this.client.infoItems.get(this.client.mage.weapon).name}
-                        **Starting Armor**: ${this.client.infoItems.get(this.client.mage.armor).name}
-                        **Starting Accessory**: ${this.client.infoItems.get(this.client.mage.accessory).name}`)
+                        **Starting Weapon**: ${this.client.items.get(this.client.mage.weapon).name}
+                        **Starting Armor**: ${this.client.items.get(this.client.mage.armor).name}
+                        **Starting Accessory**: ${this.client.items.get(this.client.mage.accessory).name}`)
                     return message.channel.send(embed);
                 }
                 catch (e) {
@@ -170,8 +170,8 @@ class InformationCommand extends Command {
                 }
             }
         }
-        if (this.client.infoItems.some(i => i.name === info || i.id === info)) {
-            const item = this.client.infoItems.find(i => i.name === info) || this.client.infoItems.find(i => i.id === info);          
+        if (this.client.items.some(i => i.name === info || i.id === info)) {
+            const item = this.client.items.find(i => i.name === info) || this.client.items.find(i => i.id === info);          
             const replace = {
                 a: 'armor',
                 w: 'weapon',

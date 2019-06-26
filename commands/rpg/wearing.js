@@ -36,10 +36,10 @@ class WearingCommand extends Command {
       players
     WHERE
       playerid = $1`,
-    [message.author.id])).rows[0]
-    const weapon = this.client.infoItems.get(wornItems.weaponid);
-    const armor = this.client.infoItems.get(wornItems.armorid);
-    const accessory = this.client.infoItems.get(wornItems.accessoryid);
+    [args.user.id])).rows[0]
+    const weapon = this.client.items.get(wornItems.weaponid);
+    const armor = this.client.items.get(wornItems.armorid);
+    const accessory = this.client.items.get(wornItems.accessoryid);
     const type = {
       p: 'physical',
       m: 'magical'
@@ -51,7 +51,7 @@ class WearingCommand extends Command {
     let accessoryStr;
     if (args.long) {
       weaponStr = stripIndents`${weapon.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
-        **Damage**: ${await this.client.displayDamage(args.user, weapon)} (${type[weapon.damagetype]})
+        **Damage**: ${weapon.attack} (${weapon.attacktype})
         **Abilities**: ${weaponAbilities}
         **Strength:** ${weapon.strmod}
         **Agility:** ${weapon.agimod}
@@ -91,7 +91,7 @@ class WearingCommand extends Command {
     }
     else {
       weaponStr = stripIndents`${weapon.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
-        **Damage**: ${await this.client.displayDamage(args.user, weapon)} (${type[weapon.damagetype]})
+        **Damage**: ${weapon.attack} (${weapon.attacktype})
         **Abilities**: ${weaponAbilities}`
       armorStr = stripIndents`${armor.name.split(' ').map(m => m.charAt(0).toUpperCase() + m.substr(1)).join(' ')}
         **Physical Defense**: ${armor.physdef}

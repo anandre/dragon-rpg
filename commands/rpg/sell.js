@@ -24,7 +24,7 @@ class SellCommand extends Command {
   }
 
   async exec(message, { item }) {
-    const sold = this.client.infoItems.find(i => i.id === item) || this.client.infoItems.find(i => i.name === item);
+    const sold = this.client.items.find(i => i.id === item) || this.client.items.find(i => i.name === item);
     if (!sold) {
       return message.answer(message.author, 'there is no item like that.');
     }
