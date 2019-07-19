@@ -1,0 +1,14 @@
+[
+  {
+    "level":1,
+    "str":3,
+    "agi":1,
+    "con":2,
+    "mag":0,
+    "spr":1,
+    "hp":10,
+    "mp":0,
+    "physdef":2,
+    "magdef":1
+  }
+]

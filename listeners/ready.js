@@ -1,6 +1,5 @@
 const { Listener } = require('discord-akairo');
 const { Collection, MessageEmbed } = require('discord.js');
-const enemies = require('../data/enemies.json');
 const weapons = require('../data/weapons.json');
 const armor = require('../data/armor.json');
 const accessories = require('../data/accessories.json');
@@ -18,9 +17,10 @@ class ReadyListener extends Listener {
   }
 
   async exec() {
-    console.log(this.client.user.username)
     console.log(`Online at ${new Date()}.`);
     try {
+      await this.client.user.setActivity(`@${this.client.user.username} help`, { type: 'WATCHING' })
+
       //guild settings - prefix and channels to run in
       const gSettings = (await this.client.db.query(`SELECT * FROM guildsettings`)).rows;
 
@@ -83,17 +83,14 @@ class ReadyListener extends Listener {
 
       //enemies - used for info command combat-related commands
       this.client.enemies = new Collection();
-      fs.readdir('./data/enemies/', (err, files) => {
+      fs.readdir('./data/enemies/common/', (err, files) => {
         if (err) return console.error(err);
         files.forEach(f => {
           if (!f.endsWith('.js')) return;
-          const enemy = new (require(`../data/enemies/${f}`))(this.client);
+          const enemy = new (require(`../data/enemies/common/${f}`))(this.client);
           this.client.enemies.set(enemy.id, enemy);
         })
       })
-      //for (let enemy of enemies) {
-      //  this.client.enemies.set(enemy.enemyid, enemy)
-      //};
 
       //items - for information, shop, gather and use
       this.client.items = new Collection();

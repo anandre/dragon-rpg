@@ -11,8 +11,7 @@ class MyClient extends AkairoClient {
       ownerID: ['167988857046827010', '575448221577641989']
     }, {
       // Options for discord.js go here
-      disableEveryone: true,
-      presence: { activity: { name: '@YggyBot help', type: 'PLAYING'} }
+      disableEveryone: true
     });
 
     this.commandHandler = new CommandHandler(this, {

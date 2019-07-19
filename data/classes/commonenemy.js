@@ -14,36 +14,36 @@ class CommonEnemy extends ClassBase {
     this.xp = this.level * 4; 
   }
 
-  get dodge() {
-    return (5 + (this.level/3) + (this.agi * 1.2)).toFixed(2);
-  }
+  /*Accuracy (agi)
+  Precision (agi) (increased crit chance)
+  Ferocity (class-based) (Crit Multi)
+  Dodge (agi)
+  Focus (mag) (mag. to-hit)
+  HP (con)
+  Init (agi)
+  Resistance (spr) (mag resist to debuffs)
+  MP (spr)
+  Mind (spr) (magical defense, equivalent to toughness)
+  Toughness (con)*/
 
-  get maxHP() {
-    return this.hpbase + Math.round(this.level/5) + (this.con * 10);
-  }
-
-  get magDef() {
-    return Math.floor((this.level * 1.75) + (this.spr * 1.5));
-  }
-
-  get magicDodge() {
-    return (10 + (this.level/5) + (this.spr * 1.3)).toFixed(2);
-  }
-
-  get magicToHitBonus() {
-    return (1 + (this.level/3) + (this.mag * 1.1)).toFixed(2);
-  }
-
-  get maxMP() {
-    return this.mpbase + (this.spr * 5) + Math.round(this.con * 1.25);
-  }
-
-  get physDef() {
-    return Math.floor((this.level * 1.75) + (this.con * 1.3));
-  }
-
-  get toHitBonus() {
+  get acc() { //increased to hit chance
     return (1 + (this.level/4) + (this.agi * .9)).toFixed(2);
+  }
+
+  get dodge() { //increased chance to be missed
+    return ((this.level/3) + (this.agi * .8)).toFixed(2);
+  }
+
+  get focus() { //increased to hit magical chance
+    return ((this.level/6) + (this.mag * .8)).toFixed(2);
+  }
+
+  get maxHP() { //max HP, overwritten in paths
+    return this.hpbase * 5;
+  }
+
+  get prec() { //increased crit chance
+    return ((this.level/6) + (this.agi * .7)).toFixed(2);
   }
 }
 

@@ -1,4 +1,4 @@
-const CommonEnemy = require('../classes/commonenemy.js');
+const CommonEnemy = require('../../classes/commonenemy.js');
 
 class Goblin extends CommonEnemy {
   constructor(client, data = {

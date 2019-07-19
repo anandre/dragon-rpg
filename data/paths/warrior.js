@@ -1,15 +1,30 @@
 const ClassBase = require('../classes/base.js');
+const warrior = require('../warrior.json');
 
 class Warrior extends ClassBase {
   constructor(client, data) {
     super(client, data)
 
-    this.weaponid = data.weaponid;
-    this.armorid = data.armorid;
-    this.accessoryid = data.accessoryid;
+    this.weapon = this.client.items.get(data.weaponid);
+    this.armor = this.client.items.get(data.armorid);
+    this.accessory = this.client.items.get(data.accessoryid);
+    this.level = data.level;
     this.xp = data.xp;
+    this.gold = data.gold;
+    this.currhp = data.currhp;
+    this.maxhp = data.maxhp;
+    this.currmp = data.currmp;
+    this.maxmp = data.maxmp;
 
     this.path = 'Warrior';
+  }
+
+  get critChanceBonus() {
+    return (1 + (this.agi * .8)).toFixed(2);
+  }
+
+  get critDamageBonus() {
+    return (this.level/5 + this.str/4).toFixed(2);
   }
 
   get dodge() {
