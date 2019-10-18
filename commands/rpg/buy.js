@@ -24,6 +24,9 @@ class BuyCommand extends Command {
   }
 
   async exec(message, { item }) {
+    const toBuy = this.client.items.find(i => i.id === item) || this.client.items.find(i => i.name === item);
+    if (!toBuy) return;
+
     const { gold } = (await this.client.db.query(`
       SELECT
         gold
@@ -32,8 +35,7 @@ class BuyCommand extends Command {
       WHERE
         playerid = $1`,
       [message.author.id])).rows[0];
-    const toBuy = this.client.items.find(i => i.id === item) || this.client.items.find(i => i.name === item);
-      if (!toBuy) return;
+
       if (toBuy.cost > gold) {
         return message.answer(message.author, `you don't have enough gold to purchase that!`);
       }

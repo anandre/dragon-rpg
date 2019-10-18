@@ -1,7 +1,7 @@
 const ClassBase = require('../classes/base.js');
-const warrior = require('../warrior.json');
+const rogue = require('../rogue.json');
 
-class Warrior extends ClassBase {
+class Rogue extends ClassBase {
   #levelStats;
   constructor(client, data) {
     super(client, data)
@@ -15,10 +15,10 @@ class Warrior extends ClassBase {
     this.currHP = data.currHP;
     this.currMP = data.currMP;
 
-    this.path = 'Warrior';
-    this.fero = 1.5;
+    this.path = 'Rogue';
+    this.fero = 1.4;
 
-    this.#levelStats = warrior.find(i => i.level === this.level);
+    this.#levelStats = rogue.find(i => i.level === this.level);
 
     this.str = this.#levelStats.str + this.weapon.str + this.armor.str + this.accessory.str;
     this.agi = this.#levelStats.agi + this.weapon.agi + this.armor.agi + this.accessory.agi;
@@ -29,19 +29,19 @@ class Warrior extends ClassBase {
   }
 
   get acc() { //increased to hit chance
-    return 10 + (1 + (this.level * .25) + (this.agi * .9)).toFixed(2);
+    return 10 + (1 + (this.level * .35) + (this.agi * 1)).toFixed(2);
   }
 
   get dodge() { //increased chance to be missed
-    return 5 + ((this.level * .20) + (this.agi * .8)).toFixed(2);
+    return 5 + ((this.level * .25) + (this.agi * .85)).toFixed(2);
   }
 
   get focus() { //increased to hit magical chance
-    return 10 + ((this.level * .15) + (this.mag * .8)).toFixed(2);
+    return 10 + ((this.level * .15) + (this.mag * .7)).toFixed(2);
   }
 
   get maxHP() { //max HP, overwritten in paths
-    return (this.#levelStats.hp) + (this.con * 5) + this.weapon.hp + this.armor.hp + this.accessory.hp;
+    return (this.#levelStats.hp) + (this.con * 4) + this.weapon.hp + this.armor.hp + this.accessory.hp;
   }
 
   get maxMP() { //max MP, overwritten in paths
@@ -53,7 +53,7 @@ class Warrior extends ClassBase {
   }
 
   get prec() { //increased crit chance
-    return ((this.level * .15) + (this.agi * .7)).toFixed(2);
+    return ((this.level * .2) + (this.agi * .825)).toFixed(2);
   }
 
   get resist() { //increased chance to resist debuffs
@@ -61,8 +61,8 @@ class Warrior extends ClassBase {
   }
 
   get tough() { //reduces physical damage taken
-    return ((this.level * .33) + (this.con * .9)).toFixed(2);
+    return ((this.level * .25) + (this.con * .8)).toFixed(2);
   }
 }
 
-module.exports = Warrior;
+module.exports = Rogue;

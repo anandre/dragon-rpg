@@ -28,8 +28,8 @@ class FleeCommand extends Command {
         UPDATE
           players
         SET
-          currhp = LEAST(maxhp, ${player.currhp}),
-          currmp = LEAST(maxmp, ${player.currmp})
+          currHP = LEAST(maxhp, ${player.currHP}),
+          currMP = LEAST(maxmp, ${player.currMP})
         WHERE
           playerid = '${message.author.id}'`);
       this.client.combat.delete(message.author.id);
@@ -47,7 +47,7 @@ class FleeCommand extends Command {
     }
     else {
       const enemyDmg = await this.client.enemyBasicAttack(enemy, player);
-      if (player.currhp > 0) { //player survived, increment turn
+      if (player.currHP > 0) { //player survived, increment turn
         return await this.client.fleeIncrementTurn(player, enemy, message, enemyDmg);
       }
       else { //enemy defeats player

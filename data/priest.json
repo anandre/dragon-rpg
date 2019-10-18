@@ -1,0 +1,18 @@
+[
+  {
+    "level":1,
+    "str":2,
+    "agi":1,
+    "con":2,
+    "mag":3,
+    "spr":5,
+    "hp":15,
+    "mp":20,
+    "tough":1,
+    "mind":3,
+    "abilities":["heal"],
+    "weaponid":"approd",
+    "armorid":"crobes",
+    "accessoryid":"nothing"
+  }
+]

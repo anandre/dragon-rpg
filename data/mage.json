@@ -1,0 +1,16 @@
+[
+  {
+    "level":1,
+    "str":1,
+    "agi":1,
+    "con":1,
+    "mag":4,
+    "spr":3,
+    "hp":10,
+    "mp":20,
+    "abilities":["spark"],
+    "weaponid":"approd",
+    "armorid":"crobes",
+    "accessoryid":"nothing"
+  }
+]

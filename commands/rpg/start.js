@@ -1,4 +1,6 @@
 const { Command } = require('discord-akairo');
+const { MessageEmbed } = require('discord.js');
+const { stripIndents } = require('common-tags');
 
 class StartCommand extends Command {
   constructor() {
@@ -10,13 +12,13 @@ class StartCommand extends Command {
         content: 'Choose your starting path.  Respond to the prompt with your choice.',
         usage: 'start -> respond to prompt',
         example: 'start -> Warrior' 
-      }    
+      }
     })
   }
 
   async *args(message, parsed, state) {
     const input = yield {
-      type: ['Warrior', 'Priest', 'Rogue', 'Mage'],
+      type: ['warrior', 'priest', 'rogue', 'mage'],
       prompt: {
         start: 'Are you going to follow the path of the `Warrior`, `Priest`, `Rogue`, or `Mage`?  If you are unsure, you can say \`cancel\` to choose later.',
         retry: 'That is not a valid path!',
@@ -26,47 +28,68 @@ class StartCommand extends Command {
       }
     }
 
-    const paths = {
-      'Warrior': this.client.warrior,
-      'Priest': this.client.priest,
-      'Rogue': this.client.rogue,
-      'Mage': this.client.mage
-    }
+    const pathData = require(`../../data/paths/${input}.js`);
+    const equipData = (require(`../../data/${input}.json`))[0];
 
-    const path = paths[input];
+    const path = new pathData(this.client, {
+      id: message.author.id,
+      level: 1,
+      xp: 0,
+      gold: 0,
+      weaponid: equipData.weaponid,
+      armorid: equipData.armorid,
+      accessoryid: equipData.accessoryid,
+    });
+    console.log(path.weapon, path.armor, path.accessory);
 
-    const weapon = this.client.items.get(path.weapon);
-    const armor = this.client.items.get(path.armor);
-    const strmod = weapon.strmod + armor.strmod;
-    const agimod = weapon.agimod + armor.agimod;
-    const conmod = weapon.conmod + armor.conmod;
-    const magmod = weapon.magmod + armor.magmod;
-    const sprmod = weapon.sprmod + armor.sprmod;
-    const hpmod = weapon.hpmod + armor.mpmod;
-    const mpmod = weapon.mpmod + armor.mpmod;
+    const color = {
+      warrior: 'RED',
+      rogue: 'BLUE',
+      mage: 'BLACK',
+      priest: 'WHITE'
+    }[input]
 
-    return { path, strmod, agimod, conmod, magmod, sprmod, hpmod, mpmod };
+    return { path, color };
   }
 
-  async exec(message, { path, strmod, agimod, conmod, magmod, sprmod, hpmod, mpmod }) {
+  async exec(message, { path, color }) {
     await this.client.db.query(`
-      INSERT INTO
+      INSERT INTO 
         players (
-      playerid, path, xp, level, str, agi, con, mag, spr, currhp, maxhp, currmp, maxmp,
-      hunttimer, gathertimer, fishtimer, armorid, weaponid, accessoryid,
-      gold, huntmod, fishmod, gathermod, physdef, magdef)
+          playerid, path, level, xp, gold, weaponid, armorid, accessoryid, currhp, currmp,
+          hunttimer, fishtimer, gathertimer
+      )
       VALUES (
-        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $10,
-        $11, $11, $12, $12, $12, $13, $14, $15,
-        $16, $17, $18, $19, $20, $21)
-      ON CONFLICT (playerid) DO NOTHING`,
-      [message.author.id, path.name, 0, 1, path.str + strmod,
-      path.agi + agimod , path.con + conmod, path.mag + magmod,
-      path.spr + sprmod, path.hpmod + hpmod, path.mpmod + mpmod,
-      message.createdTimestamp - 1800000, path.armor, path.weapon,
-      path.accessory, 50, 1, 1, 1, 2, 1]);
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $11, $11
+      )
+      ON CONFLICT
+        (playerid)
+      DO NOTHING`,
+      [path.id, path.path, path.level, path.xp, path.gold, path.weapon.id, path.armor.id, path.accessory.id,
+      path.maxHP, path.maxMP, Date.now() - 300000]);
     this.client.players.push(message.author.id);
-    return message.channel.send(`You have chosen to follow the path of the ${path.name}.`)
+    const embed = new MessageEmbed()
+      .setColor(color)
+      .setAuthor(`${message.author.username} has embarked upon the path of the ${path.path}.`, message.author.displayAvatarURL())
+      .addField('\u200b', stripIndents`**HP**: ${path.maxHP}
+        \u200b
+        **STR**: ${path.str}
+        **AGI**: ${path.agi}
+        \u200b
+        **Weapon**: ${path.weapon.name}`, true)
+      .addField('\u200b', stripIndents`**MP**: ${path.maxMP}
+        \u200b
+        **CON**: ${path.con}
+        \u200b
+        \u200b
+        **Armor**: ${path.armor.name}`, true)
+      .addField('\u200b', stripIndents`\u200b
+        \u200b
+        **MAG**: ${path.mag}
+        **SPR**: ${path.spr}
+        \u200b
+        **Accessory**: ${path.accessory.name}`, true)
+    return message.channel.send(embed);
   }
 }
 

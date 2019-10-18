@@ -95,16 +95,16 @@ class ReadyListener extends Listener {
       //items - for information, shop, gather and use
       this.client.items = new Collection();
       for (let item of weapons) {
-        this.client.items.set(item.itemid, item)
+        this.client.items.set(item.id, item)
       };
       for (let item of armor) {
-        this.client.items.set(item.itemid, item);
+        this.client.items.set(item.id, item);
       }
       for (let item of accessories) {
-        this.client.items.set(item.itemid, item);
+        this.client.items.set(item.id, item);
       }
       for (let item of consumables) {
-        this.client.items.set(item.itemid, item);
+        this.client.items.set(item.id, item);
       }
 
       this.client.shopItems = this.client.items.filter(i => i.source === 's');

@@ -82,12 +82,12 @@ class TestCommand extends Command {
       
 
       const attacks = await this.client.fighterPrompt(combat, message);*/
-    } while (combat.filter(f => f.currhp || f.currhp === 0).every(f => f.currhp > 0));
-    if (combat.filter(f => f.side === 'player').every(f => f.currhp <= 0)) {
+    } while (combat.filter(f => f.currHP || f.currHP === 0).every(f => f.currHP > 0));
+    if (combat.filter(f => f.side === 'player').every(f => f.currHP <= 0)) {
       this.client.combat.delete(players.keyArray().join('-'));
       return message.channel.send('players lose');
     }
-    if (combat.filter(f => f.side === 'monster').every(f => f.currhp <= 0)) {
+    if (combat.filter(f => f.side === 'monster').every(f => f.currHP <= 0)) {
       this.client.combat.delete(players.keyArray().join('-'));
       return message.channel.send('enemies lose');
     }
@@ -104,7 +104,7 @@ class TestCommand extends Command {
     
     await message.channel.send(attacks.join('\n'));
 
-    if (combat.filter(f => f.currhp).every(f => f.currhp > 0)) {
+    if (combat.filter(f => f.currHP).every(f => f.currHP > 0)) {
       combat[combat.findIndex(t => t.constructor.name === 'Number')]++;
       const newTurnEmbed = this.client.combatEmbed(combat);
       const newInits = this.client.generateInit(combat);

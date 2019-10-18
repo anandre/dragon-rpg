@@ -18,17 +18,17 @@ class InventoryCommand extends Command {
   async exec(message) {
     const inv = (await this.client.db.query(`
       SELECT
-        inventory.count, inventory.itemid, items.name
+        inventory.count, inventory.id, items.name
       FROM
         inventory
       INNER JOIN
         items
       ON
-        inventory.itemid = items.itemid
+        inventory.id = items.id
       WHERE
         inventory.playerid = $1
       ORDER BY
-        inventory.itemid ASC`,
+        inventory.id ASC`,
       [message.author.id])).rows
     const embed = new MessageEmbed()
       .setColor("#e00808")

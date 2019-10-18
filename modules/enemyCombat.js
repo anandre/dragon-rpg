@@ -23,7 +23,7 @@ module.exports = (client) => {
     const addDmg = Math.floor(parseFloat(enemyDmgAdd[0]) * enemyObject[enemyDmgAdd[1]]);
     const enemyRawDmg = rawDmg + addDmg;
     const enemyNetDmg = enemyRawDmg - enemyObject[enemy.damagetype];
-    player.currhp -= Math.max(1, enemyNetDmg);
+    player.currHP -= Math.max(1, enemyNetDmg);
     return Math.max(1, enemyNetDmg);
 };
 
@@ -68,7 +68,7 @@ client.enemyCastSingleHeal = (enemy, player, ability) => {
     const addDmg = Math.floor(parseFloat(dmgAdd[0]) * type[dmgAdd[1]]);
     const grossDmg = rawDmg + addDmg;
     const netDmg = Math.max(1, grossDmg - type[ability.damagetype]);
-    player.currhp -= netDmg;
+    player.currHP -= netDmg;
     player.enemymp -= ability.mana;
     player.enemycd[enemy.abilities.indexOf(ability.name)] -= 1;
     return netDmg;

@@ -67,5 +67,6 @@ client.db = db;
 require('./modules/functions.js')(client);
 require('./modules/combat.js')(client);
 require('./modules/gather.js')(client);
+require('./modules/testing.js')(client);
 
 client.login(config.token);

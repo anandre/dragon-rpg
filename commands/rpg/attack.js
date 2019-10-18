@@ -30,7 +30,7 @@ class AttackCommand extends Command {
       const pDmg = this.client.playerBasicAttack(player, weapon, enemy);
       if (player.enemyhp > 0) { //enemy survives, counterattacks
         const eDmg = this.client.enemyBasicAttack(enemy, player);
-        if (player.currhp > 0) { //player survives, increment turn
+        if (player.currHP > 0) { //player survives, increment turn
           return await this.client.incrementTurn(player, enemy, message, pDmg, eDmg);
         }
         else { //player dies
@@ -43,7 +43,7 @@ class AttackCommand extends Command {
     }
     else { //enemy goes first
       const eDmg = this.client.enemyBasicAttack(enemy, player);
-      if (player.currhp > 0) { //player survives, counterattacks
+      if (player.currHP > 0) { //player survives, counterattacks
         const pDmg = this.client.playerBasicAttack(player, weapon, enemy);
         if (player.enemyhp > 0) { //enemy survives, increment turn
           return await this.client.incrementTurn(player, enemy, message, pDmg, eDmg);
@@ -60,4 +60,4 @@ class AttackCommand extends Command {
   }
 }
 
-module.exports = AttackCommand;
+//module.exports = AttackCommand;

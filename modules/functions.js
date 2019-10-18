@@ -109,7 +109,7 @@ module.exports = (client) => {
 
     client.checkXP = async function(message) {
         console.log('checking xp')
-        const currXP = (await client.db.query('SELECT path, xp, level, str, agi, con, mag, spr, currhp, maxhp, currmp, maxmp FROM players WHERE playerid = $1', [message.author.id])).rows[0]
+        const currXP = (await client.db.query('SELECT path, xp, level, str, agi, con, mag, spr, currHP, maxhp, currMP, maxmp FROM players WHERE playerid = $1', [message.author.id])).rows[0]
         console.log(currXP);
         const xpNeeded = client.levelChart[currXP.level];
         console.log(xpNeeded);
@@ -118,7 +118,7 @@ module.exports = (client) => {
         }
         else {
             console.log('leveling up time!');
-            await client.db.query("UPDATE players SET xp = $1, level = $2, str = $4, agi = $5, con = $6, mag = $7, spr = $8, currhp = $9, maxhp = $10, currmp = $11, maxmp = $12 WHERE playerid = $3", [currXP.xp - client.levelChart[currXP.level], currXP.level + 1, message.author.id, currXP.str + client.levelStats[currXP.path][currXP.level].str, currXP.agi + client.levelStats[currXP.path][currXP.level].agi, currXP.con + client.levelStats[currXP.path][currXP.level].con, currXP.mag + client.levelStats[currXP.path][currXP.level].mag, currXP.spr + client.levelStats[currXP.path][currXP.level].spr, currXP.currhp + client.levelStats[currXP.path][currXP.level].hp, currXP.maxhp + client.levelStats[currXP.path][currXP.level].hp, currXP.currmp + client.levelStats[currXP.path][currXP.level].mp, currXP.maxmp + client.levelStats[currXP.path][currXP.level].mp])
+            await client.db.query("UPDATE players SET xp = $1, level = $2, str = $4, agi = $5, con = $6, mag = $7, spr = $8, currHP = $9, maxhp = $10, currMP = $11, maxmp = $12 WHERE playerid = $3", [currXP.xp - client.levelChart[currXP.level], currXP.level + 1, message.author.id, currXP.str + client.levelStats[currXP.path][currXP.level].str, currXP.agi + client.levelStats[currXP.path][currXP.level].agi, currXP.con + client.levelStats[currXP.path][currXP.level].con, currXP.mag + client.levelStats[currXP.path][currXP.level].mag, currXP.spr + client.levelStats[currXP.path][currXP.level].spr, currXP.currHP + client.levelStats[currXP.path][currXP.level].hp, currXP.maxhp + client.levelStats[currXP.path][currXP.level].hp, currXP.currMP + client.levelStats[currXP.path][currXP.level].mp, currXP.maxmp + client.levelStats[currXP.path][currXP.level].mp])
             return await message.channel.send(`You have leveled up!  Now level ${currXP.level + 1} with ${currXP.xp - client.levelChart[currXP.level]} XP!`)
         }
     };

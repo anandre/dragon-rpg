@@ -10,10 +10,12 @@ class Bandit extends CommonEnemy {
     con: 2,
     mag: 1,
     spr: 2,
+    weaponid: 76
   }) {
     super(client, data)
 
     this.description = 'Scourge of the road, a bandit prefers to destroy another\'s life to enrich his own.'
+    this.xp = 6;
     this.gold = 50;
     this.drops = [
       'meat',
@@ -21,17 +23,8 @@ class Bandit extends CommonEnemy {
       'iron dagger'];
     
     this.abilities = [
-      'rush',
-      'bash',
-      'stab'
+      'rush'
     ];
-
-    this.weapon = this.client.items.get(25);
-  }
-
-  attack(defender, dStatuses) {
-    const baseDmg = Math.floor((Number.parseFloat((Math.random() * 1.5).toFixed(2)) + 1) * this.weapon.attack) + 1 + Math.max(Math.floor(this.str/3),1);
-    return baseDmg;
   }
 }
 

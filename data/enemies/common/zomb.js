@@ -25,7 +25,7 @@ class Zombie extends CommonEnemy {
       'bash'
     ]
 
-    this.weapon = this.client.items.get(76);
+    //this.weapon = this.client.items.get(76);
   }
 }
 

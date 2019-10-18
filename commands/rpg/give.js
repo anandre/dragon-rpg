@@ -17,7 +17,6 @@ class GiveCommand extends Command {
   async *args(message, parsed, state) {
     const recip = yield {
       type: 'user',
-      default: message => messagee.author
     }
 
     const give = yield {
@@ -31,9 +30,9 @@ class GiveCommand extends Command {
   }
 
   async exec(message, { recip, give }) {
-    console.log('give');
-    if (!this.client.players.includes(message.author.id) || recip.id === message.author.id) return message.channel.send(`${message.author.username}, you cannot give an item to that player.`);
-
+    if (!this.client.players.includes(recip.id) || recip.id === message.author.id) {
+      return message.answer(message.author, `you cannot give an item to that player.`);
+    }
     const item = this.client.items.find(i => i.id === give) || this.client.items.find(i => i.name === give);
     if (!item) {
       if (give.match(/\b[0-9]*(?=g)/)) { //gold instead
@@ -86,40 +85,6 @@ class GiveCommand extends Command {
       if (pInv.length === 0) {
         return message.answer(message.author, `you do not have ${item.name} in your inventory!`);
       } 
-      /*DO $$
-DECLARE inc TEXT = '654321-2';
-DECLARE deinc TEXT = '123456-1';
-BEGIN
-UPDATE test AS foo SET
-  itemid = bar.itemid
-FROM (values
-  ((SELECT itemid FROM test WHERE playeritem = inc) + 1, inc),
-  ((SELECT itemid FROM test WHERE playeritem = deinc) - 1, deinc)  
-) AS bar(
-  itemid,
-  playeritem
-) WHERE bar.playeritem = foo.playeritem;
-END $$
-      await this.client.db.query(`
-        DO $$
-        DECLARE inc TEXT = ${recip.id}-${item.itemid};
-        DECLARE deinc TEXT = ${message.author.id}-${item.itemid};
-        BEGIN
-        UPDATE
-          inventory AS upinventory
-        SET
-          count = up.count
-        FROM (values
-          (GREATEST(0, (SELECT count FROM inventory WHERE playeritem = inc)) + 1, inc),
-          ((SELECT count FROM inventory WHERE playeritem = deinc) - 1, deinc)
-        )
-        AS up(
-          count,
-          playeritem
-          ) 
-        WHERE
-          up.playeritem = upinventory.playeritem;
-        END $$`);*/
       await this.client.db.query(`
         INSERT INTO
           inventory (playeritem, playerid, itemid, count)

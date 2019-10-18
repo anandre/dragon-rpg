@@ -12,8 +12,8 @@ class RefreshCommand extends Command {
   async exec(message) {
     if (!this.client.combat.has(message.author.id)) return message.channel.send('Only usable in combat!');
     const combat = this.client.combat.get(message.author.id);
-    combat.currhp = combat.maxhp;
-    combat.currmp = combat.maxmp;
+    combat.currHP = combat.maxhp;
+    combat.currMP = combat.maxmp;
 
     return message.channel.send(`${message.author.username}, your HP and MP have been refreshed!`);
   };

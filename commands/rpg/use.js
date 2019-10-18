@@ -59,8 +59,8 @@ class UseCommand extends Command {
     const type = usedItem.effects.match(/HP|MP/g)[0];
 
     const transfer = {
-      HP: 'currhp',
-      MP: 'currmp'
+      HP: 'currHP',
+      MP: 'currMP'
     }
 
     console.log(transfer[type]);
@@ -81,10 +81,10 @@ class UseCommand extends Command {
           i++;
         };
         if (type === 'HP') {
-          player.currhp = Math.min(player.maxhp, math.currhp + totalRestored);
+          player.currHP = Math.min(player.maxhp, math.currHP + totalRestored);
         }
         else {
-          player.currmp = Math.min(player.maxmp, math.currmp + totalRestored);
+          player.currMP = Math.min(player.maxmp, math.currMP + totalRestored);
         }
         await this.client.db.query(`
           UPDATE
@@ -94,21 +94,21 @@ class UseCommand extends Command {
           WHERE
             itemid = ${usedItem.itemid}`);
         const enemyDmg = await this.client.enemyBasicAttack(enemy, player);
-        if (this.client.combat.get(message.author.id).currhp > 0) { //player survives, turn increments
+        if (this.client.combat.get(message.author.id).currHP > 0) { //player survives, turn increments
           await this.client.turnIncrement(player, enemy);
           const embed = new MessageEmbed()
             .setColor('BLUE')
             .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
             .setDescription(stripIndents`${message.author.username} used ${item} and healed ${totalRestored} ${type}!
               ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} attacked and dealt ${enemyDmg} damage!`)
-            .addField(`**${message.author.username}**`, `❤ HP: ${this.client.combat.get(message.author.id).currhp}/${this.client.combat.get(message.author.id).maxhp}\n✨ MP: ${this.client.combat.get(message.author.id).currmp}/${this.client.combat.get(message.author.id).maxmp}\n💥 Abilities: ${player.abilities.join(', ')}`, true)
+            .addField(`**${message.author.username}**`, `❤ HP: ${this.client.combat.get(message.author.id).currHP}/${this.client.combat.get(message.author.id).maxhp}\n✨ MP: ${this.client.combat.get(message.author.id).currMP}/${this.client.combat.get(message.author.id).maxmp}\n💥 Abilities: ${player.abilities.join(', ')}`, true)
             .addField(`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${this.client.combat.get(message.author.id).enemyhp}\n✨ MP: ${this.client.combat.get(message.author.id).enemymp}`, true)
             .setFooter(`Current turn: ${this.client.combat.get(message.author.id).turn}`)
           return message.channel.send(embed);
         }
         else { //player dies
           await this.client.db.query('DELETE FROM combat WHERE playerid = $1', [message.author.id]);
-          await this.client.db.query(`UPDATE players SET currhp = div(maxhp, 2), currmp = (maxmp, 2) WHERE playerid = '${message.author.id}'`);
+          await this.client.db.query(`UPDATE players SET currHP = div(maxhp, 2), currMP = (maxmp, 2) WHERE playerid = '${message.author.id}'`);
           this.client.combat.delete(message.author.id);
           const embed = new MessageEmbed()
             .setColor('RED')
@@ -121,7 +121,7 @@ class UseCommand extends Command {
       }
       else { //enemy goes first
         const enemyDmg = await this.client.enemyBasicAttack(enemy, player);
-        if (this.client.combat.get(message.author.id).currhp > 0) { //player survives, uses item
+        if (this.client.combat.get(message.author.id).currHP > 0) { //player survives, uses item
           let i = 0;
           let totalRestored = 0;
           while (i < amount) {
@@ -129,10 +129,10 @@ class UseCommand extends Command {
             i++;
           };
           if (type === 'HP') {
-            player.currhp = Math.min(player.maxhp, math.currhp + totalRestored);
+            player.currHP = Math.min(player.maxhp, math.currHP + totalRestored);
           }
           else {
-            player.currmp = Math.min(player.maxmp, math.currmp + totalRestored);
+            player.currMP = Math.min(player.maxmp, math.currMP + totalRestored);
           }
           await this.client.db.query(`UPDATE ${'inv' + message.author.id} SET ${usedItem.itemid} = ${foundItem.count - amount} WHERE itemid = ${usedItem.itemid}`)
           await this.client.turnIncrement(player, enemy);
@@ -141,14 +141,14 @@ class UseCommand extends Command {
               .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
               .setDescription(stripIndents`${message.author.username} used ${item} and healed ${totalRestored} ${type}!
                 ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} attacked and dealt ${enemyDmg} damage!`)
-              .addField(`**${message.author.username}**`, `❤ HP: ${this.client.combat.get(message.author.id).currhp}/${this.client.combat.get(message.author.id).maxhp}\n✨ MP: ${this.client.combat.get(message.author.id).currmp}/${this.client.combat.get(message.author.id).maxmp}\n💥 Abilities: ${player.abilities.join(', ')}`, true)
+              .addField(`**${message.author.username}**`, `❤ HP: ${this.client.combat.get(message.author.id).currHP}/${this.client.combat.get(message.author.id).maxhp}\n✨ MP: ${this.client.combat.get(message.author.id).currMP}/${this.client.combat.get(message.author.id).maxmp}\n💥 Abilities: ${player.abilities.join(', ')}`, true)
               .addField(`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${this.client.combat.get(message.author.id).enemyhp}\n✨ MP: ${this.client.combat.get(message.author.id).enemymp}`, true)
               .setFooter(`Current turn: ${this.client.combat.get(message.author.id).turn}`)
             return message.channel.send(embed);
           }
           else { //player dies
             await this.client.db.query('DELETE FROM combat WHERE playerid = $1', [message.author.id]);
-            await this.client.db.query(`UPDATE players SET currhp = div(maxhp, 2), currmp = (maxmp, 2) WHERE playerid = '${message.author.id}'`);
+            await this.client.db.query(`UPDATE players SET currHP = div(maxhp, 2), currMP = (maxmp, 2) WHERE playerid = '${message.author.id}'`);
             this.client.combat.delete(message.author.id);
             const embed = new MessageEmbed()
               .setColor('RED')
@@ -170,10 +170,10 @@ class UseCommand extends Command {
 
         try {
           if (type === 'HP') {
-            await this.client.db.query(`UPDATE players SET currhp = LEAST(maxhp, (currhp + ${totalRestored})) WHERE playerid = '${message.author.id}'`); 
+            await this.client.db.query(`UPDATE players SET currHP = LEAST(maxhp, (currHP + ${totalRestored})) WHERE playerid = '${message.author.id}'`); 
           }
           else {
-            await this.client.db.query(`UPDATE players SET currmp = LEAST(maxmp, (currmp + ${totalRestored})) WHERE playerid = '${message.author.id}'`);
+            await this.client.db.query(`UPDATE players SET currMP = LEAST(maxmp, (currMP + ${totalRestored})) WHERE playerid = '${message.author.id}'`);
           }
           await this.client.db.query(`UPDATE ${'inv' + message.author.id} SET ${usedItem.itemid} = ${foundItem.count - amount} WHERE itemid = ${usedItem.itemid}`)
           message.channel.send(`${message.author.username}, you used ${amount} ${item} and restored ${totalRestored} ${type}.`)

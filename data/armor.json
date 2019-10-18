@@ -1,26 +1,21 @@
 [  
   {
-    "itemid":33,
     "id":"clothes",
     "name":"clothes",
     "description":"A standard outfit, because it's not acceptable to be naked in public.",
-    
-    "abilities":[  
-      "punch",
-      "stomp"
-    ],
-    "physdef":1,
-    "magdef":1,
-    "strmod":1,
-    "agimod":1,
-    "conmod":1,
-    "magmod":0,
-    "sprmod":0,
-    "hpmod":5,
-    "mpmod":0,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "abilities":[],
+    "tough":1,
+    "mind":1,
+    "str":1,
+    "agi":1,
+    "con":1,
+    "mag":0,
+    "spr":0,
+    "hp":5,
+    "mp":0,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":25,
     "sell":5,
@@ -28,8 +23,7 @@
     "slot":"a"
   },
   {
-    "itemid":34,
-    "id":"leatherjerkin",
+    "id":"lejerkin",
     "name":"leather jerkin",
     "description":"A workman's outfit, or that of an apprentice, sturdy but serviceable.",
     
@@ -37,18 +31,18 @@
       "defend",
       "rush"
     ],
-    "physdef":2,
-    "magdef":1,
-    "strmod":0,
-    "agimod":1,
-    "conmod":1,
-    "magmod":0,
-    "sprmod":0,
-    "hpmod":10,
-    "mpmod":0,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "tough":2,
+    "mind":1,
+    "str":0,
+    "agi":1,
+    "con":1,
+    "mag":0,
+    "spr":0,
+    "hp":10,
+    "mp":0,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":250,
     "sell":50,
@@ -56,8 +50,7 @@
     "slot":"a"
   },
   {
-    "itemid":35,
-    "id":"leatherarmor",
+    "id":"learmor",
     "name":"leather armor",
     "description":"When properly maintained, this well-worn armor can feel like a second skin.",
     
@@ -65,16 +58,16 @@
       "rush",
       "kick"
     ],
-    "strmod":1,
-    "agimod":1,
-    "conmod":0,
-    "magmod":0,
-    "sprmod":0,
-    "hpmod":15,
-    "mpmod":0,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":1,
+    "agi":1,
+    "con":0,
+    "mag":0,
+    "spr":0,
+    "hp":15,
+    "mp":0,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":750,
     "sell":150,
@@ -82,13 +75,12 @@
     "slot":"a",
     
     
-    "physdef":3,
-    "magdef":1
+    "tough":3,
+    "mind":1
     
   },
   {
-    "itemid":36,
-    "id":"studdedarmor",
+    "id":"studarmor",
     "name":"studded leather armor",
     "description":"Tough leather with bits of metal at key points, this armor is excellent for a brawler.",
     
@@ -96,16 +88,16 @@
       "bash",
       "headbutt"
     ],
-    "strmod":1,
-    "agimod":2,
-    "conmod":1,
-    "magmod":0,
-    "sprmod":0,
-    "hpmod":25,
-    "mpmod":0,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":1,
+    "agi":2,
+    "con":1,
+    "mag":0,
+    "spr":0,
+    "hp":25,
+    "mp":0,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":1500,
     "sell":300,
@@ -113,13 +105,12 @@
     "slot":"a",
     
     
-    "physdef":5,
-    "magdef":2
+    "tough":5,
+    "mind":2
     
   },
   {
-    "itemid":37,
-    "id":"spidersilkarmor",
+    "id":"silkarmor",
     "name":"spidersilk armor",
     "description":"Difficult to make due to the scarcity of the materials, it renders the wearer near invisible when still.",
     
@@ -127,30 +118,27 @@
       "hide",
       "backstab"
     ],
-    "strmod":1,
-    "agimod":5,
-    "conmod":0,
-    "magmod":0,
-    "sprmod":0,
-    "hpmod":35,
-    "mpmod":0,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":1,
+    "agi":5,
+    "con":0,
+    "mag":0,
+    "spr":0,
+    "hp":35,
+    "mp":0,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":4500,
     "sell":900,
     "rarity":7,
     "slot":"a",
-    
-    
-    "physdef":7,
-    "magdef":3
+    "tough":7,
+    "mind":3
     
   },
   {
-    "itemid":38,
-    "id":"assassinsarmor",
+    "id":"sinarmor",
     "name":"assassin's armor",
     "description":"Bestowed only to those who have proven their skill, the fabric provides protection from both weapons and sight.",
     
@@ -158,16 +146,16 @@
       "hide",
       "blind"
     ],
-    "strmod":2,
-    "agimod":8,
-    "conmod":2,
-    "magmod":0,
-    "sprmod":1,
-    "hpmod":50,
-    "mpmod":0,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":2,
+    "agi":8,
+    "con":2,
+    "mag":0,
+    "spr":1,
+    "hp":50,
+    "mp":0,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"b",
     "cost":9000,
     "sell":1800,
@@ -175,8 +163,8 @@
     "slot":"a",
     
     
-    "physdef":10,
-    "magdef":3
+    "tough":10,
+    "mind":3
     
   },
   {
@@ -189,16 +177,16 @@
       "sneak",
       "garrote"
     ],
-    "strmod":3,
-    "agimod":10,
-    "conmod":3,
-    "magmod":0,
-    "sprmod":4,
-    "hpmod":100,
-    "mpmod":10,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":3,
+    "agi":10,
+    "con":3,
+    "mag":0,
+    "spr":4,
+    "hp":100,
+    "mp":10,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"b",
     "cost":9000,
     "sell":1800,
@@ -206,8 +194,8 @@
     "slot":"a",
     
     
-    "physdef":14,
-    "magdef":5
+    "tough":14,
+    "mind":5
     
   },
   {
@@ -220,85 +208,46 @@
       "dodge",
       "assassinate"
     ],
-    "strmod":6,
-    "agimod":15,
-    "conmod":4,
-    "magmod":0,
-    "sprmod":5,
-    "hpmod":150,
-    "mpmod":20,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":6,
+    "agi":15,
+    "con":4,
+    "mag":0,
+    "spr":5,
+    "hp":150,
+    "mp":20,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"b",
     "cost":25000,
     "sell":3000,
     "rarity":10,
     "slot":"a",
-    
-    
-    "physdef":17,
-    "magdef":6
-    
+    "tough":17,
+    "mind":6
   },
   {
-    "itemid":47,
-    "id":"nothing",
-    "name":"nothing",
-    "description":"Nothing worn.",
-    
-    "abilities":null,
-    "strmod":0,
-    "agimod":0,
-    "conmod":0,
-    "magmod":0,
-    "sprmod":0,
-    "hpmod":0,
-    "mpmod":0,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
-    "source":null,
-    "cost":null,
-    "sell":null,
-    "rarity":null,
-    "slot":"a",
-    
-    
-    "physdef":null,
-    "magdef":null
-    
-  },
-  {
-    "itemid":57,
-    "id":"cottonrobes",
+    "id":"crobes",
     "name":"cotton robes",
     "description":"An inititate's robes, simple and unadorned.",
-    
-    "abilities":[  
-      "band-aid",
-      "toughen"
-    ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":1,
-    "magmod":1,
-    "sprmod":1,
-    "hpmod":0,
-    "mpmod":5,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "abilities":[],
+    "str":0,
+    "agi":0,
+    "con":1,
+    "mag":1,
+    "spr":1,
+    "hp":0,
+    "mp":5,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":25,
     "sell":5,
     "rarity":3,
     "slot":"a",
-    
-    
-    "physdef":1,
-    "magdef":2
-    
+    "tough":1,
+    "mind":2
   },
   {
     "itemid":58,
@@ -310,16 +259,16 @@
       "band-aid",
       "detox"
     ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":1,
-    "magmod":1,
-    "sprmod":2,
-    "hpmod":0,
-    "mpmod":10,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":0,
+    "con":1,
+    "mag":1,
+    "spr":2,
+    "hp":0,
+    "mp":10,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":250,
     "sell":50,
@@ -327,8 +276,8 @@
     "slot":"a",
     
     
-    "physdef":1,
-    "magdef":3
+    "tough":1,
+    "mind":3
     
   },
   {
@@ -341,16 +290,16 @@
       "heal",
       "toughen"
     ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":1,
-    "magmod":2,
-    "sprmod":4,
-    "hpmod":0,
-    "mpmod":20,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":0,
+    "con":1,
+    "mag":2,
+    "spr":4,
+    "hp":0,
+    "mp":20,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":750,
     "sell":150,
@@ -358,8 +307,8 @@
     "slot":"a",
     
     
-    "physdef":2,
-    "magdef":5
+    "tough":2,
+    "mind":5
     
   },
   {
@@ -372,16 +321,16 @@
       "heal",
       "purify"
     ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":2,
-    "magmod":3,
-    "sprmod":6,
-    "hpmod":5,
-    "mpmod":30,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":0,
+    "con":2,
+    "mag":3,
+    "spr":6,
+    "hp":5,
+    "mp":30,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":1500,
     "sell":300,
@@ -389,8 +338,8 @@
     "slot":"a",
     
     
-    "physdef":3,
-    "magdef":6
+    "tough":3,
+    "mind":6
     
   },
   {
@@ -403,16 +352,16 @@
       "detox",
       "cure"
     ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":2,
-    "magmod":3,
-    "sprmod":9,
-    "hpmod":10,
-    "mpmod":30,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":0,
+    "con":2,
+    "mag":3,
+    "spr":9,
+    "hp":10,
+    "mp":30,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":4500,
     "sell":900,
@@ -420,8 +369,8 @@
     "slot":"a",
     
     
-    "physdef":5,
-    "magdef":10
+    "tough":5,
+    "mind":10
     
   },
   {
@@ -434,16 +383,16 @@
       "psychic scream",
       "calming wave"
     ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":3,
-    "magmod":4,
-    "sprmod":10,
-    "hpmod":20,
-    "mpmod":40,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":0,
+    "con":3,
+    "mag":4,
+    "spr":10,
+    "hp":20,
+    "mp":40,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":9000,
     "sell":1800,
@@ -451,8 +400,8 @@
     "slot":"a",
     
     
-    "physdef":6,
-    "magdef":12
+    "tough":6,
+    "mind":12
     
   },
   {
@@ -465,16 +414,16 @@
       "revive",
       "purify"
     ],
-    "strmod":0,
-    "agimod":2,
-    "conmod":5,
-    "magmod":5,
-    "sprmod":12,
-    "hpmod":30,
-    "mpmod":55,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":2,
+    "con":5,
+    "mag":5,
+    "spr":12,
+    "hp":30,
+    "mp":55,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"b",
     "cost":15000,
     "sell":2500,
@@ -482,8 +431,8 @@
     "slot":"a",
     
     
-    "physdef":8,
-    "magdef":18
+    "tough":8,
+    "mind":18
     
   },
   {
@@ -496,16 +445,16 @@
       "full heal",
       "barrier"
     ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":10,
-    "magmod":8,
-    "sprmod":17,
-    "hpmod":40,
-    "mpmod":70,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":0,
+    "con":10,
+    "mag":8,
+    "spr":17,
+    "hp":40,
+    "mp":70,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"b",
     "cost":25000,
     "sell":3000,
@@ -513,8 +462,8 @@
     "slot":"a",
     
     
-    "physdef":10,
-    "magdef":23
+    "tough":10,
+    "mind":23
     
   },
   {
@@ -527,16 +476,16 @@
       "barfire",
       "spark"
     ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":1,
-    "magmod":2,
-    "sprmod":0,
-    "hpmod":15,
-    "mpmod":10,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":0,
+    "con":1,
+    "mag":2,
+    "spr":0,
+    "hp":15,
+    "mp":10,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":250,
     "sell":50,
@@ -544,8 +493,8 @@
     "slot":"a",
     
     
-    "physdef":1,
-    "magdef":2
+    "tough":1,
+    "mind":2
     
   },
   {
@@ -558,16 +507,16 @@
       "barice",
       "ice shard"
     ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":1,
-    "magmod":3,
-    "sprmod":1,
-    "hpmod":20,
-    "mpmod":10,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":0,
+    "con":1,
+    "mag":3,
+    "spr":1,
+    "hp":20,
+    "mp":10,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":750,
     "sell":150,
@@ -575,8 +524,8 @@
     "slot":"a",
     
     
-    "physdef":1,
-    "magdef":3
+    "tough":1,
+    "mind":3
     
   },
   {
@@ -589,16 +538,16 @@
       "barlite",
       "shock"
     ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":2,
-    "magmod":4,
-    "sprmod":1,
-    "hpmod":25,
-    "mpmod":15,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":0,
+    "con":2,
+    "mag":4,
+    "spr":1,
+    "hp":25,
+    "mp":15,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":1500,
     "sell":300,
@@ -606,8 +555,8 @@
     "slot":"a",
     
     
-    "physdef":2,
-    "magdef":5
+    "tough":2,
+    "mind":5
     
   },
   {
@@ -620,16 +569,16 @@
       "magic missile",
       "magic lash"
     ],
-    "strmod":0,
-    "agimod":0,
-    "conmod":3,
-    "magmod":6,
-    "sprmod":2,
-    "hpmod":35,
-    "mpmod":20,
-    "hunttimermod":1,
-    "gathertimermod":1,
-    "fishtimermod":1,
+    "str":0,
+    "agi":0,
+    "con":3,
+    "mag":6,
+    "spr":2,
+    "hp":35,
+    "mp":20,
+    "hunttimer":1,
+    "gathertimer":1,
+    "fishtimer":1,
     "source":"s",
     "cost":4500,
     "sell":900,
@@ -637,8 +586,8 @@
     "slot":"a",
     
     
-    "physdef":4,
-    "magdef":8
+    "tough":4,
+    "mind":8
     
   }
 ]

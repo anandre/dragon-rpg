@@ -26,13 +26,6 @@ class Goblin extends CommonEnemy {
       'bash',
       'swipe'
     ];
-
-    this.weapon = this.client.items.get(76);
-  }
-
-  attack() {
-    const baseDmg = Math.floor((Number.parseFloat((Math.random() * 1.5).toFixed(2)) + 1) * this.weapon.attack) + 1 + Math.max(Math.floor(this.str/3),1);
-    return baseDmg;
   }
 }
 

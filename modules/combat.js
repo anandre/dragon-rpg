@@ -26,8 +26,8 @@ module.exports = (client) => {
         UPDATE
           combat
         SET
-          currhp = $1,
-          currmp = $2,
+          currHP = $1,
+          currMP = $2,
           enemyhp = $3,
           enemymp = $4,
           turn = $5,
@@ -35,7 +35,7 @@ module.exports = (client) => {
           enemycd = $7
         WHERE
           playerid = $8`,
-        [player.currhp, player.currmp, player.enemyhp, player.enemymp, player.turn,
+        [player.currHP, player.currMP, player.enemyhp, player.enemymp, player.turn,
         player.cooldowns, player.enemycd, player.playerid]);
     };
     const embed = new MessageEmbed()
@@ -43,8 +43,8 @@ module.exports = (client) => {
       .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
       .setDescription(stripIndents`${message.author.username} has dealt ${playerDmg ? playerDmg : 0} damage!
         ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} has done ${enemyDmg ? enemyDmg : 0} damage!`)
-      .addField(stripIndents`**${message.author.username}**`, `❤ HP: ${player.currhp}/${player.maxhp}
-      ✨ MP: ${player.currmp}/${player.maxmp}
+      .addField(stripIndents`**${message.author.username}**`, `❤ HP: ${player.currHP}/${player.maxhp}
+      ✨ MP: ${player.currMP}/${player.maxmp}
       💥 Abilities: ${player.abilities.join(', ')}`, true)
       .addField(stripIndents`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${player.enemyhp}
       ✨ MP: ${player.enemymp}`, true)
@@ -75,8 +75,8 @@ module.exports = (client) => {
         UPDATE
           combat
         SET
-          currhp = $1,
-          currmp = $2,
+          currHP = $1,
+          currMP = $2,
           enemyhp = $3,
           enemymp = $4,
           turn = $5,
@@ -84,7 +84,7 @@ module.exports = (client) => {
           enemycd = $7
         WHERE
           playerid = $8`,
-        [player.currhp, player.currmp, player.enemyhp, player.enemymp, player.turn,
+        [player.currHP, player.currMP, player.enemyhp, player.enemymp, player.turn,
         player.cooldowns, player.enemycd, player.playerid]);
     };
     const embed = new MessageEmbed()
@@ -92,8 +92,8 @@ module.exports = (client) => {
       .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
       .setDescription(stripIndents`${message.author.username} tried to run but failed!
         ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} has done ${enemyDmg ? enemyDmg : 0} damage!`)
-      .addField(stripIndents`**${message.author.username}**`, `❤ HP: ${player.currhp}/${player.maxhp}
-      ✨ MP: ${player.currmp}/${player.maxmp}
+      .addField(stripIndents`**${message.author.username}**`, `❤ HP: ${player.currHP}/${player.maxhp}
+      ✨ MP: ${player.currMP}/${player.maxmp}
       💥 Abilities: ${player.abilities.join(', ')}`, true)
       .addField(stripIndents`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${player.enemyhp}
       ✨ MP: ${player.enemymp}`, true)
@@ -151,7 +151,7 @@ module.exports = (client) => {
         const grossDmg = rawDmg + addDmg;
         const netDmg = grossDmg - type[ability.damagetype];
         player.enemyhp -= Math.max(1, netDmg);
-        player.currmp -= ability.mana;
+        player.currMP -= ability.mana;
         player.cooldowns[player.abilities.indexOf(ability.name)] -= 1;
         return Math.max(1, netDmg);
     };
@@ -176,9 +176,9 @@ module.exports = (client) => {
         };
         const addDmg = Math.floor(parseFloat(dmgAdd[0]) * type[dmgAdd[1]]);
         const grossDmg = rawDmg + addDmg;
-        player.currhp += grossDmg;
-        if (player.currhp > player.maxhp) player.currhp = player.maxhp;
-        player.currmp -= ability.mana;
+        player.currHP += grossDmg;
+        if (player.currHP > player.maxhp) player.currHP = player.maxhp;
+        player.currMP -= ability.mana;
         player.cooldowns[player.abilities.indexOf(ability.name)] -= 1;
         return grossDmg;
     };
@@ -199,13 +199,13 @@ module.exports = (client) => {
       UPDATE
         players
       SET
-        currhp = LEAST(maxhp, $1),
-        currmp = LEAST(maxmp, $2),
+        currHP = LEAST(maxhp, $1),
+        currMP = LEAST(maxmp, $2),
         xp = (xp + $3),
         gold = (gold + $4)
       WHERE
         playerid = $5`,
-      [player.currhp, player.currmp, enemy.xp, enemy.gold, message.author.id]);
+      [player.currHP, player.currMP, enemy.xp, enemy.gold, message.author.id]);
     await client.db.query(`
       DELETE FROM
         combat
@@ -219,8 +219,8 @@ module.exports = (client) => {
       .setDescription(stripIndents`${message.author.username} has dealt ${playerDmg ? playerDmg : 0} damage!
         ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} has done ${enemyDmg ? enemyDmg : 0} damage!`)
       .addField(`${message.author.username} has defeated ${enemy.name}!`, `They have found ${enemy.gold} gold and earned ${enemy.xp} experience!`)
-      .addField(stripIndents`**${message.author.username}**`, `❤ HP: ${player.currhp}/${player.maxhp}
-      ✨ MP: ${player.currmp}/${player.maxmp}
+      .addField(stripIndents`**${message.author.username}**`, `❤ HP: ${player.currHP}/${player.maxhp}
+      ✨ MP: ${player.currMP}/${player.maxmp}
       💥 Abilities: ${player.abilities.join(', ')}`, true)
       .addField(stripIndents`**${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)}**`, `❤ HP: ${player.enemyhp}
       ✨ MP: ${player.enemymp}`, true)
@@ -241,8 +241,8 @@ module.exports = (client) => {
       UPDATE
         players
       SET
-        currhp = $1,
-        currmp = $2
+        currHP = $1,
+        currMP = $2
       WHERE
         playerid = $3`,
       [Math.floor(player.maxhp/2), Math.floor(player.maxmp/2), message.author.id]);
@@ -252,8 +252,8 @@ module.exports = (client) => {
       .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
       .setDescription(stripIndents`${message.author.username} has dealt ${playerDmg ? playerDmg : 0} damage!
         ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} has done ${enemyDmg ? enemyDmg : 0} damage!`)
-      .addField(stripIndents`**${message.author.username}**`, `❤ HP: ${player.currhp}/${player.maxhp}
-      ✨ MP: ${player.currmp}/${player.maxmp}
+      .addField(stripIndents`**${message.author.username}**`, `❤ HP: ${player.currHP}/${player.maxhp}
+      ✨ MP: ${player.currMP}/${player.maxmp}
       💥 Abilities: ${player.abilities.join(', ')}`, true)
       .addField('\u200b', stripIndents`${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} has defeated ${message.author.username}!
 
@@ -272,8 +272,8 @@ module.exports = (client) => {
       UPDATE
         players
       SET
-        currhp = $1,
-        currmp = $2
+        currHP = $1,
+        currMP = $2
       WHERE
         playerid = $3`,
       [Math.floor(player.maxhp/2), Math.floor(player.maxmp/2), message.author.id]);
@@ -283,8 +283,8 @@ module.exports = (client) => {
       .setTitle(`${message.author.username}'s combat against ${enemy.name}!`)
       .setDescription(stripIndents`${message.author.username} could not escape!!
         ${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} has done ${enemyDmg ? enemyDmg : 0} damage!`)
-      .addField(stripIndents`**${message.author.username}**`, `❤ HP: ${player.currhp}/${player.maxhp}
-      ✨ MP: ${player.currmp}/${player.maxmp}
+      .addField(stripIndents`**${message.author.username}**`, `❤ HP: ${player.currHP}/${player.maxhp}
+      ✨ MP: ${player.currMP}/${player.maxmp}
       💥 Abilities: ${player.abilities.join(', ')}`, true)
       .addField('\u200b', stripIndents`${enemy.name.charAt(0).toUpperCase()}${enemy.name.substr(1)} has defeated ${message.author.username}!
 
@@ -297,9 +297,9 @@ module.exports = (client) => {
     const monsters = combat.filter(f => f.side === 'monster');
     const embed = new MessageEmbed()
       .setTitle(`Combat - Turn ${combat.find(t => t.constructor.name === 'Number')}`)
-      .setDescription(players.map(f => `**${f.name}** - ❤ HP: ${f.currhp}/${f.maxhp}  ✨ MP: ${f.currmp}/${f.maxmp} 💥 Abilities: ${f.abilities.map(a => a.name).join(', ')}`).join('\n') + '\n')
+      .setDescription(players.map(f => `**${f.name}** - ❤ HP: ${f.currHP}/${f.maxHP}  ✨ MP: ${f.currMP}/${f.maxMP} 💥 Abilities: ${f.abilities.map(a => a.name).join(', ')}`).join('\n') + '\n')
     for (const monster of monsters) {
-      embed.description += `\n**${monster.name}** - ❤ HP: ${monster.currhp}/${monster.maxhp}  ✨ MP: ${monster.currmp}/${monster.maxmp}`
+      embed.description += `\n**${monster.name}** (${monster.id}) - ❤ HP: ${monster.currHP}/${monster.maxHP}  ✨ MP: ${monster.currMP}/${monster.maxMP}`
     }
     return embed;
   }
@@ -324,35 +324,38 @@ module.exports = (client) => {
       client.combat.set(players.keyArray().join('-'), []);
       const thisCombat = client.combat.get(players.keyArray().join('-'));
       const playerStats = (await client.db.query(`SELECT
-          playerid, path, str, agi, con, mag, spr,
-          currhp, maxhp, currmp, maxmp, level,
-          weaponid, armorid, physdef, magdef
+          playerid, path, currhp, currmp, level, weaponid, armorid, accessoryid, xp, gold
         FROM
           players
         WHERE
           playerid IN ('${players.keyArray().join('\', \'')}')`)).rows;
       for (const fighter of playerStats) {
-        fighter.name = client.users.get(fighter.playerid).username;
-        const weaponAbilities = client.items.get(fighter.weaponid).abilities;
-        const armorAbilities = client.items.get(fighter.armorid).abilities;
-        const totalAbis = weaponAbilities.concat(armorAbilities);
-        const abiInfo = [];
-        for (let i = 0; i < totalAbis.length; i++) {
-          abiInfo.push({ name: totalAbis[i], cooldown: client.abilities.get(totalAbis[i]).cooldown})
-        }
-        fighter.abilities = abiInfo;
-        fighter.statuses = [];
-        fighter.side = 'player';
-        fighter.target = fighter.playerid;
-        thisCombat.push(fighter);
-        const enemy = { ...client.enemies.filter(e => e.rank <= fighter.level).random()};
+        const path = require(`../data/paths/${fighter.path}.js`);
+        const combatant = new path(client, {
+          id: fighter.playerid,
+          name: (await client.users.fetch(fighter.playerid)).username,
+          level: fighter.level,
+          xp: fighter.xp,
+          gold: fighter.gold,
+          weaponid: fighter.weaponid,
+          armorid: fighter.armorid,
+          accessoryid: fighter.accessoryid,
+          currHP: fighter.currhp,
+          currMP: fighter.currmp
+        });
+        combatant.side = 'player';
+        thisCombat.push(combatant);
+
+        const eData = client.enemies.filter(e => e.level <= fighter.level).random();
+        const enemy = new (require(`../data/enemies/${eData.rarity}/${eData.id}.js`))(client);
+        //const enemy = { ...client.enemies.filter(e => e.level <= fighter.level).random() };
         enemy.side = 'monster';
-        enemy.abilities = enemy.abilities.map(a => a = { name: a, cooldown: client.abilities.get(a).cooldown });
-        enemy.statuses = [];
-        enemy.target = `${enemy.id}${thisCombat.filter(e => e.name === enemy.name && e.side === 'monster').length + 1}`
+        enemy.currHP = enemy.maxHP;
+        enemy.currMP = enemy.maxMP;
+        enemy.id = `${enemy.id}${thisCombat.filter(e => e.name === enemy.name && e.side === 'monster').length + 1}`
         thisCombat.push(enemy);
-        thisCombat.push(1);
       }
+      thisCombat.push(1);
     }
     catch (error) {
       if (error === 'Combat has been canceled.') {
@@ -360,6 +363,7 @@ module.exports = (client) => {
       }
       else {
         message.answer(message.author, 'there was a problem starting combat.  Please report this in my support server, an invite can be found using the `invite` command.');
+        console.log(error)
         client.commandHandler.emit('error', (message, error, client.commandHandler.modules.get('startcombat')));
       }
     }
@@ -377,31 +381,54 @@ module.exports = (client) => {
     let pAttacks = [];
     for (const fighter of thisCombat) {
       if (fighter.side === 'player') {
-        if (fighter.currhp > 0) {
+        if (fighter.currHP > 0) {
           const cFilter = m => {
-            const commandArgs = m.content.toLowerCase().trim().split(/ +/g);
+            const args = m.content.toLowerCase().trim().split(/ +/g);
             //add cast spell-name target format
-            return m.author.id === fighter.playerid && ['attack'].includes(commandArgs[0])
+            return m.author.id === fighter.id
+            &&
+            (
+              (
+                ['attack', 'a', 'att'].includes(args[0])
+                && thisCombat.map(f => f.id).indexOf(args[1]) !== -1
+                )
+              ||
+              (
+                ['cast', 'c', 'use'].includes(args[0])
+                && fighter.abilities.some(a => a.name === args[1])
+                && fighter.abilities.find(a => a.name === args[1]).cooldown === client.abilities.find(a => a.name === args[1]).cooldown
+                && thisCombat.map(f => f.id).indexOf(args[2]) !== -1
+              )
+            )
           }
           pAttacks.push(message.channel.awaitMessages(cFilter, { max: 1 }))
         }
       }
       else {
-        if (fighter.currhp > 0) {
+        if (fighter.currHP > 0) {
           const players = thisCombat.filter(f => f.side === 'player');
-          const targ = players[Math.floor(Math.random() * players.length)].playerid
-          pAttacks.push(Promise.resolve(`${fighter.target} attack ${targ}`));
+          const targ = players[Math.floor(Math.random() * players.length)].id
+          pAttacks.push(Promise.resolve(`${fighter.id} attack ${targ}`));
         }
       }
     }
     const round = await Promise.all(pAttacks);
-    //console.log(round);
-    const roundAttacks = round.map(r => r.constructor.name === 'Collection' ? `${r.first().author.id} ${r.first().content.split(' ').slice(0, 2).join(' ')}`.split(' ') : r.split(' '));
+    console.log(round);
+    const roundAttacks = round.map(r => r.constructor.name === 'Collection' ? `${r.first().author.id} ${r.first().content.toLowerCase().trim().split(/ +/g).slice(0, 3).join(' ')}`.split(' ') : r.split(' '));
     //console.log(roundAttacks);
     const res = [];
     for (const choice of roundAttacks) {
-      const attacker = thisCombat.find(a => a.target === choice[0]);
-      const defender = thisCombat.find(d => d.target === choice[2]);
+      if (['attack', 'a', 'att'].includes(choice[1])) {
+        const attacker = thisCombat.find(a => a.id === choice[0]);
+        const defender = thisCombat.find(a => a.id === choice[2]);
+        const action = client.attack(attacker, defender, attacker.statuses, defender.statuses);
+        res.push(action);
+      }
+      else if (['cast', 'c', 'use'].includes(choice[1])) {
+
+      }
+      const attacker = thisCombat.find(a => a.id === choice[0]);
+      const defender = thisCombat.find(d => d.id === choice[2]); //fix this line to work attack/cast
       //fix attack to start working with hit/miss/crit rolls in order
       const choiceObj = {
         attack: client.attack(attacker, defender, attacker.statuses, defender.statuses)
@@ -413,11 +440,13 @@ module.exports = (client) => {
   }
 
   client.attack = (attacker, defender, aStatuses, dStatuses) => {
-    if (attacker.currhp === 0) return;
+    if (attacker.currHP === 0) return;
 
     const toHit = Math.random() * 100;
-    const critChance = (10 + (attacker.agi * 1.25)) * (Object.keys(aStatuses).includes('focus') ? 1.1 : 1);
-    const toMiss = 100 - ((5 + (defender.agi * 1.10)) + (Object.keys(aStatuses).includes('aim') ? 15 : 0) + (Object.keys(dStatuses).includes('evasion') ? 25 : 0));
+    const critChance = attacker.prec;
+    const toMiss = 100 + attacker.acc - defender.dodge;
+    //const critChance = (10 + (attacker.agi * 1.25)) * (Object.keys(aStatuses).includes('focus') ? 1.1 : 1);
+    //const toMiss = 100 - ((5 + (defender.agi * 1.10)) + (Object.keys(aStatuses).includes('aim') ? 15 : 0) + (Object.keys(dStatuses).includes('evasion') ? 25 : 0));
     //console.log(`toHit: ${toHit}. toMiss: ${toMiss}. miss: ${toHit > toMiss}`)
     if (toHit > toMiss) {
       return `${attacker.name} attacked ${defender.name} but missed.`;
@@ -429,12 +458,12 @@ module.exports = (client) => {
     }
     const critMulti = 1.5 * (1 + attacker.agi/25)
     //console.log(crit)
-    const weapon = client.items.get(attacker.weaponid);
+    const weapon = attacker.weapon;
     const defense = {
-      physical: defender.physdef,
-      piercePhysical: Math.floor(defender.physef/2),
-      magical: defender.magdef,
-      pierceMagical: Math.floor(defender.magdef/2),
+      physical: defender.tough,
+      piercePhysical: Math.floor(defender.tough/2),
+      magical: defender.mind,
+      pierceMagical: Math.floor(defender.mind/2),
       pierceAll: 0
     };
     const statusMods = {
@@ -459,15 +488,15 @@ module.exports = (client) => {
     //console.log(`baseDmg: ${baseDmg}`)
     const rawDmg = (baseDmg * statusMulti) * (crit ? critMulti : 1).toFixed();
     //console.log(`rawDmg: ${rawDmg}`)
-    const netDmg = Math.max(rawDmg - defense[weapon.attacktype], 1);
+    const netDmg = Math.max(Math.round(rawDmg - defense[weapon.attacktype]), 1);
     //console.log(`netDmg ${netDmg}`)
-    defender.currhp = Math.max(defender.currhp - netDmg, 0);
+    defender.currHP = Math.max(defender.currHP - netDmg, 0);
     return `${attacker.name} attacked ${defender.name} and did ${netDmg} damage.`;
   }
 
   client.spellCast = (attacker, ability, defender, aStatuses, dStatuses) => {
-    if (attacker.currhp === 0) return;
-    defender.currmp = Math.max(defender.currmp - ability.mana, 0);
+    if (attacker.currHP === 0) return;
+    defender.currMP = Math.max(defender.currMP - ability.mana, 0);
     const defense = {
       physical: defender.physdef,
       piercePhysical: Math.floor(defender.physef/2),
@@ -534,7 +563,7 @@ module.exports = (client) => {
     const baseDmg = Math.floor((Number.parseFloat((Math.random() * 2.5).toFixed(2)) + 1) * ability.damage) + 1 + Math.max(Math.floor(damagetype[ability.attackstat]/3),1);
     const rawDmg = (baseDmg * statusMulti).toFixed();
     if (ability.type === 'heal') {
-      defender.currhp = Math.min(defender.currhp += rawDmg, defender.maxhp);
+      defender.currHP = Math.min(defender.currHP += rawDmg, defender.maxhp);
       return `${attacker.name} healed ${defender.name} for ${rawDmg} HP.`;
     }
   }

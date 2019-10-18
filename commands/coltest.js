@@ -47,7 +47,7 @@ class TestTwoCommand extends Command {
     await this.client.db.query(`
       INSERT INTO
         players (
-      playerid, path, xp, level, str, agi, con, mag, spr, currhp, maxhp, currmp, maxmp,
+      playerid, path, xp, level, str, agi, con, mag, spr, currHP, maxhp, currMP, maxmp,
       hunttimer, gathertimer, fishtimer, armorid, weaponid, accessoryid,
       gold, huntmod, fishmod, gathermod, physdef, magdef)
       VALUES (

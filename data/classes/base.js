@@ -16,6 +16,8 @@ class ClassBase {
     this.spr = data.spr;
     this.hpbase = data.hpbase;
     this.mpbase = data.mpbase;
+
+    this.statuses = [];
   }
 
 }

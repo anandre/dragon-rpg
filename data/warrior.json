@@ -4,11 +4,28 @@
     "str":3,
     "agi":1,
     "con":2,
+    "mag":1,
+    "spr":1,
+    "hp":20,
+    "mp":8,
+    "tough":2,
+    "mind":1,
+    "abilities":["rush"],
+    "weaponid":"idagg",
+    "armorid":"clothes",
+    "accessoryid":"nothing"
+  },
+  {
+    "level":2,
+    "str":4,
+    "agi":1,
+    "con":3,
     "mag":0,
     "spr":1,
-    "hp":10,
-    "mp":0,
-    "physdef":2,
-    "magdef":1
-  }
+    "hp":15,
+    "mp":3,
+    "tough":3,
+    "mind":2,
+    "abilities":["rush"]
+    }
 ]

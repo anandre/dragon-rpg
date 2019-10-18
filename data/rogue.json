@@ -1,0 +1,16 @@
+[
+  {
+    "level":1,
+    "str":2,
+    "agi":3,
+    "con":2,
+    "mag":1,
+    "spr":1,
+    "hp":15,
+    "mp":10,
+    "abilities":["backstab"],
+    "weaponid":"idagg",
+    "armorid":"clothes",
+    "accessoryid":"nothing"
+  }
+]

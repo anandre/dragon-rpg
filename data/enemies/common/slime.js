@@ -27,7 +27,7 @@ class Slime extends CommonEnemy {
       'icy touch'
     ];
     //update this to correct weapon when made
-    this.weapon = this.client.items.get(77)
+    //.weapon = this.client.items.get(77)
   }
 
   attack() {

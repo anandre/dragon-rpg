@@ -12,27 +12,41 @@ class ProfileCommand extends Command{
         content: 'Show a user\'s profile.',
         usage: 'profile [@user | user ID | username]',
         example: 'profile [@Mark | 167988857046827010 | Mark#2320]'
-      },
-      args: [
-        {
-          id: 'user',
-          type: 'user',
-          default: message => message.author
-        }
-      ]
+      }
     })
+  }
+
+  async *args(message, parsed, state) {
+    const user = yield {
+      type: 'user',
+      default: message => message.author
+    }
+
+    return { user };
   }
 
   async exec(message, { user }) {
     if (!this.client.players.includes(user.id)) return;
-    const data = (await this.client.db.query(`
+    const res = (await this.client.db.query(`
       SELECT
-        *
+        path, level, xp, gold, currhp, currmp, weaponid, armorid, accessoryid
       FROM
         players
       WHERE
         playerid = $1`,
       [user.id])).rows[0];
+    const path = require(`../../data/paths/${res.path}.js`);
+    const data = new path(this.client, {
+      id: user.id,
+      level: res.level,
+      xp: res.xp,
+      gold: res.gold,
+      weaponid: res.weaponid,
+      armorid: res.armorid,
+      accessoryid: res.accessoryid,
+      currHP: res.currhp,
+      currMP: res.currmp 
+    });
     const embed = new MessageEmbed()
       .setColor("#00FF33")
 	    .setThumbnail(user.displayAvatarURL())
@@ -43,8 +57,8 @@ class ProfileCommand extends Command{
         **Level**: ${data.level}
         **XP**: ${data.xp}
         **Gold**: ${data.gold}`, true)
-        .addField('\u200b', stripIndents`**HP**: ${data.currhp} / ${data.maxhp}
-        **MP**: ${data.currmp} / ${data.maxmp}
+        .addField('\u200b', stripIndents`**HP**: ${data.currHP} / ${data.maxHP}
+        **MP**: ${data.currMP} / ${data.maxMP}
         **Strength**: ${data.str}
         **Agility**: ${data.agi}
         **Constitution**: ${data.con}

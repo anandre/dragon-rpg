@@ -25,7 +25,7 @@ class HedgeWitch extends CommonEnemy {
       'poison'
     ];
 
-    this.weapon = this.client.items.get(77);
+    //this.weapon = this.client.items.get(77);
   }
 }
 
