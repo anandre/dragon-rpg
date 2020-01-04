@@ -1,6 +1,9 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
+const { join, dirname } = require('path');
+const appDir = dirname(require.main.filename);
+const dataManager = require(join(appDir, '/data/manager/dataManager.js'));
 
 class InformationCommand extends Command {
   constructor() {
@@ -19,63 +22,65 @@ class InformationCommand extends Command {
           match: 'content'
         }
       ]
-    })
+    });
   }
 
   async exec(message, { info }) {
-        if (this.client.abilities.some(i => i.name === info)) {
-            const ability = this.client.abilities.find(i => i.name === info);
-            const type = {
-                d: `${ability.damage}`,
-                h: `${ability.damage}`,
-                s: '',
-                p: ' (physical) ',
-                m: ' (magical) ',
-                n: '',
-                s: 'self',
-                t: 'single',
-                a: 'all enemies'
+    if (!info) {
+      return message.answer(message.author, 'please specify a `path`, `item`, `enemy`, or `ability` you want information on.');
+    }
+    if (dataManager.abilities.some(i => i.name === info)) {
+      const ability = dataManager.abilities.find(i => i.name === info);
+      const type = {
+        d: `${ability.damage}`,
+        h: `${ability.damage}`,
+        p: ' (physical) ',
+        m: ' (magical) ',
+        n: '',
+        s: 'self',
+        t: 'single',
+        a: 'all enemies'
 
-            }
-            const embed = new MessageEmbed()
-                .setColor('YELLOW')
-                .setTitle(`Information on ${info}.`)
-                .setDescription(stripIndents`**Dice**: ${type[ability.type]}${type[ability.damagetype]}
+      };
+      const embed = new MessageEmbed()
+        .setColor('YELLOW')
+        .setTitle(`Information on ${info}.`)
+        .setDescription(stripIndents`**Dice**: ${type[ability.type]}${type[ability.damagetype]}
                 **Effect**: ${ability.description}
                 **Target**: ${type[ability.target]}
                 **Mana cost**: ${ability.mana}
-                **Cooldown**: ${ability.cooldown}`)
-            return message.channel.send(embed);
-        }
-        if (this.client.enemies.some(i => i.name === info)) {
-            const enemy = this.client.enemies.find(i => i.name === info);
-            const type = {
-                p: ' (physical) ',
-                m: ' (magical) ',
-                n: '',
-                c: 'common',
-                u: 'uncommon',
-                b: 'boss'
-            }
-            const embed = new MessageEmbed()
-                .setColor('YELLOW')
-                .setTitle(`Information on ${info}.`)
-                .setDescription(stripIndents`**Name**: ${enemy.name}
+                **Cooldown**: ${ability.cooldown}`);
+      return message.channel.send(embed);
+    }
+    if (dataManager.enemies.some(i => i.name === info)) {
+      const enemy = this.client.enemies.find(i => i.name === info);
+      const type = {
+        p: ' (physical) ',
+        m: ' (magical) ',
+        n: '',
+        c: 'common',
+        u: 'uncommon',
+        b: 'boss'
+      };
+      const embed = new MessageEmbed()
+        .setColor('YELLOW')
+        .setTitle(`Information on ${info}.`)
+        .setDescription(stripIndents`**Name**: ${enemy.name}
                 **ID**: ${enemy.id}
                 **Description**: ${enemy.description}
                 **Regular attack**: ${enemy.damage} ${type[enemy.damagetype]}
                 **Abilities**: ${enemy.abilities.join(', ')}
                 **Possible drops**: ${enemy.drops.join(', ')}
-                **Rarity**: ${type[enemy.rarity]}`)
-            return message.channel.send(embed);
-        }
-        if (['warrior', 'rogue', 'priest', 'mage'].includes(info)) {
-            if (info === 'warrior') {
-                try {
-                    const embed = new MessageEmbed()
-                        .setColor('RED')
-                        .setTitle(stripIndents`Information on ${info.charAt(0).toUpperCase()}${info.substr(1).toLowerCase()}`)
-                        .setDescription(`${this.client.warrior.description}\n**Starting Strength**: ${this.client.warrior.str}
+                **Rarity**: ${type[enemy.rarity]}`);
+      return message.channel.send(embed);
+    }
+    if (['warrior', 'rogue', 'priest', 'mage'].includes(info)) {
+      if (info === 'warrior') {
+        try {
+          const embed = new MessageEmbed()
+            .setColor('RED')
+            .setTitle(stripIndents`Information on ${info.charAt(0).toUpperCase()}${info.substr(1).toLowerCase()}`)
+            .setDescription(`${this.client.warrior.description}\n**Starting Strength**: ${this.client.warrior.str}
                         **Starting Agility**: ${this.client.warrior.agi}
                         **Starting Constitution**: ${this.client.warrior.con}
                         **Starting Magic**: ${this.client.warrior.mag}
@@ -84,22 +89,22 @@ class InformationCommand extends Command {
                         **Starting MP**: ${this.client.warrior.mpmod}
                         **Starting Weapon**: ${this.client.items.get(this.client.warrior.weapon).name}
                         **Starting Armor**: ${this.client.items.get(this.client.warrior.armor).name}
-                        **Starting Accessory**: ${this.client.items.get(this.client.warrior.accessory).name}`)
-                    return message.channel.send(embed);
-                }
-                catch (e) {
-                    message.channel.send('There was an error retrieving information!  Please report this to my maker, an invite link can be found in the `invite` command.')
-                    this.client.channels.get('547399254864560138').send(`Error getting information on ${message.guild.name}.
+                        **Starting Accessory**: ${this.client.items.get(this.client.warrior.accessory).name}`);
+          return message.channel.send(embed);
+        }
+        catch (e) {
+          message.channel.send('There was an error retrieving information!  Please report this to my maker, an invite link can be found in the `invite` command.');
+          this.client.channels.get('547399254864560138').send(`Error getting information on ${message.guild.name}.
                     ${e.message}
-                    ${e.stack}`, {code: 'xxl'})
-                }
-            }
-            if (info === 'rogue') {
-                try {
-                    const embed = new MessageEmbed()
-                        .setColor('GREEN')
-                        .setTitle(stripIndents`Information on ${info.charAt(0).toUpperCase()}${info.substr(1).toLowerCase()}`)
-                        .setDescription(`${this.client.rogue.description}
+                    ${e.stack}`, { code: 'xxl' });
+        }
+      }
+      if (info === 'rogue') {
+        try {
+          const embed = new MessageEmbed()
+            .setColor('GREEN')
+            .setTitle(stripIndents`Information on ${info.charAt(0).toUpperCase()}${info.substr(1).toLowerCase()}`)
+            .setDescription(`${this.client.rogue.description}
                         **Starting Strength**: ${this.client.rogue.str}
                         **Starting Agility**: ${this.client.rogue.agi}
                         **Starting Constitution**: ${this.client.rogue.con}
@@ -109,22 +114,22 @@ class InformationCommand extends Command {
                         **Starting MP**: ${this.client.rogue.mpmod}
                         **Starting Weapon**: ${this.client.items.get(this.client.rogue.weapon).name}
                         **Starting Armor**: ${this.client.items.get(this.client.rogue.armor).name}
-                        **Starting Accessory**: ${this.client.items.get(this.client.rogue.accessory).name}`)
-                    return message.channel.send(embed);
-                }
-                catch (e) {
-                    message.channel.send('There was an error retrieving information!  Please report this to my maker, an invite link can be found in the `invite` command.')
-                    this.client.channels.get('547399254864560138').send(`Error getting information on ${message.guild.name}.
+                        **Starting Accessory**: ${this.client.items.get(this.client.rogue.accessory).name}`);
+          return message.channel.send(embed);
+        }
+        catch (e) {
+          message.channel.send('There was an error retrieving information!  Please report this to my maker, an invite link can be found in the `invite` command.');
+          this.client.channels.get('547399254864560138').send(`Error getting information on ${message.guild.name}.
                     ${e.message}
-                    ${e.stack}`, {code: 'xxl'})
-                }
-            }
-            if (info === 'priest') {
-                try {
-                    const embed = new MessageEmbed()
-                        .setColor('WHITE')
-                        .setTitle(stripIndents`Information on ${info.charAt(0).toUpperCase()}${info.substr(1).toLowerCase()}`)
-                        .setDescription(`${this.client.priest.description}
+                    ${e.stack}`, { code: 'xxl' });
+        }
+      }
+      if (info === 'priest') {
+        try {
+          const embed = new MessageEmbed()
+            .setColor('WHITE')
+            .setTitle(stripIndents`Information on ${info.charAt(0).toUpperCase()}${info.substr(1).toLowerCase()}`)
+            .setDescription(`${this.client.priest.description}
                         **Starting Strength**: ${this.client.priest.str}
                         **Starting Agility**: ${this.client.priest.agi}
                         **Starting Constitution**: ${this.client.priest.con}
@@ -134,22 +139,22 @@ class InformationCommand extends Command {
                         **Starting MP**: ${this.client.priest.mpmod}
                         **Starting Weapon**: ${this.client.items.get(this.client.priest.weapon).name}
                         **Starting Armor**: ${this.client.items.get(this.client.priest.armor).name}
-                        **Starting Accessory**: ${this.client.items.get(this.client.priest.accessory).name}`)
-                    return message.channel.send(embed);
-                }
-                catch (e) {
-                    message.channel.send('There was an error retrieving information!  Please report this to my maker, an invite link can be found in the `invite` command.')
-                    this.client.channels.get('547399254864560138').send(`Error getting information on ${message.guild.name}.
+                        **Starting Accessory**: ${this.client.items.get(this.client.priest.accessory).name}`);
+          return message.channel.send(embed);
+        }
+        catch (e) {
+          message.channel.send('There was an error retrieving information!  Please report this to my maker, an invite link can be found in the `invite` command.');
+          this.client.channels.get('547399254864560138').send(`Error getting information on ${message.guild.name}.
                     ${e.message}
-                    ${e.stack}`, {code: 'xxl'})
-                }
-            }
-            if (info === 'mage') {
-                try {
-                    const embed = new MessageEmbed()
-                        .setColor('BLACK')
-                        .setTitle(stripIndents`Information on ${info.charAt(0).toUpperCase()}${info.substr(1).toLowerCase()}`)
-                        .setDescription(`${this.client.mage.description}
+                    ${e.stack}`, { code: 'xxl' });
+        }
+      }
+      if (info === 'mage') {
+        try {
+          const embed = new MessageEmbed()
+            .setColor('BLACK')
+            .setTitle(stripIndents`Information on ${info.charAt(0).toUpperCase()}${info.substr(1).toLowerCase()}`)
+            .setDescription(`${this.client.mage.description}
                         **Starting Strength**: ${this.client.mage.str}
                         **Starting Agility**: ${this.client.mage.agi}
                         **Starting Constitution**: ${this.client.mage.con}
@@ -159,34 +164,34 @@ class InformationCommand extends Command {
                         **Starting MP**: ${this.client.mage.mpmod}
                         **Starting Weapon**: ${this.client.items.get(this.client.mage.weapon).name}
                         **Starting Armor**: ${this.client.items.get(this.client.mage.armor).name}
-                        **Starting Accessory**: ${this.client.items.get(this.client.mage.accessory).name}`)
-                    return message.channel.send(embed);
-                }
-                catch (e) {
-                    message.channel.send('There was an error retrieving information!  Please report this to my maker, an invite link can be found in the `invite` command.')
-                    this.client.channels.get('547399254864560138').send(`Error getting information on ${message.guild.name}.
-                    ${e.message}
-                    ${e.stack}`, {code: 'xxl'})
-                }
-            }
+                        **Starting Accessory**: ${this.client.items.get(this.client.mage.accessory).name}`);
+          return message.channel.send(embed);
         }
-        if (this.client.items.some(i => i.name === info || i.id === info)) {
-            const item = this.client.items.find(i => i.name === info) || this.client.items.find(i => i.id === info);          
-            const replace = {
-                a: 'armor',
-                w: 'weapon',
-                c: 'accessory',
-                s: 'shop',
-                u: 'upgrade',
-                b: 'combat',
-                p: ' (physical)',
-                m: ' (magical)',
-                n: ''
-            }
-            const embed = new MessageEmbed()
-                .setColor('YELLOW')
-                .setTitle(`Information on ${info}.`)
-                .setDescription(stripIndents`**Name**: ${item.name}
+        catch (e) {
+          message.channel.send('There was an error retrieving information!  Please report this to my maker, an invite link can be found in the `invite` command.');
+          this.client.channels.get('547399254864560138').send(`Error getting information on ${message.guild.name}.
+                    ${e.message}
+                    ${e.stack}`, { code: 'xxl' });
+        }
+      }
+    }
+    if (dataManager.items.some(i => i.name === info || i.id === info)) {
+      const item = this.client.items.find(i => i.name === info) || this.client.items.find(i => i.id === info);
+      const replace = {
+        a: 'armor',
+        w: 'weapon',
+        c: 'accessory',
+        s: 'shop',
+        u: 'upgrade',
+        b: 'combat',
+        p: ' (physical)',
+        m: ' (magical)',
+        n: ''
+      };
+      const embed = new MessageEmbed()
+        .setColor('YELLOW')
+        .setTitle(`Information on ${info}.`)
+        .setDescription(stripIndents`**Name**: ${item.name}
                 **ID** ${item.id}
                 **Description**: ${item.description}
                 **Source**: ${replace[item.source]}
@@ -206,10 +211,10 @@ class InformationCommand extends Command {
                 ${item.gathertimermod >= 0 ? `**Gather timer mod**: ${(1 - item.gathertimermod) * 100}%` : ''}
                 ${item.hunttimermod >= 0 ? `**Hunt timer mod**: ${(1 - item.hunttimermod) * 100}%` : ''}
                 ${item.cost || item.sell ? `**Cost**: ${item.cost > 0 ? item.cost : 'unbuyable'}, **sell for**: ${item.sell}` : ''}
-                `.split('\n').filter(l=>l.trim().length).join('\n'))
-            return message.channel.send(embed);
-        }
+                `.split('\n').filter(l=>l.trim().length).join('\n'));
+      return message.channel.send(embed);
     }
+  }
 }
 
 module.exports = InformationCommand;

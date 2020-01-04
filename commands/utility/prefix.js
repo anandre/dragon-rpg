@@ -11,7 +11,7 @@ class PrefixCommand extends Command {
         usage: 'prefix',
         example: 'prefix'
       }
-    })
+    });
   }
 
   async exec(message) {

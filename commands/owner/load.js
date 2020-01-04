@@ -11,17 +11,17 @@ class LoadCommand extends Command {
           id: 'commandName'
         }
       ]
-    })
+    });
   }
 
   async exec(message, args) {
     try {
-      this.client.commandHandler.load(`./commands/${args.commandName}.js`)
-      message.channel.send(`${args.commandName} successfully loaded.`)
+      this.client.commandHandler.load(`./commands/${args.commandName}.js`);
+      message.channel.send(`${args.commandName} successfully loaded.`);
     }
     catch (e) {
       message.channel.send(`${e.message}
-      ${e.stack}`, {code: 'xxl'})
+      ${e.stack}`, { code: 'xxl' });
     }
   }
 }

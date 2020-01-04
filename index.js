@@ -1,6 +1,5 @@
 const { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } = require('discord-akairo');
 const config = require('./config.json');
-const pg = require('pg');
 
 require('./structures/message.js');
 
@@ -15,14 +14,14 @@ class MyClient extends AkairoClient {
     });
 
     this.commandHandler = new CommandHandler(this, {
-    // Options for command handler go here
+      // Options for command handler go here
       directory: './commands/',
       allowMention: true,
       prefix: message => {
         if (message.guild) {
-          return this.guildSettings.get(message.guild.id).prefix
+          return this.guildSettings.get(message.guild.id).prefix;
         }
-        return ';'
+        return ';';
       }
     });
 
@@ -49,24 +48,5 @@ class MyClient extends AkairoClient {
 }
 
 const client = new MyClient();
-
-const db = new pg.Pool({
-  user: config.pguser,
-  host: config.pgserv,
-  database: config.pgdb,
-  password: config.pgpass,
-  port: config.pgport
-})
-
-db.connect(err => {
-  if (err) return console.error('Could not connect to database', err);
-});
-
-client.db = db;
-
-require('./modules/functions.js')(client);
-require('./modules/combat.js')(client);
-require('./modules/gather.js')(client);
-require('./modules/testing.js')(client);
 
 client.login(config.token);

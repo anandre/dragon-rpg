@@ -1,23 +1,27 @@
-const ClassBase = require('./base.js');
+const { join, dirname } = require('path');
+const appDir = dirname(require.main.filename);
+const ClassBase = require(join(appDir, '/data/classes/base.js'));
+const dataManager = require(join(appDir, '/data/manager/dataManager.js'));
 
 class CommonEnemy extends ClassBase {
-  constructor(client, data) {
+  constructor(data) {
     if (new.target === CommonEnemy) {
-      throw new TypeError('Cannot instantiate a CommonEnemy class directly.')
+      throw new TypeError('Cannot instantiate a CommonEnemy class directly.');
     }
-    super(client, data)
+    super(data);
 
-    this.weapon = this.client.items.get(data.weaponid);
+    this.weapon = dataManager.items.get(data.weaponid);
 
-    this.hpbase = 5;
-    this.mpbase = 2;
+    this.speed = 2;
 
     this.rarity = 'common';
-    
-    this.fero = 1.5; //Ferocity
+    this.ai = data.ai;
+
+    // Ferocity
+    this.fero = 1.5;
   }
 
-  /*Accuracy (agi)
+  /* Accuracy (agi)
   Precision (agi) (increased crit chance)
   Ferocity (class-based) (Crit Multi)
   Dodge (agi)
@@ -27,42 +31,41 @@ class CommonEnemy extends ClassBase {
   Resistance (spr) (mag resist to debuffs)
   MP (spr)
   Mind (spr) (magical defense, equivalent to toughness)
-  Toughness (con)*/
+  Toughness (con) */
 
-  get acc() { //increased to hit chance
-    return 10 + (1 + (this.level * .25) + (this.agi * .9)).toFixed(2);
+  // increased to hit chance
+  get acc() {
+    return 10 + (1 + (this.level * 0.25) + (this.agi * 0.9)).toFixed(2);
   }
 
-  get dodge() { //increased chance to be missed
-    return 5 + ((this.level * .25) + (this.agi * .8)).toFixed(2);
+  // increased chance to be missed
+  get dodge() {
+    return 5 + ((this.level * 0.25) + (this.agi * 0.8)).toFixed(2);
   }
 
-  get focus() { //increased to hit magical chance
-    return 10 + ((this.level * .17) + (this.mag * .8)).toFixed(2);
+  // increased to hit magical chance
+  get focus() {
+    return 10 + ((this.level * 0.17) + (this.mag * 0.8)).toFixed(2);
   }
 
-  get maxHP() { //max HP, overwritten in paths
-    return this.hpbase * 10;
+  // reduces magical damage taken
+  get mind() {
+    return 5 + Math.round((this.level * 0.2) + (this.spr * 0.2));
   }
 
-  get maxMP() { //max MP, overwritten in paths
-    return this.mpbase * 5;
+  // increased crit chance
+  get prec() {
+    return ((this.level * 0.17) + (this.agi * 0.7)).toFixed(2);
   }
 
-  get mind() { //reduces magical damage taken
-    return 5 + ((this.level * .2) + (this.spr * .2)).toFixed(2);
+  // increased chance to resist debuffs
+  get resist() {
+    return 5 + ((this.level * 0.14) + (this.spr * 0.6)).toFixed(2);
   }
 
-  get prec() { //increased crit chance
-    return ((this.level * .17) + (this.agi * .7)).toFixed(2);
-  }
-
-  get resist() { //increased chance to resist debuffs
-    return 5 + ((this.level * .14) + (this.spr * .6)).toFixed(2);
-  }
-
-  get tough() { //reduces physical damage taken
-    return ((this.level * .25) + (this.con * .8)).toFixed(2);
+  // reduces physical damage taken
+  get tough() {
+    return Math.round((this.level * 0.25) + (this.con * 0.8));
   }
 }
 

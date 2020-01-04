@@ -1,7 +1,10 @@
-const CommonEnemy = require('../../classes/commonenemy.js');
+const { join, dirname } = require('path');
+const appDir = dirname(require.main.filename);
+const CommonEnemy = require(join(appDir, '/data/classes/commonenemy.js'));
+const dataManager = require(join(appDir, '/data/manager/dataManager.js'));
 
 class Slime extends CommonEnemy {
-  constructor(client, data = {
+  constructor(data = {
     id: 'slime',
     name: 'Slime',
     level: 1,
@@ -9,30 +12,36 @@ class Slime extends CommonEnemy {
     agi: 1,
     con: 2,
     mag: 4,
-    spr: 4
+    spr: 4,
+    weaponid: 'goo',
+    ai: 'cMage'
   }) {
-    super(client, data)
+    super(data);
 
     this.description = 'A magic experiment gone awry, these misshapen blobs have spread all over the countryside, multiplying constantly.';
     this.gold = 45;
+    this.xp = 7;
     this.drops = [
-      'broken horn',
+      'bhorn',
       'meat',
-      'apprentice\'s rod'
-    ];
+      'approd'
+    ].map(d => d = { ...dataManager.items.get(d) });
 
-    this.abilitie = [
+    this.abilities = [
       'spark',
       'flame',
-      'icy touch'
-    ];
-    //update this to correct weapon when made
-    //.weapon = this.client.items.get(77)
+      'icytouch'
+    ].map(a => a = { ...dataManager.abilities.find(ab => ab.name === a) });
+
+    this.hp = 22 + Math.floor(Math.random() * 5);
   }
 
-  attack() {
-    const baseDmg = Math.floor((Number.parseFloat((Math.random() * 1.4).toFixed(2)) + 1) * this.weapon.attack) + 1 + Math.max(Math.floor(this.mag/3),1);
-    return baseDmg;
+  get maxHP() {
+    return this.hp;
+  }
+
+  get maxMP() {
+    return 20;
   }
 }
 

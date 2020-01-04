@@ -12,5 +12,27 @@
     "weaponid":"idagg",
     "armorid":"clothes",
     "accessoryid":"nothing"
+  },
+  {
+    "level":2,
+    "str":3,
+    "agi":4,
+    "con":2,
+    "mag":1,
+    "spr":1,
+    "hp":18,
+    "mp":12,
+    "abilities":["backstab"]
+  },
+  {
+    "level":3,
+    "str":3,
+    "agi":5,
+    "con":3,
+    "mag":1,
+    "spr":2,
+    "hp":22,
+    "mp":14,
+    "abilities":["backstab", "poisonstab"]
   }
 ]

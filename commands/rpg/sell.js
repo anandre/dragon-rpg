@@ -1,4 +1,8 @@
 const { Command } = require('discord-akairo');
+const { join, dirname } = require('path');
+const appDir = dirname(require.main.filename);
+const dataManager = require(join(appDir, '/data/manager/dataManager.js'));
+const db = require(join(appDir, '/data/database/pool.js'));
 
 class SellCommand extends Command {
   constructor() {
@@ -11,10 +15,10 @@ class SellCommand extends Command {
         usage: 'sell (item)',
         example: 'sell irondagger\nsell "iron dagger"'
       }
-    })
+    });
   }
 
-  async *args(message, parsed, stated) {
+  async *args() {
     const item = yield {
       type: 'string',
       match: 'phrase'
@@ -24,12 +28,12 @@ class SellCommand extends Command {
   }
 
   async exec(message, { item }) {
-    const sold = this.client.items.find(i => i.id === item) || this.client.items.find(i => i.name === item);
+    const sold = dataManager.items.get(item) || dataManager.items.find(i => i.name === item);
     if (!sold) {
       return message.answer(message.author, 'there is no item like that.');
     }
 
-    const inventory = (await this.client.db.query(`
+    const inventory = (await db.query(`
       SELECT
         itemid,
         count
@@ -37,20 +41,20 @@ class SellCommand extends Command {
         inventory
       WHERE
         playerid = $1`,
-      [message.author.id])).rows;
+    [message.author.id])).rows;
 
-    if (!inventory.some(i => i.itemid === sold.itemid)) {
-     return message.answer(message.author, `you do not have ${sold.name} in your inventory.`);
+    if (!inventory.some(i => i.id === sold.id)) {
+      return message.answer(message.author, `you do not have ${sold.name} in your inventory.`);
     }
 
-    await this.client.db.query(`
+    await db.query(`
       UPDATE
         players
       SET
         gold = (gold + $1)
       WHERE
         playerid = $2`,
-      [sold.sell, message.auhor.id]);
+    [sold.sell, message.author.id]);
     await this.client.db.query(`
       UPDATE
         inventory
@@ -58,7 +62,7 @@ class SellCommand extends Command {
         count = (count - 1)
       WHERE
         playeritem = $1`,
-      [`${message.author.id}-${sold.itemid}`]);
+    [`${message.author.id}-${sold.itemid}`]);
 
     return message.answer(message.author, `you sold ${sold.name} for ${sold.sell}g.`);
   }

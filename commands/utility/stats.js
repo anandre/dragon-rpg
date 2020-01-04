@@ -13,7 +13,7 @@ class StatsCommand extends Command {
         usage: 'stats',
         example: 'stats'
       }
-    })
+    });
   }
 
   async exec(message) {
@@ -23,7 +23,7 @@ class StatsCommand extends Command {
     const aVersion = 'Akairo v8.0.0';
     const channels = this.client.channels.size;
     const guilds = this.client.guilds.size;
-    const members = this.client.guilds.map(g => g.memberCount).reduce((a, b) => a + b)
+    const members = this.client.guilds.map(g => g.memberCount).reduce((a, b) => a + b);
     const embed = new MessageEmbed()
       .setThumbnail(this.client.user.displayAvatarURL())
       .setTitle('Dragon RPG Stats')
@@ -33,7 +33,7 @@ class StatsCommand extends Command {
       .addField('Technical Stats', stripIndents`**Uptime**: ${uptime}
         **RAM Use**: ${memoryUsed} MB
         **Disord Library**: [${dVersion}](https://discord.js.org/#/docs/main/master/)
-        **Framework**: [${aVersion}](https://www.npmjs.com/package/discord-akairo)`, true)
+        **Framework**: [${aVersion}](https://www.npmjs.com/package/discord-akairo)`, true);
     return message.channel.send(embed);
   }
 }

@@ -1,6 +1,9 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
+const { join, dirname } = require('path');
+const appDir = dirname(require.main.filename);
+const db = require(join(appDir, '/data/database/pool.js'));
 
 class StartCommand extends Command {
   constructor() {
@@ -11,27 +14,27 @@ class StartCommand extends Command {
       description: {
         content: 'Choose your starting path.  Respond to the prompt with your choice.',
         usage: 'start -> respond to prompt',
-        example: 'start -> Warrior' 
+        example: 'start -> Warrior'
       }
-    })
+    });
   }
 
-  async *args(message, parsed, state) {
+  async *args(message) {
     const input = yield {
       type: ['warrior', 'priest', 'rogue', 'mage'],
       prompt: {
-        start: 'Are you going to follow the path of the `Warrior`, `Priest`, `Rogue`, or `Mage`?  If you are unsure, you can say \`cancel\` to choose later.',
+        start: 'Are you going to follow the path of the `Warrior`, `Priest`, `Rogue`, or `Mage`?  If you are unsure, you can say `cancel` to choose later.',
         retry: 'That is not a valid path!',
         timeout: 'If you need more time to think about your choice, please ask for more information.',
         cancel: 'If you need more time to think about your choice, please ask for more information.',
         retries: 2
       }
-    }
+    };
 
-    const pathData = require(`../../data/paths/${input}.js`);
-    const equipData = (require(`../../data/${input}.json`))[0];
+    const pathData = require(join(appDir, `/data/paths/${input}.js`));
+    const equipData = (require(join(appDir, `/data/${input}.json`)))[0];
 
-    const path = new pathData(this.client, {
+    const path = new pathData({
       id: message.author.id,
       level: 1,
       xp: 0,
@@ -47,13 +50,13 @@ class StartCommand extends Command {
       rogue: 'BLUE',
       mage: 'BLACK',
       priest: 'WHITE'
-    }[input]
+    }[input];
 
     return { path, color };
   }
 
   async exec(message, { path, color }) {
-    await this.client.db.query(`
+    await db.query(`
       INSERT INTO 
         players (
           playerid, path, level, xp, gold, weaponid, armorid, accessoryid, currhp, currmp,
@@ -65,7 +68,7 @@ class StartCommand extends Command {
       ON CONFLICT
         (playerid)
       DO NOTHING`,
-      [path.id, path.path, path.level, path.xp, path.gold, path.weapon.id, path.armor.id, path.accessory.id,
+    [path.id, path.path, path.level, path.xp, path.gold, path.weapon.id, path.armor.id, path.accessory.id,
       path.maxHP, path.maxMP, Date.now() - 300000]);
     this.client.players.push(message.author.id);
     const embed = new MessageEmbed()
@@ -88,7 +91,7 @@ class StartCommand extends Command {
         **MAG**: ${path.mag}
         **SPR**: ${path.spr}
         \u200b
-        **Accessory**: ${path.accessory.name}`, true)
+        **Accessory**: ${path.accessory.name}`, true);
     return message.channel.send(embed);
   }
 }

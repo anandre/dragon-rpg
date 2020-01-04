@@ -6,11 +6,33 @@
     "con":1,
     "mag":4,
     "spr":3,
-    "hp":10,
+    "hp":14,
     "mp":20,
     "abilities":["spark"],
     "weaponid":"approd",
     "armorid":"crobes",
     "accessoryid":"nothing"
+  },
+  {
+    "level":2,
+    "str":1,
+    "agi":1,
+    "con":1,
+    "mag":5,
+    "spr":4,
+    "hp":17,
+    "mp":22,
+    "abilities":["spark"]
+  },
+  {
+    "level":3,
+    "str":1,
+    "agi":1,
+    "con":2,
+    "mag":6,
+    "spr":4,
+    "hp":20,
+    "mp":25,
+    "abilities":["spark", "flame"]
   }
 ]

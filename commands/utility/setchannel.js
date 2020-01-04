@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
 
-class SetChannelCommand extends Command { 
+class SetChannelCommand extends Command {
   constructor() {
     super('setchannel', {
       aliases: ['setchannel', 'setch'],
@@ -37,9 +37,9 @@ class SetChannelCommand extends Command {
           flag: '--reset'
         }
       ]
-    })
+    });
   }
-    
+
   async exec(message, args) {
     if (args.add && !args.del && !args.reset && args.channel) {
       try {
@@ -51,14 +51,14 @@ class SetChannelCommand extends Command {
             channel = $1
           WHERE
             guildid = $2`,
-          [this.client.guildSettings.get(message.guild.id).channel, message.guild.id]);
-        return message.channel.send(`Successfully added <#${args.channel.id}> to allowed channels.`)
+        [this.client.guildSettings.get(message.guild.id).channel, message.guild.id]);
+        return message.channel.send(`Successfully added <#${args.channel.id}> to allowed channels.`);
       }
       catch (e) {
-        message.channel.send('There was an error changing your allowed channels!  Please report this to my maker, an invite link can be found in the `invite` command.')
+        message.channel.send('There was an error changing your allowed channels!  Please report this to my maker, an invite link can be found in the `invite` command.');
         this.client.channels.get('547399254864560138').send(`Error changing channel on ${message.guild.name}.
         ${e.message}
-        ${e.stack}`, {code: 'xxl'})
+        ${e.stack}`, { code: 'xxl' });
       }
     }
     else if (!args.add && args.del && !args.reset && args.channel) {
@@ -76,10 +76,10 @@ class SetChannelCommand extends Command {
         return message.channel.send(`Successfully removed <#${args.channel.id}> from allowed channels.`);
       }
       catch (e) {
-        message.channel.send('There was an error changing your allowed channels!  Please report this to my maker, an invite link can be found in the `invite` command.')
+        message.channel.send('There was an error changing your allowed channels!  Please report this to my maker, an invite link can be found in the `invite` command.');
         this.client.channels.get('547399254864560138').send(`Error changing channel on ${message.guild.name}.
         ${e.message}
-        ${e.stack}`, {code: 'xxl'})
+        ${e.stack}`, { code: 'xxl' });
       }
     }
     else if (!args.add && !args.del && args.reset) {
@@ -92,14 +92,14 @@ class SetChannelCommand extends Command {
             channel = $1
           WHERE
             guildid = $2`,
-          [this.client.guildSettings.get(message.guild.id).channel, message.guild.id]);
-        return message.channel.send('Reset channels to respond in any channel.')
+        [this.client.guildSettings.get(message.guild.id).channel, message.guild.id]);
+        return message.channel.send('Reset channels to respond in any channel.');
       }
       catch (e) {
-        message.channel.send('There was an error changing your allowed channels!  Please report this to my maker, an invite link can be found in the `invite` command.')
+        message.channel.send('There was an error changing your allowed channels!  Please report this to my maker, an invite link can be found in the `invite` command.');
         this.client.channels.get('547399254864560138').send(`Error changing channel on ${message.guild.name}.
         ${e.message}
-        ${e.stack}`, {code: 'xxl'})
+        ${e.stack}`, { code: 'xxl' });
       }
     }
   }

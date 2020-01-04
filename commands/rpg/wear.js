@@ -1,5 +1,9 @@
 const { Command } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
+const { join, dirname } = require('path');
+const appDir = dirname(require.main.filename);
+const dataManager = require(join(appDir, '/data/manager/dataManager.js'));
+const db = require(join(appDir, '/data/database/pool.js'));
 
 class WearCommand extends Command {
   constructor() {
@@ -13,52 +17,61 @@ class WearCommand extends Command {
         usage: 'wear (item name | id | nothing)',
         example: 'wear iron dagger | idagg | nothing'
       }
-    })
+    });
   }
 
-  async *args(message, parsed, state) {
+  async *args() {
     const text = yield {
       match: 'rest'
-    }
+    };
 
-    const item = this.client.items.get(text) || this.client.items.find(i => i.name === text)
+    const item = dataManager.items.get(text) || dataManager.items.find(i => i.name === text);
+    console.log(item.id);
 
-    return { item }
+    return { item };
   }
 
   async exec(message, { item }) {
     if (!item) {
       return message.answer(message.author, 'there is no such item.');
     }
-    const inventory = (await this.client.db.query(`
+    console.log(1);
+    const inventory = (await db.query(`
       SELECT
         inventory.count
       FROM
         inventory
       WHERE
         playeritem = $1`,
-      [`${message.author.id}-${item.id}`])).rows[0];
+    [`${message.author.id}-${item.id}`])).rows[0];
     if (!inventory) {
       return message.answer(message.author, `you do not have ${item.name}`);
     }
-    const currentItem = (await this.client.db.query(`
+    console.log(2);
+    const currentItem = (await db.query(`
       SELECT
-        $1
+        ${item.slot}id
       FROM
         players
       WHERE
-        playerid = $2`,
-      [`${item.slot}id`, message.author.id])).rows[0];
+        playerid = $1`,
+    [message.author.id])).rows[0];
+    console.log(currentItem);
+    const oldItem = dataManager.items.get(currentItem[`${item.slot}id`]);
+    console.log(oldItem);
     try {
-      await this.client.db.query(`
+      console.log(3);
+      await db.query(`
         UPDATE
           players
         SET
-          $1 = $2
+          ${item.slot}id = $1
         WHERE
-          playerid = $3`,
-        [`${item.slot}id`, item.id, message.author.id]);
-      await this.client.db.query(`
+          playerid = $2`,
+      [item.id, `${message.author.id}`]);
+      console.log(4);
+      console.log(oldItem);
+      await db.query(`
         INSERT INTO
           inventory (playeritem, playerid, itemid, count)
         VALUES
@@ -66,16 +79,18 @@ class WearCommand extends Command {
         ON CONFLICT (playeritem)
         DO UPDATE SET
           count = (inventory.count + excluded.count)`,
-        [`${message.author.id}-${currentItem.id}`, message.author.id, currentItem.id, 1]);
-      await this.client.db.query(`
+      [`${message.author.id}-${oldItem.id}`, message.author.id, oldItem.id, 1]);
+      console.log(5);
+      await db.query(`
         UPDATE
           inventory
         SET 
           count = (inventory.count - 1)
         WHERE
           playeritem = $1`,
-        [`${message.author.id}-${item.id}`]);
-      await this.client.db.query(`
+      [`${message.author.id}-${item.id}`]);
+      console.log(6);
+      await db.query(`
         INSERT INTO
           inventory (playeritem, playerid, itemid, count)
         VALUES
@@ -84,8 +99,8 @@ class WearCommand extends Command {
           (playeritem)
         DO UPDATE SET
           count = (inventory.count + excluded.count)`,
-        [`${message.author.id}-${currentItem.id}`, message.author.id, currentItem.id, 1]);
-      return message.answer(message.author, `you have removed **${currentItem.name}** and put on **${item.name}**.`);
+      [`${message.author.id}-${oldItem.id}`, message.author.id, oldItem.id, 1]);
+      return message.answer(message.author, `you have removed **${oldItem.name}** and put on **${item.name}**.`);
     }
     catch (error) {
       message.answer(message.author, 'there was a problem running the wear command.  Please report this in my support server.');

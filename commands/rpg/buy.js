@@ -1,4 +1,8 @@
 const { Command } = require('discord-akairo');
+const { join, dirname } = require('path');
+const appDir = dirname(require.main.filename);
+const dataManager = require(join(appDir, '/data/manager/dataManager.js'));
+const db = require(join(appDir, '/data/database/pool.js'));
 
 class BuyCommand extends Command {
   constructor() {
@@ -11,43 +15,44 @@ class BuyCommand extends Command {
         usage: 'buy (item id | item name)',
         example: 'buy iron dagger'
       }
-    })
+    });
   }
 
-  async *args(message, parsed, state) {
+  async *args() {
     const item = yield {
       type: 'string',
       match: 'content'
-    }
+    };
 
-    return { item }
+    return { item };
   }
 
   async exec(message, { item }) {
-    const toBuy = this.client.items.find(i => i.id === item) || this.client.items.find(i => i.name === item);
+    const shopItems = dataManager.items.filter(i => i.source === 'shop');
+    const toBuy = shopItems.items.get(item) || shopItems.find(i => i.name === item);
     if (!toBuy) return;
 
-    const { gold } = (await this.client.db.query(`
+    const { gold } = (await db.query(`
       SELECT
         gold
       FROM
         players
       WHERE
         playerid = $1`,
-      [message.author.id])).rows[0];
+    [message.author.id])).rows[0];
 
-      if (toBuy.cost > gold) {
-        return message.answer(message.author, `you don't have enough gold to purchase that!`);
-      }
-      await this.client.db.query(`
+    if (toBuy.cost > gold) {
+      return message.answer(message.author, 'you don\'t have enough gold to purchase that!');
+    }
+    await db.query(`
         UPDATE
           players
         SET
           gold = (gold - $1)
         WHERE
           playerid = $2`,
-        [toBuy.cost, message.author.id]);
-      await this.client.db.query(`
+    [toBuy.cost, message.author.id]);
+    await this.client.db.query(`
         INSERT INTO
           inventory (playeritem, playerid, itemid, count)
         VALUES
@@ -55,9 +60,9 @@ class BuyCommand extends Command {
         ON CONFLICT (playeritem) DO UPDATE
         SET
           count = (inventory.count + excluded.count)`,
-        [`${message.author.id}-${toBuy.itemid}`, message.author.id, toBuy.itemid, 1]);
-      return message.answer(message.author, `you have bought ${toBuy.name} for ${toBuy.cost}g.`);
-    }
+    [`${message.author.id}-${toBuy.itemid}`, message.author.id, toBuy.itemid, 1]);
+    return message.answer(message.author, `you have bought ${toBuy.name} for ${toBuy.cost}g.`);
+  }
 }
 
 module.exports = BuyCommand;

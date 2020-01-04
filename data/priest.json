@@ -14,5 +14,31 @@
     "weaponid":"approd",
     "armorid":"crobes",
     "accessoryid":"nothing"
+  },
+  {
+    "level":2,
+    "str":2,
+    "agi":1,
+    "con":3,
+    "mag":3,
+    "spr":6,
+    "hp":18,
+    "mp":23,
+    "tough":1,
+    "mind":4,
+    "abilities":["heal"]
+  },
+  {
+    "level":3,
+    "str":2,
+    "agi":1,
+    "con":3,
+    "mag":4,
+    "spr":7,
+    "hp":21,
+    "mp":25,
+    "tough":1,
+    "mind":4,
+    "abilities":["heal", "apoison"]
   }
 ]

@@ -1,11 +1,8 @@
 class ClassBase {
-  constructor(client, data) {
+  constructor(data) {
     if (new.target === ClassBase) {
-      throw new TypeError('Cannot instantiate a ClassBase class directly.')
+      throw new TypeError('Cannot instantiate a ClassBase class directly.');
     }
-
-    this.client = client;
-    
     this.id = data.id;
     this.name = data.name;
     this.level = data.level;
@@ -14,8 +11,6 @@ class ClassBase {
     this.con = data.con;
     this.mag = data.mag;
     this.spr = data.spr;
-    this.hpbase = data.hpbase;
-    this.mpbase = data.mpbase;
 
     this.statuses = [];
   }

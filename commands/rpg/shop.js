@@ -1,6 +1,8 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
-const { stripIndents } = require('common-tags');
+const { join, dirname } = require('path');
+const appDir = dirname(require.main.filename);
+const dataManager = require(join(appDir, '/data/manager/dataManager.js'));
 
 class ShopCommand extends Command {
   constructor() {
@@ -19,24 +21,21 @@ class ShopCommand extends Command {
           type: 'string'
         }
       ]
-    })
+    });
   }
 
   async exec(message, { cat }) {
-    const type = {
-      weapon: 'w',
-      armor: 'a',
-      accessory: 'c'
-    };
-    if (!type[cat]) return;
-    const shop = this.client.shopItems.filter(i => i.slot === type[cat]).sort((a, b) => a.cost - b.cost).map(i => `**${i.name}** - ${i.cost}g`);
-    const shopCols = this.client.shopArray(shop, 3);
+    if (!cat) {
+      return message.answer(message.author, 'please specify a category');
+    }
+    const shop = dataManager.items.filter(i => i.source === 'shop' && i.slot === cat).sort((a, b) => a.cost - b.cost).map(i => `**${i.name}** - ${i.cost}g`);
+    const shopCols = dataManager.functions.shopArray(shop, 3);
     const embed = new MessageEmbed()
       .setColor('GOLD')
       .setTitle(`Currently viewing ${cat} in the shop.`)
       .addField('\u200b', shopCols[0].join('\n'), true)
       .addField('\u200b', shopCols[1].join('\n'), true)
-      .addField('\u200b', shopCols[2].join('\n'), true)
+      .addField('\u200b', shopCols[2].join('\n'), true);
     return message.channel.send(embed);
   }
 }

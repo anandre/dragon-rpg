@@ -11,17 +11,17 @@ class UnloadCommand extends Command {
           id: 'commandName'
         }
       ]
-  })
+    });
   }
 
   async exec(message, args) {
     try {
-      this.client.commandHandler.remove(args.commandName)
-      message.channel.send(`${args.commandName} unloaded.`)
+      this.client.commandHandler.remove(args.commandName);
+      message.channel.send(`${args.commandName} unloaded.`);
     }
     catch (e) {
       message.channel.send(`${e.message}
-      ${e.stack}`, {code: 'xxl'})
+      ${e.stack}`, { code: 'xxl' });
     }
   }
 }

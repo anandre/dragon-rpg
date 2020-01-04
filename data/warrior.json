@@ -22,10 +22,23 @@
     "con":3,
     "mag":0,
     "spr":1,
-    "hp":15,
-    "mp":3,
+    "hp":23,
+    "mp":10,
     "tough":3,
     "mind":2,
     "abilities":["rush"]
-    }
+    },
+    {
+      "level":3,
+      "str":5,
+      "agi":2,
+      "con":3,
+      "mag":0,
+      "spr":1,
+      "hp":25,
+      "mp":12,
+      "tough":5,
+      "mind":2,
+      "abilities":["rush", "bash"]
+      }
 ]

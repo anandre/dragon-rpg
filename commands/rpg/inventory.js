@@ -1,5 +1,9 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
+const { join, dirname } = require('path');
+const appDir = dirname(require.main.filename);
+const db = require(join(appDir, '/data/database/pool.js'));
+const dataManager = require(join(appDir, '/data/manager/dataManager.js'));
 
 class InventoryCommand extends Command {
   constructor() {
@@ -12,38 +16,35 @@ class InventoryCommand extends Command {
         usage: 'List your inventory items',
         example: 'inventory'
       }
-    })
+    });
   }
 
   async exec(message) {
-    const inv = (await this.client.db.query(`
+    const inv = (await db.query(`
       SELECT
-        inventory.count, inventory.id, items.name
+        inventory.count, inventory.itemid
       FROM
         inventory
-      INNER JOIN
-        items
-      ON
-        inventory.id = items.id
       WHERE
         inventory.playerid = $1
       ORDER BY
-        inventory.id ASC`,
-      [message.author.id])).rows
+        inventory.itemid ASC`,
+    [message.author.id])).rows;
+    const inventory = inv.map(i => i = `${dataManager.items.get(i.itemid).name} - ${i.count}\n`);
     const embed = new MessageEmbed()
-      .setColor("#e00808")
-      .setTitle(message.author.username + "'s inventory")
+      .setColor('#e00808')
+      .setTitle(message.author.username + '\'s inventory')
       .setFooter('Information retrieved at:')
       .setTimestamp()
       .setThumbnail(message.author.displayAvatarURL());
     let invstr = '';
     for(let i = 0; i < inv.length; i++) {
-      invstr += `${inv[i].name} - ${inv[i].count}\n`
+      invstr += `${inv[i].name} - ${inv[i].count}\n`;
     }
     if (invstr.length > 1) {
-      embed.addField("\u200b", invstr);
+      embed.addField('\u200b', inventory.join(' '));
     }
-    message.channel.send({ embed: embed })
+    message.channel.send({ embed: embed });
   }
 }
 

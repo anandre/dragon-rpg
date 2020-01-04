@@ -11,7 +11,7 @@ class PurgeCommand extends Command {
       }],
       ownerOnly: true,
       category: 'owner'
-    })
+    });
   }
 
   async exec(message, args) {
