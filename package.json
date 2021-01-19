@@ -13,8 +13,10 @@
     "common-tags": "^1.8.0",
     "discord-akairo": "github:1Computer1/discord-akairo",
     "discord.js": "github:discordjs/discord.js",
-    "eslint": "^6.5.1",
     "pg": "^7.7.1",
-    "pm2": "^3.5.1"
+    "pm2": "^4.5.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.18.0"
   }
 }
